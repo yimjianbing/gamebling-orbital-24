@@ -12,7 +12,9 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: slateblue;
+  background: url(./Components/Assets/background.svg) no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 
