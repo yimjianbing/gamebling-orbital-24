@@ -1,8 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Jersey+15&display=swap");
-    
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: "Jersey 15", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: slateblue;
 }
 
 
