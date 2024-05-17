@@ -1,0 +1,23 @@
+
+.about {
+  font-family: 'Jersey', sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fffbe6; /* Cream background color */
+  padding: 20px; /* Add padding for spacing */
+  max-width: 600px; /* Limit width to prevent stretching across the entire screen */
+  margin: 0 auto; /* Center the block horizontally */
+  margin-top: 50px; /* Adjust top margin for vertical centering */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+  
+  .about h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .about p {
+    margin-bottom: 10px;
+  }
