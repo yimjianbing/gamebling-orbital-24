@@ -1,6 +1,5 @@
-
 .about {
-  font-family: 'Jersey', sans-serif;
+  font-family: "Jersey", sans-serif;
   font-size: 20px;
   line-height: 1.5;
   color: #333;
@@ -11,13 +10,25 @@
   margin-top: 50px; /* Adjust top margin for vertical centering */
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  animation: zoom 0.3s ease-in;
 }
-  
-  .about h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
+
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
-  
-  .about p {
-    margin-bottom: 10px;
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
+}
+
+.about h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.about p {
+  margin-bottom: 10px;
+}

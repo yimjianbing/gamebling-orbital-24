@@ -1,0 +1,42 @@
+.contactus {
+    font-family: "Jersey", sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fffbe6; /* Cream background color */
+    padding: 20px; /* Add padding for spacing */
+    max-width: 600px; /* Limit width to prevent stretching across the entire screen */
+    margin: 0 auto; /* Center the block horizontally */
+    margin-top: 50px; /* Adjust top margin for vertical centering */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    animation: zoom 0.3s ease-in;
+}
+  
+  @keyframes zoom {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .icons {
+    font-size: 1.5em;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .icons:hover {
+    cursor: pointer;
+  }
+  
+  .contact {
+    background-color:rgb(53, 51, 61);
+    color:#d06666; 
+    border-radius: 15px; 
+    padding: 5px;
+}

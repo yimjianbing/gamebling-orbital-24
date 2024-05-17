@@ -6,10 +6,10 @@ const NavBar = () => (
   <header>
     <h2 className="logo">GameBling</h2>
     <nav className="navigation">
-      <a href="">Home</a>
+      <Link to="/">Home</Link>
       <Link to="/about">About</Link>
-      <a href="">Contact Us</a>
-      <button className="btnLogin-popup">Play</button>
+      <Link to="/contactus"> Contact Us</Link>
+      <Link to="/loginregister" className="btnLogin-popup">Play</Link>
     </nav>
   </header>
 );

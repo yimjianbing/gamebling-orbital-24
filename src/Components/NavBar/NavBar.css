@@ -19,23 +19,13 @@ header{
 }
 
 
-/* body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: url(assets/wallpaper/background.svg) no-repeat;
-    background-size:cover;
-} */
-
 .logo {
-    /* font-family: "Abril Fatface", serif; */
     font-size: 4em;
     color:#d06666;
     user-select: none;
     text-shadow: black;
-    /* font-weight: 400; */
 }
+
 
 .navigation a{
     position: relative;
@@ -44,6 +34,15 @@ header{
     text-decoration: none;
     font-weight: 1000;
     margin-left: 40px;
+}
+
+.navigation a:nth-of-type(4) {
+    font-size: 1.5em;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
 }
 
 .navigation a::after {
