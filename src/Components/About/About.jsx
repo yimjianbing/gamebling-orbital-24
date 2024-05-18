@@ -7,7 +7,7 @@ const About = () => {
       <h1>About Us</h1>
       <p>
         Welcome to GameBling! If you love poker and mahjong like us, look no
-        further. Lets learn the game together , and most importantly, have
+        further. Lets learn the game together, and most importantly, have
         fun!
       </p>
       <p>
