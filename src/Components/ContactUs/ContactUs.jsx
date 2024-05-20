@@ -28,9 +28,9 @@ const ContactUs = () => {
             <p>
                 <FaInstagram className="icons" onClick={() => window.open('https://www.instagram.com/min.ha0')}/>
                 <FaGithub className="icons" onClick={() => window.open('https://github.com/minhao23')}/>
-                <FaLinkedin className="icons" onClick={() => window.open('')}/>
+                <FaLinkedin className="icons" onClick={() => window.open('https://www.linkedin.com/in/minhaohe/')}/>
             </p>
-            <p>Email: </p>
+            <p>Email: heminhao120@gmail.com</p>
         </p>
       </div>
     );
