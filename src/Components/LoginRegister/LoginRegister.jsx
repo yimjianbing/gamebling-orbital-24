@@ -6,7 +6,7 @@ import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "./firebase-config";
+} from '../../auth/firebase-config';
 import { validateField, validatePassword } from "./validators";
 
 const LoginRegister = () => {
