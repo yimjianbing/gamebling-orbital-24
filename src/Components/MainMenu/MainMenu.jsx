@@ -4,3 +4,5 @@ import "./MainMenu.css";
 const MainMenu = () => {
     <div>placeholder</div>
 }
+
+export default MainMenu;

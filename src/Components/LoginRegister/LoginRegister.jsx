@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
 } from '../../auth/firebase-config';
 import { validateField, validatePassword } from "./validators";
+import { Navigate } from "react-router-dom";
 
 const LoginRegister = () => {
   const [action, setAction] = useState("");
@@ -67,6 +68,7 @@ const LoginRegister = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(function () {
         alert("User Logged in successful!");
+        
       })
       .catch(function (error) {
         var errorCode = error.code;

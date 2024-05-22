@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { auth, onAuthStateChanged } from './firebase-config'; // Assuming this import is correct
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -18,12 +18,18 @@ export function AuthProvider({ children }) {
       setLoading(false); // Update loading state once authentication check is done
     });
 
-    return unsubscribe;
+    return () => { if (unsubscribe) unsubscribe()};
   }, []);
 
   // Render children only when loading is false
+
+  const values = {
+    currentUserLoggedIn: currentUserLoggedIn,
+    setCurrentUserLoggedIn: setCurrentUserLoggedIn
+  }
+
   return (
-    <AuthContext.Provider value={{ currentUserLoggedIn }}>
+    <AuthContext.Provider value={{ values }}>
       {!loading && children}
     </AuthContext.Provider>
   );
