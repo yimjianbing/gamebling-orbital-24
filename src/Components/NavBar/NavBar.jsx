@@ -11,7 +11,7 @@ export function NavBar() {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/contactus"> Contact Us</Link>
-        <Link to="/loginregister" className="btnLogin-popup">Play</Link>
+        <Link to="/mainmenu" className="btnLogin-popup">Play</Link>
       </nav>
     </header>
   )

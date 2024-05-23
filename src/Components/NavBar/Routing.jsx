@@ -21,7 +21,7 @@ const RouterBuilder = () => {
     },
     {
         path: '/contactus',
-        element: <ContactUs />
+        element: <Protected><ContactUs /></Protected>
     },
     {
         path: "/mainmenu",
