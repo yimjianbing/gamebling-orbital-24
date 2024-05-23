@@ -8,12 +8,11 @@ import {
   signInWithEmailAndPassword,
 } from '../../auth/firebase-config';
 import { validateField, validatePassword } from "./validators";
-// import { AuthContext } from "../../auth/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 
 
 const LoginRegister = () => {
-  // const user = useContext(AuthContext);
+  const navigate = useNavigate();
   const [action, setAction] = useState("");
 
   const registerLink = () => {
@@ -29,6 +28,10 @@ const LoginRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  function navToMainMenu() {
+    navigate("/mainmenu")
+  }
 
   const register = async (e) => {
     e.preventDefault();
@@ -70,8 +73,8 @@ const LoginRegister = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(function () {
-        alert("User Logged in successful!");
-        
+        // alert("User Logged in successful!");
+        navToMainMenu();
       })
       .catch(function (error) {
         var errorCode = error.code;

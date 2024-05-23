@@ -11,7 +11,7 @@ const MainMenu = () => {
         signOut(auth)
             .then(() => {
                 updateLoggedIn(false); //update context to be signedout
-                alert("successful signout"); // Sign-out successful.
+                // alert("successful signout"); // Sign-out successful.
             })
             .catch((error) => {
                 var errorMessage = error.message;
