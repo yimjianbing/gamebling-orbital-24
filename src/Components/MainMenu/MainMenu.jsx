@@ -3,6 +3,7 @@ import "./MainMenu.css";
 import { auth, signOut } from "../../auth/firebase-config.js";
 import { AuthContext } from "../../auth/AuthContext.jsx";
 import { useContext } from "react";
+import ChatRoom from '../ChatRoom/ChatRoom';
 
 const MainMenu = () => {
     const { updateLoggedIn } = useContext(AuthContext);
@@ -27,6 +28,8 @@ const MainMenu = () => {
             <button onClick={() => handleSignOut()} className="signout">
                 Sign out
             </button>
+            <ChatRoom />
+
         </div>
     );
 };
