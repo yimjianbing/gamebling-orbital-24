@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 
 export function Protected ({children}) {
@@ -11,4 +11,5 @@ export function Protected ({children}) {
         console.log(user);
         return children;
     }
+
 }

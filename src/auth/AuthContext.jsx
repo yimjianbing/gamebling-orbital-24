@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useNavigate } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Assuming this import is correct
 
 export const AuthContext = createContext();
@@ -22,6 +22,9 @@ export function AuthProvider({ children }) {
 
     return () => { if (unsubscribe) unsubscribe()};
   }, []);
+
+
+
 
   // Render children only when loading is false
 
