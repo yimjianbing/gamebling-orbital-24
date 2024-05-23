@@ -1,15 +1,23 @@
 .chat-room {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
     margin-top: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid aliceblue;
     padding: 10px;
     border-radius: 5px;
-    width: 100%;
+    width: 400px;
     max-width: 600px;
     margin: 0 auto;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .messages {
-    max-height: 300px;
+    max-height: 200px;
     overflow-y: auto;
     margin-bottom: 10px;
 }
@@ -25,19 +33,19 @@
 .input input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid aliceblue;
     border-radius: 5px 0 0 5px;
 }
 
 .input button {
     padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #007bff;
-    color: white;
+    border: 1px solid aliceblue;
+    background-color:rgb(53, 51, 61);
+    color: aliceblue;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
 
 .input button:hover {
-    background-color: #0056b3;
+    background-color:rgb(53, 51, 61);
 }

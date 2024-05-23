@@ -4,7 +4,7 @@ import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firesto
 import './ChatRoom.css';
 import { AuthContext } from '../../auth/AuthContext.jsx';
 
-export const ChatRoom = () => {
+export const ChatRoom = ({ setChatOpen }) => {
     const { currentUserLoggedIn } = useContext(AuthContext);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -33,22 +33,27 @@ export const ChatRoom = () => {
     };
 
     return (
-        <div className="chat-room">
-            <div className="messages">
-                {messages.map((message) => (
-                    <div key={message.id} className="message">
-                        <strong>{message.user}:</strong> {message.text}
-                    </div>
-                ))}
-            </div>
-            <div className="input">
-                <input
-                    type="text"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Type your message..."
-                />
-                <button onClick={handleSendMessage}>Send</button>
+        <div>
+            <p>
+                <button onClick={() => setChatOpen(false)} className="chat-close">Close Chat</button>
+            </p>
+            <div className="chat-room">
+                <div className="messages">
+                    {messages.map((message) => (
+                        <div key={message.id} className="message">
+                            <strong>{message.user}:</strong> {message.text}
+                        </div>
+                    ))}
+                </div>
+                <div className="input">
+                    <input
+                        type="text"
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        placeholder="Type your message..."
+                    />
+                    <button onClick={handleSendMessage}>Send</button>
+                </div>
             </div>
         </div>
     );

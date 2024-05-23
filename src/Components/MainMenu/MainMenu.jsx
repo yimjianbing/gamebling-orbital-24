@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import "./MainMenu.css";
 import { auth, signOut } from "../../auth/firebase-config.js";
 import { AuthContext } from "../../auth/AuthContext.jsx";
-import { useContext } from "react";
 import ChatRoom from '../ChatRoom/ChatRoom';
+import ChatClose from '../ChatRoom/ChatClose';
 
-const MainMenu = () => {
+
+export const MainMenu = () => {
     const { updateLoggedIn } = useContext(AuthContext);
+    const [chatOpen, setChatOpen] = useState(false);
 
     function handleSignOut() {
         signOut(auth)
@@ -21,17 +23,17 @@ const MainMenu = () => {
     }
 
     return (
-        <div className="mainmenu">
-            <h1>Main Menu</h1>
-            <p>Mahjong</p>
-            <p>Poker</p>
-            <button onClick={() => handleSignOut()} className="signout">
-                Sign out
-            </button>
-            <ChatRoom />
-
-        </div>
+        <>
+            <div className="mainmenu">
+                <h1>Main Menu</h1>
+                <p>Mahjong</p>
+                <p>Poker</p>
+                <button onClick={() => handleSignOut()} className="signout">
+                    Sign out
+                </button>
+            </div>
+            {chatOpen ? <ChatRoom setChatOpen={setChatOpen} /> : <ChatClose setChatOpen={setChatOpen} />}
+        </>
     );
 };
 
-export default MainMenu;

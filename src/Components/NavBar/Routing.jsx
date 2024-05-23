@@ -3,7 +3,7 @@ import About from '../About/About';
 import ContactUs from '../ContactUs/ContactUs';
 import LoginRegister from '../LoginRegister/LoginRegister';
 import Layout from './Layout'
-import MainMenu from '../MainMenu/MainMenu';
+import {MainMenu} from '../MainMenu/MainMenu';
 
 const RouterBuilder = () => {
   const generalRoutes = [

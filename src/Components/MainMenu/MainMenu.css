@@ -14,7 +14,7 @@
     backdrop-filter: blur(30px);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: #fff;
+    color: rgb(53, 51, 61);
     padding: 20px; /* Add padding for spacing */
     max-width: 600px; /* Limit width to prevent stretching across the entire screen */
     margin: 0 auto; /* Center the block horizontally */

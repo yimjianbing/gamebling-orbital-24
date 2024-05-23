@@ -6,6 +6,7 @@ import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile
 } from '../../auth/firebase-config';
 import { validateField, validatePassword } from "./validators";
 import { useNavigate } from "react-router-dom";
@@ -51,12 +52,21 @@ const LoginRegister = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(function () {
         alert("User Created!");
-      })
-      .catch(function (error) {
+      }).then(() => {
+        updateProfile(auth.currentUser, {displayName: name})
+        .catch(function (error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage);
+        })
+      }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
+
+    
+
   };
 
   //set up login using firebase auth
