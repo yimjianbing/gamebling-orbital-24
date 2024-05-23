@@ -18,6 +18,19 @@ header{
     z-index: 99;
 }
 
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 100px;
+    background-color:rgb(53, 51, 61);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
 
 .logo {
     font-size: 4em;

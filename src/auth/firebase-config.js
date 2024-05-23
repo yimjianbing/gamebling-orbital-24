@@ -1,8 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import {
+  onAuthStateChanged,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from 'firebase/auth';
 
 // Your web app's Firebase configuration
@@ -18,4 +20,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
+export {
+  auth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+};

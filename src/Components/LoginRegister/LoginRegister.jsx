@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./LoginRegister.css";
 import { HiMiniUser, HiMiniKey } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
@@ -6,10 +6,14 @@ import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "./firebase-config";
+} from '../../auth/firebase-config';
 import { validateField, validatePassword } from "./validators";
+// import { AuthContext } from "../../auth/AuthContext";
+
+
 
 const LoginRegister = () => {
+  // const user = useContext(AuthContext);
   const [action, setAction] = useState("");
 
   const registerLink = () => {
@@ -67,6 +71,7 @@ const LoginRegister = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(function () {
         alert("User Logged in successful!");
+        
       })
       .catch(function (error) {
         var errorCode = error.code;

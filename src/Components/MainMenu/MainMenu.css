@@ -1,0 +1,37 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Jersey 15", sans-serif;
+}
+
+.mainmenu {
+    font-family: "Jersey", sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    padding: 20px; /* Add padding for spacing */
+    max-width: 600px; /* Limit width to prevent stretching across the entire screen */
+    margin: 0 auto; /* Center the block horizontally */
+    margin-top: 50px; /* Adjust top margin for vertical centering */
+    border-radius: 10px; /* Rounded corners */
+    animation: zoom 0.3s ease-in;
+}
+
+
+.signout {
+    font-size: 1.5em;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .signout:hover {
+    cursor: pointer;
+  }

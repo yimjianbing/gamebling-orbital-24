@@ -1,25 +1,22 @@
-import LoginRegister from './Components/LoginRegister/LoginRegister'
-import NavBar from './Components/NavBar/NavBar'
-import About from './Components/About/About';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ContactUs from './Components/ContactUs/ContactUs';
+import "./App.css";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import { useMemo } from "react";
+import RouterBuilder from "./Components/NavBar/Routing.jsx";
+import { AuthProvider } from "./auth/AuthContext.jsx";
+import MainMenu from "./Components/MainMenu/MainMenu.jsx";
 
 
 function App() {
+
+  const routes = useMemo(() => RouterBuilder(), []);
+
   return (
-    <Router>
-      <div>
-        <NavBar />
-        <Routes>
-          <Route path="/about" element={<About />} />
-          <Route
-            path="/loginRegister" element={<LoginRegister />} />
-          <Route
-           path="/contactus" element={<ContactUs />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <RouterProvider router={createBrowserRouter(routes)}></RouterProvider>
+    </AuthProvider>
   );
 }
 
