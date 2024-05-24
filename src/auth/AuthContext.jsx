@@ -23,9 +23,6 @@ export function AuthProvider({ children }) {
     return () => { if (unsubscribe) unsubscribe()};
   }, []);
 
-
-
-
   // Render children only when loading is false
 
   const updateLoggedIn = (bool) => {

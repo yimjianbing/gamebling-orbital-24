@@ -7,7 +7,7 @@
 
 .title {
   background-color: transparent;
-  max-width: 200px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +68,6 @@
   cursor: pointer;
   background-color: white;
   color: #162938;
-  transition: 0.2s fade;
 }
 
 .poker {
@@ -85,7 +84,7 @@
   color: white;
   font-weight: 500;
   margin: 40px;
-  transition: 0.5s;
+  transition: 0.5s ;
   display: flex; /* Add this line to make it a flex container */
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
@@ -95,7 +94,6 @@
   cursor: pointer;
   background-color: white;
   color: #162938;
-  transition: 0.2s fade;
 }
 
 .signout {
@@ -113,6 +111,13 @@
 
 .signout:hover {
   cursor: pointer;
+}
+
+.chooseGamemode{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Add this line to center horizontally */
 }
 
 

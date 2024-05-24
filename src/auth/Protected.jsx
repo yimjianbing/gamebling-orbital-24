@@ -8,8 +8,8 @@ export function Protected ({children}) {
     if (!user.loggedIn) {
         return <Navigate to="/loginregister" replace/>
     } else {        
-        console.log(user);
         return children;
     }
 
 }
+

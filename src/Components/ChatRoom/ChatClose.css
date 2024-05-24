@@ -17,7 +17,6 @@
     cursor: pointer;
     background-color: aliceblue;
     color: rgb(53, 51, 61);
-    transition: 0.5s fade;
 }
 
 .openChatIcon {

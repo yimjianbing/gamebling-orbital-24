@@ -25,12 +25,12 @@ export const MainMenu = () => {
     return (
         <div className="mainmenu">
             <div >
-                <h1 className="title">Main Menu</h1>
+                {/* <h1 className="title">Main Menu</h1> */}
+                <h2 className="title">Choose your gamemode to play!</h2>
                 <heading className='boxes'>
                     <h2 className="mahjong">Mahjong</h2>
                     <h2 className="poker">Poker</h2>
                 </heading>
-                
                 <button onClick={() => handleSignOut()} className="signout">
                     Sign out
                 </button>
@@ -38,6 +38,7 @@ export const MainMenu = () => {
             <p className="chatTab">
                 {chatOpen ? <ChatRoom setChatOpen={setChatOpen} /> : <ChatClose setChatOpen={setChatOpen} />}
             </p>
+
             
         </div>
     );
