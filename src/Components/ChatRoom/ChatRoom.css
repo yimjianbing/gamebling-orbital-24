@@ -49,3 +49,16 @@
 .input button:hover {
     background-color:rgb(53, 51, 61);
 }
+
+.chat-close {
+    position: relative;
+}
+
+.closeChatIcon {
+    position: relative;
+    left: 95%;
+}
+
+.closeChatIcon:hover {
+    cursor: pointer;
+}

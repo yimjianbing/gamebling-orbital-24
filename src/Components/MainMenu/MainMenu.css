@@ -6,11 +6,16 @@
 }
 
 .title {
-  background-color: aliceblue;
+  background-color: transparent;
   max-width: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto; /* Add this line to center horizontally */
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .mainmenu {
@@ -20,8 +25,8 @@
     background: transparent;
     /* border: 2px solid rgba(255, 255, 255, 0.1); */
     /* backdrop-filter: blur(30px); */
-    border-radius: 10px;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    border-radius: 10px;
     color: rgb(53, 51, 61);
     padding: 20px; /* Add padding for spacing */
     max-width: 800px; /* Limit width to prevent stretching across the entire screen */
@@ -101,18 +106,24 @@
     padding-bottom: 8px;
     align-items: center;
     border-radius: 8px;
+    margin: 0 auto; /* Add this line to center horizontally */
+    display: flex; /* Add this line to make it a flex container */
+
 }
 
 .signout:hover {
   cursor: pointer;
 }
 
-.openCloseButton {
-  font-size: 1.5em;
-  padding-left: 35px;
-  padding-right: 35px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  align-items: center;
-  border-radius: 8px;
+
+
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

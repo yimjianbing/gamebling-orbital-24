@@ -1,9 +1,13 @@
 import React from "react";
 import './ChatClose.css';
+import { IoMdChatboxes } from "react-icons/io";
 
 
 const ChatClose = ({setChatOpen}) => {
-    return <button onClick={() => setChatOpen(true)} className="chat-close">Open Chat</button>
+    return  <div className="openChatTab" onClick={() => setChatOpen(true)} >
+                Open In Game Chat
+                <IoMdChatboxes className="openChatIcon"/>
+            </div>
 }
 
 

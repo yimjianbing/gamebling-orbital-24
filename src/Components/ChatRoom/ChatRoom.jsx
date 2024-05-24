@@ -3,6 +3,7 @@ import { db, auth } from '../../auth/firebase-config.js';
 import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import './ChatRoom.css';
 import { AuthContext } from '../../auth/AuthContext.jsx';
+import { IoCloseOutline } from "react-icons/io5";
 
 export const ChatRoom = ({ setChatOpen }) => {
     const { currentUserLoggedIn } = useContext(AuthContext);
@@ -40,28 +41,26 @@ export const ChatRoom = ({ setChatOpen }) => {
     };
 
     return (
-        <div>
-            <p>
-                <button onClick={() => setChatOpen(false)} className="chat-close">Close Chat</button>
-            </p>
-            <div className="chat-room">
-                <div className="messages">
-                    {messages.map((message) => (
-                        <div key={message.id} className="message">
-                            <strong>{message.user}:</strong> {message.text}
-                        </div>
-                    ))}
-                    <div ref={messagesEndRef} />
-                </div>
-                <div className="input">
-                    <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type your message..."
-                    />
-                    <button onClick={handleSendMessage}>Send</button>
-                </div>
+        <div className="chat-room">
+        <nav>
+            <IoCloseOutline onClick={() => setChatOpen(false)} className='closeChatIcon'/>
+        </nav>
+            <div className="messages">
+                {messages.map((message) => (
+                    <div key={message.id} className="message">
+                        <strong>{message.user}:</strong> {message.text}
+                    </div>
+                ))}
+                <div ref={messagesEndRef} />
+            </div>
+            <div className="input">
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="Type your message..."
+                />
+                <button onClick={handleSendMessage}>Send</button>
             </div>
         </div>
     );

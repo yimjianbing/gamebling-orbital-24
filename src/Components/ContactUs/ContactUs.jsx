@@ -7,7 +7,7 @@ const ContactUs = () => {
     return (
       <div className="contactus">
         <h1>Contact Us</h1>
-        <p className="title">
+        <p>
             Have any questions/feedback or wish to contact us?
         </p>
         <p>

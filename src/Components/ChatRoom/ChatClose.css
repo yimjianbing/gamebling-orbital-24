@@ -1,0 +1,27 @@
+.openChatTab {
+    padding: 8px;
+    color: aliceblue;
+    background-color: rgb(53, 51, 61);
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    border-top-left-radius: 10px;
+    transition: 0.5s;
+}
+
+.openChatTab:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+    color: rgb(53, 51, 61);
+    transition: 0.5s fade;
+}
+
+.openChatIcon {
+    position: relative;
+    top: 5px;
+    left: 5px;
+}

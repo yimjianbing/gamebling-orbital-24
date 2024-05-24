@@ -35,7 +35,7 @@ export const MainMenu = () => {
                     Sign out
                 </button>
             </div>
-            <p className="openCloseButton">
+            <p className="chatTab">
                 {chatOpen ? <ChatRoom setChatOpen={setChatOpen} /> : <ChatClose setChatOpen={setChatOpen} />}
             </p>
             
