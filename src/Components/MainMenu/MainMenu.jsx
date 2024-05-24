@@ -23,17 +23,23 @@ export const MainMenu = () => {
     }
 
     return (
-        <>
-            <div className="mainmenu">
-                <h1>Main Menu</h1>
-                <p>Mahjong</p>
-                <p>Poker</p>
+        <div className="mainmenu">
+            <div >
+                <h1 className="title">Main Menu</h1>
+                <heading className='boxes'>
+                    <h2 className="mahjong">Mahjong</h2>
+                    <h2 className="poker">Poker</h2>
+                </heading>
+                
                 <button onClick={() => handleSignOut()} className="signout">
                     Sign out
                 </button>
             </div>
-            {chatOpen ? <ChatRoom setChatOpen={setChatOpen} /> : <ChatClose setChatOpen={setChatOpen} />}
-        </>
+            <p className="openCloseButton">
+                {chatOpen ? <ChatRoom setChatOpen={setChatOpen} /> : <ChatClose setChatOpen={setChatOpen} />}
+            </p>
+            
+        </div>
     );
 };
 

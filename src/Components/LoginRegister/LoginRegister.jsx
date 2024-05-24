@@ -49,23 +49,22 @@ const LoginRegister = () => {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
       .then(function () {
         alert("User Created!");
       }).then(() => {
-        updateProfile(auth.currentUser, {displayName: name})
-        .catch(function (error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          alert(errorMessage);
-        })
       }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
 
-    
+    await updateProfile(auth.currentUser, {displayName: name})
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorMessage);
+    })
 
   };
 

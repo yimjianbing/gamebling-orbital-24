@@ -5,24 +5,93 @@
   font-family: "Jersey 15", sans-serif;
 }
 
+.title {
+  background-color: aliceblue;
+  max-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .mainmenu {
     font-family: "Jersey", sans-serif;
     font-size: 20px;
     line-height: 1.5;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px);
+    /* border: 2px solid rgba(255, 255, 255, 0.1); */
+    /* backdrop-filter: blur(30px); */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
     color: rgb(53, 51, 61);
     padding: 20px; /* Add padding for spacing */
-    max-width: 600px; /* Limit width to prevent stretching across the entire screen */
+    max-width: 800px; /* Limit width to prevent stretching across the entire screen */
     margin: 0 auto; /* Center the block horizontally */
     margin-top: 50px; /* Adjust top margin for vertical centering */
     border-radius: 10px; /* Rounded corners */
     animation: zoom 0.3s ease-in;
+    align-items: center;
+    justify-content: center;
 }
 
+.mainmenu .boxes{
+  display: flex;
+  align-items: center;
+
+}
+
+.mahjong {
+  width: 300px;
+  height: 300px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: white;
+  font-weight: 500;
+  margin: 40px;
+  transition: 0.5s;
+  display: flex; /* Add this line to make it a flex container */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.mahjong:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #162938;
+  transition: 0.2s fade;
+}
+
+.poker {
+  width: 300px;
+  height: 300px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: white;
+  font-weight: 500;
+  margin: 40px;
+  transition: 0.5s;
+  display: flex; /* Add this line to make it a flex container */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.poker:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #162938;
+  transition: 0.2s fade;
+}
 
 .signout {
     font-size: 1.5em;
@@ -30,8 +99,20 @@
     padding-right: 35px;
     padding-top: 8px;
     padding-bottom: 8px;
-  }
+    align-items: center;
+    border-radius: 8px;
+}
 
-  .signout:hover {
-    cursor: pointer;
-  }
+.signout:hover {
+  cursor: pointer;
+}
+
+.openCloseButton {
+  font-size: 1.5em;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  align-items: center;
+  border-radius: 8px;
+}
