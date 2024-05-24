@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { db, auth } from '../../auth/firebase-config.js';
 import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import './ChatRoom.css';
@@ -23,6 +23,7 @@ export const ChatRoom = ({ setChatOpen }) => {
 
     const handleSendMessage = async () => {
         if (newMessage.trim()) {
+            scrollToBottom();
             await addDoc(collection(db, 'messages'), {
                 text: newMessage,
                 user: currentUserLoggedIn.displayName || 'Anonymous',
@@ -30,6 +31,12 @@ export const ChatRoom = ({ setChatOpen }) => {
             });
             setNewMessage('');
         }
+    };
+
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     return (
@@ -44,6 +51,7 @@ export const ChatRoom = ({ setChatOpen }) => {
                             <strong>{message.user}:</strong> {message.text}
                         </div>
                     ))}
+                    <div ref={messagesEndRef} />
                 </div>
                 <div className="input">
                     <input
