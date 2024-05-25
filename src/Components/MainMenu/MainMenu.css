@@ -23,9 +23,6 @@
     font-size: 20px;
     line-height: 1.5;
     background: transparent;
-    /* border: 2px solid rgba(255, 255, 255, 0.1); */
-    /* backdrop-filter: blur(30px); */
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
     border-radius: 10px;
     color: rgb(53, 51, 61);
     padding: 20px; /* Add padding for spacing */
@@ -41,7 +38,7 @@
 .mainmenu .boxes{
   display: flex;
   align-items: center;
-
+  justify-content: space-between;
 }
 
 .mahjong {
