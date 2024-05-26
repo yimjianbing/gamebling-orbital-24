@@ -45,7 +45,7 @@
   width: 300px;
   height: 300px;
   background: transparent;
-  background-image: url('../Assets/mahjonghand.svg');
+  background-image: url(../../assets/mahjonghand.svg);
   background-size: cover;
   border: 2px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
@@ -74,7 +74,7 @@
   width: 300px;
   height: 300px;
   background: transparent;
-  background-image: url('../Assets/pokerhand.svg');
+  background-image: url(../../assets/pokerhand.svg);
   background-size: cover;
   border: 2px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
