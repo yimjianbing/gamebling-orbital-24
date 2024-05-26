@@ -1,9 +1,9 @@
 import { Protected } from "../auth/Protected";
-import About from "../components/About/About";
-import ContactUs from "../components/ContactUs/ContactUs";
-import LoginRegister from "../components/LoginRegister/LoginRegister";
-import Layout from "../components/NavBar/Layout";
-import { MainMenu } from "../components/MainMenu/MainMenu";
+import About from "../pages/About/About";
+import ContactUs from "../pages/ContactUs/ContactUs";
+import LoginRegister from "../pages/LoginRegister/LoginRegister";
+import Layout from "../Components/NavBar/Layout";
+import { MainMenu } from "../pages/MainMenu/MainMenu";
 
 const RouterBuilder = () => {
   const generalRoutes = [
