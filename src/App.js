@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useMemo } from "react";
-import RouterBuilder from "./Components/NavBar/Routing.jsx";
-import { AuthProvider } from "./auth/AuthContext.jsx";
+import RouterBuilder from "./routes/Routing.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 function App() {
   const routes = useMemo(() => RouterBuilder(), []);

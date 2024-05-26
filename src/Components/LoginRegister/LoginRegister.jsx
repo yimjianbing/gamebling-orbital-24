@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from '../../auth/firebase-config';
-import { validateField, validatePassword } from "./validators";
+import { validateField, validatePassword } from "../../utils/validators";
 import { useNavigate } from "react-router-dom";
 
 
