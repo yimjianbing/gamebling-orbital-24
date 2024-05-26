@@ -59,7 +59,7 @@ const LoginRegister = () => {
         alert(errorMessage);
       });
 
-    await updateProfile(auth.currentUser, {displayName: name})
+    updateProfile(auth.currentUser, {displayName: name})
     .catch(function (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
