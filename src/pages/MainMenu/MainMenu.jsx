@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "./MainMenu.css";
 import { auth, signOut } from "../../auth/firebase-config.js";
-import { AuthContext } from  "../../context/AuthContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
 import ChatRoom from "../../components/ChatRoom/ChatRoom.jsx";
 import ChatClose from "../../components/ChatClose/ChatClose.jsx";
 
