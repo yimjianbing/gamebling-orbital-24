@@ -1,0 +1,58 @@
+/* Poker Game CSS */
+
+/* Add your CSS styles here */
+body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    width: 100px;
+    height: 150px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.player {
+    margin-bottom: 20px;
+}
+
+.player-name {
+    font-weight: bold;
+}
+
+.player-cards {
+    margin-top: 10px;
+}
+
+.card-value {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.card-suit {
+    font-size: 14px;
+}
+
+.button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}

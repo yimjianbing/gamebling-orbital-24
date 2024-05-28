@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import ChatRoom from "../../components/ChatRoom/ChatRoom.jsx";
 import ChatClose from "../../components/ChatClose/ChatClose.jsx";
 
+
 export const MainMenu = () => {
   const { updateLoggedIn } = useContext(AuthContext);
   const [chatOpen, setChatOpen] = useState(false);
@@ -21,6 +22,11 @@ export const MainMenu = () => {
       });
   }
 
+  function handlePoker() {
+    console.log("poker");
+    window.location.href = "/poker";
+  }
+  
   return (
     <div>
       <div className="mainmenu">
@@ -28,7 +34,7 @@ export const MainMenu = () => {
         <h2 className="title">Choose your gamemode to play!</h2>
         <heading className="boxes">
           <h2 className="mahjong">Mahjong</h2>
-          <h2 className="poker">Poker</h2>
+          <h2 className="poker" onClick ={() => handlePoker()}>Poker</h2>
         </heading>
         <button onClick={() => handleSignOut()} className="signout">
           Sign out
