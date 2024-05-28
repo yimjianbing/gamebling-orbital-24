@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/gamebling-orbital-24/static/css/main.f89eef8c.css",
-    "main.js": "/gamebling-orbital-24/static/js/main.4735b0a9.js",
+    "main.js": "/gamebling-orbital-24/static/js/main.7482948d.js",
     "static/js/453.37757d33.chunk.js": "/gamebling-orbital-24/static/js/453.37757d33.chunk.js",
     "static/media/background.svg": "/gamebling-orbital-24/static/media/background.3d96d80e5847e093c817.svg",
     "static/media/pokerhand.svg": "/gamebling-orbital-24/static/media/pokerhand.f8d58b351bc099fad978.svg",
     "static/media/mahjonghand.svg": "/gamebling-orbital-24/static/media/mahjonghand.7f16b5b1e6a1c1f582a2.svg",
     "index.html": "/gamebling-orbital-24/index.html",
     "main.f89eef8c.css.map": "/gamebling-orbital-24/static/css/main.f89eef8c.css.map",
-    "main.4735b0a9.js.map": "/gamebling-orbital-24/static/js/main.4735b0a9.js.map",
+    "main.7482948d.js.map": "/gamebling-orbital-24/static/js/main.7482948d.js.map",
     "453.37757d33.chunk.js.map": "/gamebling-orbital-24/static/js/453.37757d33.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f89eef8c.css",
-    "static/js/main.4735b0a9.js"
+    "static/js/main.7482948d.js"
   ]
 }
