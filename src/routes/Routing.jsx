@@ -13,7 +13,7 @@ const RouterBuilder = () => {
     },
     {
       path: "/",
-      element: <div>Wassup</div>,
+      element: <></>,
     },
     {
       path: "/about",
