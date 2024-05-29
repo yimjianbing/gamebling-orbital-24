@@ -4,7 +4,8 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import LoginRegister from "../pages/LoginRegister/LoginRegister";
 import Layout from "../components/NavBar/Layout";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
-import { Poker } from "../gameLogic/poker/poker";
+import Poker from "../gameLogic/poker/Poker"; 
+
 
 const RouterBuilder = () => {
   const generalRoutes = [
@@ -35,11 +36,11 @@ const RouterBuilder = () => {
     {
       path: "/poker",
       element: (
-      <Protected>
-        <Poker />
-      </Protected>
+        <Protected>
+          <Poker />
+        </Protected>
       )
-    }
+    },
   ];
 
   const routes = [
