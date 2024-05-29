@@ -134,18 +134,25 @@ form button {
 }
 
 form .register-link {
+  display: flex;
+  justify-content: center;
   font-size: 14.5px;
   text-align: center;
   margin: 20px 0 15px;
 }
 
-.register-link p a {
+.regNavBtn {
+  position: relative;
+  bottom: 3px;
+  padding: 3px;
+  font-size: 18px;
   color: #fff;
   text-decoration: none;
   font-weight: 600;
 }
 
-.register-linkp a:hover {
+.regNavBtn:hover {
+  cursor: pointer;
   text-decoration: underline;
 }
 
@@ -155,13 +162,18 @@ form .register-link {
   background-color: rgb(53, 51, 61);
 }
 
-.login-register-button p a {
-  color: aliceblue;
+.logNavBtn {
+  position: relative;
+  bottom: 3px;
+  padding: 3px;
+  font-size: 18px;
+  color: #fff;
   text-decoration: none;
-  font-weight: 100;
+  font-weight: 600;
 }
 
-.login-register-button p a:hover {
+.logNavBtn:hover {
+  cursor: pointer;
   text-decoration: underline;
 }
 

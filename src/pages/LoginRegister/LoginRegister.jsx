@@ -17,6 +17,7 @@ const LoginRegister = () => {
   const [action, setAction] = useState("");
 
   const registerLink = () => {
+    // console.log("help");
     setAction(" active");
   };
 
@@ -136,11 +137,11 @@ const LoginRegister = () => {
 
           <div className="register-link">
             <p className="haveAccount">
-              Don't have an account?
-              <a href="#" onClick={registerLink}>
+              Don't have an account? 
+            </p>
+            <p className="regNavBtn" onClick={registerLink}>
                 {" "}
                 Register
-              </a>
             </p>
           </div>
         </form>
@@ -197,10 +198,10 @@ const LoginRegister = () => {
           <div className="register-link">
             <p className="haveAccount">
               Already have an account?
-              <a href="#" onClick={loginLink}>
+            </p>
+            <p className="logNavBtn" onClick={loginLink}>
                 {" "}
                 Login
-              </a>
             </p>
           </div>
         </form>
