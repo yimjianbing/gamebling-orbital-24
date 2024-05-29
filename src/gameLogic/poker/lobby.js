@@ -25,14 +25,15 @@ export const handleEnterRoom = () => {
       };
       set(inGameLobbyRef, newLobby);
     } else {
-      // Find a lobby with less than 6 players
-      const existingLobbyKey = Object.keys(data).find(key => data[key].players.length < 6);
+      // Find a lobby with less than 4 players
+      const existingLobbyKey = Object.keys(data).find(key => data[key].players.length < 4);
   
       if (existingLobbyKey) {
         // Join existing lobby
         const existingLobbyRef = ref(db, `lobby/${existingLobbyKey}`);
         const updatedPlayers = [...data[existingLobbyKey].players, playerId];
-        update(existingLobbyRef, { players: updatedPlayers });
+        const updatedNoOfPlayers = data[existingLobbyKey].noOfPlayers + 1; // increment noOfPlayers
+        update(existingLobbyRef, { players: updatedPlayers, noOfPlayers: updatedNoOfPlayers });
       } else {
         // Create new lobby
         const newLobbyKey = push(lobbyRef).key;

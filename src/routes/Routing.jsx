@@ -33,7 +33,7 @@ const RouterBuilder = () => {
       ),
     },
     {
-      path: "/poker",
+      path: "/poker/:lobbyId",
       element: (
       <Protected>
         <Poker />
