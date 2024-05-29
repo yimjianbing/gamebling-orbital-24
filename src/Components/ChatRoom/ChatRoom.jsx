@@ -12,7 +12,7 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const ChatRoom = ({ setChatOpen }) => {
-  const { currentUserLoggedIn } = useContext(AuthContext);
+  const {currentUserLoggedIn } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 

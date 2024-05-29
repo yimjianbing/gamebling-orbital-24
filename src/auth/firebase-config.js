@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBp7Njz2A1qUmQK9iW0YaVf9tNgbvrBCn0",
@@ -30,5 +31,5 @@ export {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  db,
+  db
 };
