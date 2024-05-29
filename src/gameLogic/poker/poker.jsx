@@ -9,12 +9,12 @@ import React, { Component } from 'react';
 import './PokerGame.css';
 import './Poker.css';
 
-import Spinner from './Spinner';
-import WinScreen from './WinScreen'
+import Spinner from './Spinner.js';
+import WinScreen from './WinScreen.js'
 
-import Player from "./components/players/Player";
-import ShowdownPlayer from "./components/players/ShowdownPlayer";
-import Card from "./components/cards/Card";
+import Player from "./components/players/Player.jsx";
+import ShowdownPlayer from "./components/players/ShowdownPlayer.jsx";
+import Card from "./components/cards/Card.jsx";
 
 import { 
   generateDeckOfCards, 
