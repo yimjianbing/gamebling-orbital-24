@@ -87,13 +87,14 @@ class Poker extends Component {
 
   }
 
-  async componentDidMount() {
-    const players = await generateTable();
+ componentDidMount() {
+    const players =  generateTable();
     const dealerIndex = Math.floor(Math.random() * Math.floor(players.length));
     const blindIndicies = determineBlindIndices(dealerIndex, players.length);
     const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
     
     const imageLoaderRequest = new XMLHttpRequest();
+
 
 imageLoaderRequest.addEventListener("load", e => {
     console.log(`${e.type}`);

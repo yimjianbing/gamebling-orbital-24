@@ -5,9 +5,9 @@ import HiddenCard from '../cards/HiddenCard';
 
 import PlayerStatusNotificationBox from "./PlayerStatusNotificationBox";
 
-const dealerChipImageURL = "/assets/chip.svg";
-const chipCountImageURL = "./assets/chips.svg";
-const playerBetImageURL = "./assets/bet.svg";
+const dealerChipImageURL = "../assets/chip.svg";
+const chipCountImageURL = "../assets/chips.svg";
+const playerBetImageURL = "../assets/bet.svg";
 
 const Player = (props) => {
   const {
@@ -25,7 +25,7 @@ const Player = (props) => {
       avatarURL,
       name,
       chips,
-      bet
+      bet = 0
     }
   } = props;
 
