@@ -118,6 +118,9 @@ const popShowdownCards = (deck, numToPop) => {
 const dealPrivateCards = (state) => {
   if (!state || !state.players || !state.deck) {
     console.error("State or required properties are missing or null", state);
+    console.error("Deck: ", state.deck);
+    console.error("Players: ", state.players);
+    console.error("State: ", state);
     throw new Error("Invalid state object");
   }
 

@@ -47,7 +47,7 @@ import {
   renderActionMenu
 } from './utils/ui.js';
 
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 class Poker extends Component {
   state = {
@@ -141,7 +141,7 @@ alert(players.length);
     this.setState(prevState => ({
       // loading: false,
       players: playersBoughtIn,
-      numPlayersActive: players.length,
+      numPlayersActive: playersBoughtIn.length,
       numPlayersFolded: 0,
       numPlayersAllIn: 0,
       activePlayerIndex: dealerIndex,
@@ -155,9 +155,13 @@ alert(players.length);
       highBet: prevState.minBet,
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
-    }))
-    //this.runGameLoop();
-  }
+    }), () => {
+      // This callback runs after the state has been updated
+      console.log("deck in state", this.state.deck);
+      console.log("players in state", this.state.players);
+      this.runGameLoop();
+    });
+}
 
   handleBetInputChange = (val, min, max) => {
     if (val === '') val = min
@@ -284,7 +288,7 @@ alert(players.length);
   }
 
   runGameLoop = () => {
-    const newState = dealPrivateCards(cloneDeep(this.state))
+    const newState = dealPrivateCards(cloneDeep(this.state)) // this is the error
     this.setState(newState, () => {
       if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
         setTimeout(() => {
@@ -427,11 +431,10 @@ alert(players.length);
     return (
       <div className="Poker">
         <div className='poker-table--wrapper'> 
-            <Spinner />
           { 
-           // (this.state.loading) ? <Spinner /> : 
-            //(this.state.winnerFound) ? <WinScreen /> : 
-            //this.renderGame()
+           (this.state.loading) ? <Spinner /> : 
+           (this.state.winnerFound) ? <WinScreen /> : 
+            this.renderGame()
           }
         </div>
         <div className='poker-table--container'>

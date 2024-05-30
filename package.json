@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "firebase": "^10.12.1",
+    "loadash": "^1.0.0",
     "npm": "^10.8.0",
     "react": "^18.3.1",
     "react-compound-slider": "^3.4.0",
