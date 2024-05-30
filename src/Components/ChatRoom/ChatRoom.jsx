@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { db, auth } from "../../auth/firebase-config.js";
+import { db } from "../../auth/firebase-config.js";
 import {
   collection,
   addDoc,
@@ -47,9 +47,9 @@ export const ChatRoom = ({ setChatOpen }) => {
   };
 
   return (
-    <div className="chat-room">
+    <div className="chat-room" data-testid="chatRoom" >
       <nav>
-        <IoCloseOutline
+        <IoCloseOutline data-testid="closeChat"
           onClick={() => setChatOpen(false)}
           className="closeChatIcon"
         />
@@ -68,8 +68,9 @@ export const ChatRoom = ({ setChatOpen }) => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message..."
+          data-testid="newMessage"
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button onClick={handleSendMessage} data-testid="send">Send</button>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ const LoginRegister = () => {
   const register = async (e) => {
     e.preventDefault();
 
-    //Validate input fields
+    //Validata input fields
     if (validatePassword(password) == false) {
       alert("Invalid email/password!");
       return;
@@ -74,7 +74,7 @@ const LoginRegister = () => {
   const login = async (e) => {
     e.preventDefault();
 
-    //Validate input fields
+    //Validata input fields
     if (validatePassword(password) == false) {
       alert("Invalid email/password!");
       return;
@@ -100,6 +100,7 @@ const LoginRegister = () => {
           <h1 className="topOfBox">Login</h1>
           <div className="input-box">
             <input
+              data-testid="loginEmail"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -110,6 +111,7 @@ const LoginRegister = () => {
           </div>
           <div className="input-box">
             <input
+              data-testid="loginPassword"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -128,6 +130,7 @@ const LoginRegister = () => {
           </div>
 
           <button
+            data-testid="loginSubmit"
             className="login-register-button"
             type="submit"
             onClick={login}
@@ -152,6 +155,7 @@ const LoginRegister = () => {
           <h1 className="topOfBox">Registration</h1>
           <div className="input-box">
             <input
+              data-testid="username"
               type="text"
               value={name}
               placeholder="Username"
@@ -162,6 +166,7 @@ const LoginRegister = () => {
           </div>
           <div className="input-box">
             <input
+              data-testid="registerEmail"
               type="email"
               value={email}
               placeholder="Email"
@@ -172,6 +177,7 @@ const LoginRegister = () => {
           </div>
           <div className="input-box">
             <input
+              data-testid="registerPassword"
               type="password"
               value={password}
               placeholder="Password"
@@ -188,6 +194,7 @@ const LoginRegister = () => {
           </div>
 
           <button
+            data-testid="registerSubmit"
             className="login-register-button"
             type="submit"
             onClick={register}
