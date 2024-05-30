@@ -1,10 +1,11 @@
 import React from "react";
+import "./PokerGame.css";
 
-const Spinner = (props) => {
+const Spinner = () => {
   return (
     <div className="loading-container">
       <div className="spinner-container">
-        <img src={"../assets/chip.svg"} alt="Loading..." />
+        <img src={require("../../assets/background.svg")} alt="Loading..." />
       </div>
     </div>
   );

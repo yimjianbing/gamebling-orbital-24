@@ -25,7 +25,7 @@ const Player = (props) => {
       avatarURL,
       name,
       chips,
-      bet = 0
+      bet,
     }
   } = props;
 

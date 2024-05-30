@@ -116,26 +116,41 @@ const popShowdownCards = (deck, numToPop) => {
 };
 
 const dealPrivateCards = (state) => {
+  if (!state || !state.players || !state.deck) {
+    console.error("State or required properties are missing or null", state);
+    throw new Error("Invalid state object");
+  }
+
   state.clearCards = false;
   let animationDelay = 0;
+
   while (state.players[state.activePlayerIndex].cards.length < 2) {
     const { mutableDeckCopy, chosenCards } = popCards(state.deck, 1);
 
-    // Can export to a separate function - as it will be used in many places
+    if (!chosenCards) {
+      console.error("No cards were chosen", state.deck);
+      throw new Error("Failed to pop cards from the deck");
+    }
+
     chosenCards.animationDelay = animationDelay;
-    animationDelay = animationDelay + 250;
+    animationDelay += 250;
 
     const newDeck = [...mutableDeckCopy];
     state.players[state.activePlayerIndex].cards.push(chosenCards);
-
     state.deck = newDeck;
+
     state.activePlayerIndex = handleOverflowIndex(
       state.activePlayerIndex,
       1,
       state.players.length,
       "up"
     );
+
+    if (state.players[state.activePlayerIndex].cards.length === 2) {
+      break;
+    }
   }
+
   if (state.players[state.activePlayerIndex].cards.length === 2) {
     state.activePlayerIndex = handleOverflowIndex(
       state.blindIndex.big,
@@ -144,8 +159,9 @@ const dealPrivateCards = (state) => {
       "up"
     );
     state.phase = "betting1";
-    return state;
   }
+
+  return state;
 };
 
 const dealFlop = (state) => {

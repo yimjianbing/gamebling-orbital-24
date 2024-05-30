@@ -88,11 +88,13 @@ class Poker extends Component {
   }
 
  componentDidMount() {
+  
     const players =  generateTable();
     const dealerIndex = Math.floor(Math.random() * Math.floor(players.length));
     const blindIndicies = determineBlindIndices(dealerIndex, players.length);
-    const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
     
+    const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
+
     const imageLoaderRequest = new XMLHttpRequest();
 
 
@@ -133,6 +135,8 @@ imageLoaderRequest.addEventListener("progress", e => {
 
 imageLoaderRequest.open("GET", "./assets/table-nobg-svg-01.svg");
 imageLoaderRequest.send();
+alert(players.length);
+
 
     this.setState(prevState => ({
       // loading: false,
@@ -152,7 +156,7 @@ imageLoaderRequest.send();
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
     }))
-    this.runGameLoop();
+    //this.runGameLoop();
   }
 
   handleBetInputChange = (val, min, max) => {
@@ -396,13 +400,13 @@ imageLoaderRequest.send();
     return (
       <div className='poker-app--background'>
         <div className="poker-table--container">
-          <img className="poker-table--table-image" src={"./assets/table-nobg-svg-01.svg"} alt="Poker Table" />
+          <img className="poker-table--table-image" src={"../../assets/table-nobg-svg-01.svg"} alt="Poker Table" />
           { this.renderBoard() }
           <div className='community-card-container' >
             { this.renderCommunityCards() }
           </div>
           <div className='pot-container'>
-            <img style={{height: 55, width: 55}} src={'./assets/pot.svg'} alt="Pot Value"/>
+            <img style={{height: 55, width: 55}} src={'../../assets/pot.svg'} alt="Pot Value"/>
             <h4> {`${this.state.pot}`} </h4>
           </div>
         </div>
@@ -418,15 +422,19 @@ imageLoaderRequest.send();
       </div>
     )
   }
+  
   render() {
     return (
       <div className="Poker">
         <div className='poker-table--wrapper'> 
+            <Spinner />
           { 
-            (this.state.loading) ? <Spinner/> : 
-            (this.state.winnerFound) ? <WinScreen /> : 
-            this.renderGame()
+           // (this.state.loading) ? <Spinner /> : 
+            //(this.state.winnerFound) ? <WinScreen /> : 
+            //this.renderGame()
           }
+        </div>
+        <div className='poker-table--container'>
         </div>
       </div>
     );

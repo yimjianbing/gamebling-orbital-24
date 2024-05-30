@@ -15,7 +15,71 @@ import {
 import axios from "axios";
 
 // TODO Generate UUID to simulate User ID and really get a perf match on binding to players when determining winnings
-const generateTable = async () => {
+// const generateTable = async () => {
+//   const users = [
+//     {
+//       id: uuid(),
+//       name: "Player 1",
+//       avatarURL: "/assets/boy.svg",
+//       cards: [],
+//       showDownHand: {
+//         hand: [],
+//         descendingSortHand: [],
+//       },
+//       chips: 20000,
+//       roundStartChips: 20000,
+//       roundEndChips: 20000,
+//       currentRoundChipsInvested: 0,
+//       bet: 0,
+//       betReconciled: false,
+//       folded: false,
+//       allIn: false,
+//       canRaise: true,
+//       stackInvestment: 0,
+//       robot: false,
+//     },
+//   ];
+
+//   const response = await axios.get(
+//     `https://randomuser.me/api/?results=4&nat=us,gb,fr`
+//   );
+//   alert(response.data.results);
+//   response.data.results
+//     .map((user) => {
+//       const randomizedChips =
+//         Math.floor(Math.random() * (20000 - 18000)) + 18000;
+//       return {
+//         id: uuid(),
+//         name: `${user.name.first
+//           .charAt(0)
+//           .toUpperCase()}${user.name.first.slice(1)} ${user.name.last
+//           .charAt(0)
+//           .toUpperCase()}${user.name.last.slice(1)}`,
+//         avatarURL: user.picture.large,
+//         cards: [],
+//         chips: randomizedChips,
+//         roundStartChips: randomizedChips,
+//         roundEndChips: randomizedChips,
+//         currentRoundChipsInvested: 0,
+//         showDownHand: {
+//           hand: [],
+//           descendingSortHand: [],
+//         },
+//         bet: 0,
+//         betReconciled: false,
+//         folded: false,
+//         allIn: false,
+//         robot: true,
+//         canRaise: true,
+//         stackInvestment: 0,
+//       };
+//     })
+//     .forEach((user) => users.push(user));
+
+//   return users;
+// };
+
+const generateTable = () => {
   const users = [
     {
       id: uuid(),
@@ -38,42 +102,91 @@ const generateTable = async () => {
       stackInvestment: 0,
       robot: false,
     },
+    {
+      id: uuid(),
+      name: "John Doe",
+      avatarURL: "https://randomuser.me/api/portraits/men/1.jpg",
+      cards: [],
+      chips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundStartChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundEndChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      currentRoundChipsInvested: 0,
+      showDownHand: {
+        hand: [],
+        descendingSortHand: [],
+      },
+      bet: 0,
+      betReconciled: false,
+      folded: false,
+      allIn: false,
+      robot: true,
+      canRaise: true,
+      stackInvestment: 0,
+    },
+    {
+      id: uuid(),
+      name: "Jane Smith",
+      avatarURL: "https://randomuser.me/api/portraits/women/1.jpg",
+      cards: [],
+      chips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundStartChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundEndChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      currentRoundChipsInvested: 0,
+      showDownHand: {
+        hand: [],
+        descendingSortHand: [],
+      },
+      bet: 0,
+      betReconciled: false,
+      folded: false,
+      allIn: false,
+      robot: true,
+      canRaise: true,
+      stackInvestment: 0,
+    },
+    {
+      id: uuid(),
+      name: "Alice Johnson",
+      avatarURL: "https://randomuser.me/api/portraits/women/2.jpg",
+      cards: [],
+      chips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundStartChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundEndChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      currentRoundChipsInvested: 0,
+      showDownHand: {
+        hand: [],
+        descendingSortHand: [],
+      },
+      bet: 0,
+      betReconciled: false,
+      folded: false,
+      allIn: false,
+      robot: true,
+      canRaise: true,
+      stackInvestment: 0,
+    },
+    {
+      id: uuid(),
+      name: "Bob Brown",
+      avatarURL: "https://randomuser.me/api/portraits/men/2.jpg",
+      cards: [],
+      chips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundStartChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      roundEndChips: Math.floor(Math.random() * (20000 - 18000 + 1)) + 18000,
+      currentRoundChipsInvested: 0,
+      showDownHand: {
+        hand: [],
+        descendingSortHand: [],
+      },
+      bet: 0,
+      betReconciled: false,
+      folded: false,
+      allIn: false,
+      robot: true,
+      canRaise: true,
+      stackInvestment: 0,
+    },
   ];
-
-  const response = await axios.get(
-    `https://randomuser.me/api/?results=4&nat=us,gb,fr`
-  );
-  response.data.results
-    .map((user) => {
-      const randomizedChips =
-        Math.floor(Math.random() * (20000 - 18000)) + 18000;
-      return {
-        id: uuid(),
-        name: `${user.name.first
-          .charAt(0)
-          .toUpperCase()}${user.name.first.slice(1)} ${user.name.last
-          .charAt(0)
-          .toUpperCase()}${user.name.last.slice(1)}`,
-        avatarURL: user.picture.large,
-        cards: [],
-        chips: randomizedChips,
-        roundStartChips: randomizedChips,
-        roundEndChips: randomizedChips,
-        currentRoundChipsInvested: 0,
-        showDownHand: {
-          hand: [],
-          descendingSortHand: [],
-        },
-        bet: 0,
-        betReconciled: false,
-        folded: false,
-        allIn: false,
-        robot: true,
-        canRaise: true,
-        stackInvestment: 0,
-      };
-    })
-    .forEach((user) => users.push(user));
 
   return users;
 };
