@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import "./MainMenu.css";
 import { auth, signOut } from "../../auth/firebase-config.js";
 import { AuthContext } from "../../context/AuthContext.jsx";
-import ChatRoom from "../../components/ChatRoom/ChatRoom.jsx";
-import ChatClose from "../../components/ChatClose/ChatClose.jsx";
+import ChatRoom from "../../Components/ChatRoom/ChatRoom.jsx";
+import ChatClose from "../../Components/ChatClose/ChatClose.jsx";
 import { useNavigate } from "react-router-dom";
 
 

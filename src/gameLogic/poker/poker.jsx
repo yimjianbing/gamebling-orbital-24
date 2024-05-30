@@ -350,6 +350,7 @@ alert(players.length);
   handleNextRound = () => {
     this.setState({clearCards: true})
     const newState = beginNextRound(cloneDeep(this.state))
+    alert("hello");
     // Check win condition
     if(checkWin(newState.players)) {
       this.setState({ winnerFound: true })
