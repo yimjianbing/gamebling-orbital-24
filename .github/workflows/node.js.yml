@@ -32,4 +32,8 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.6.1
       with:
+        permissions:
+        contents: write
         folder: build # The folder the action should deploy.
+        
+
