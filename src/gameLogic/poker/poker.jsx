@@ -135,7 +135,7 @@ imageLoaderRequest.addEventListener("progress", e => {
 
 imageLoaderRequest.open("GET", "./assets/table-nobg-svg-01.svg");
 imageLoaderRequest.send();
-alert(players.length);
+
 
 
     this.setState(prevState => ({
@@ -350,7 +350,6 @@ alert(players.length);
   handleNextRound = () => {
     this.setState({clearCards: true})
     const newState = beginNextRound(cloneDeep(this.state))
-    alert("hello");
     // Check win condition
     if(checkWin(newState.players)) {
       this.setState({ winnerFound: true })
