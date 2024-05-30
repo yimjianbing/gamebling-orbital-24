@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./LoginRegister.css";
 import { HiMiniUser, HiMiniKey } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
@@ -39,13 +39,13 @@ const LoginRegister = () => {
     e.preventDefault();
 
     //Validata input fields
-    if (validatePassword(password) == false) {
+    if (validatePassword(password) === false) {
       alert("Invalid email/password!");
       return;
       //bad input
     }
 
-    if (validateField(name) == false) {
+    if (validateField(name) === false) {
       alert("One or more characters is needed for username!");
       return;
     }
@@ -55,14 +55,14 @@ const LoginRegister = () => {
         alert("User Created!");
       }).then(() => {
       }).catch(function (error) {
-        var errorCode = error.code;
+        // var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
 
     updateProfile(auth.currentUser, {displayName: name})
     .catch(function (error) {
-      var errorCode = error.code;
+      // var errorCode = error.code;
       var errorMessage = error.message;
       alert(errorMessage);
     })
@@ -75,7 +75,7 @@ const LoginRegister = () => {
     e.preventDefault();
 
     //Validata input fields
-    if (validatePassword(password) == false) {
+    if (validatePassword(password) === false) {
       alert("Invalid email/password!");
       return;
       //bad input
@@ -87,7 +87,7 @@ const LoginRegister = () => {
         navToMainMenu();
       })
       .catch(function (error) {
-        var errorCode = error.code;
+        // var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
