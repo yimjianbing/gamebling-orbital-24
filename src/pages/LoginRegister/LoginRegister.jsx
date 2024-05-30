@@ -126,7 +126,7 @@ const LoginRegister = () => {
               <input type="checkbox" />
               Remember me
             </label>
-            <a href="#">Forgot password?</a>
+            <div>Forgot password?</div>
           </div>
 
           <button
