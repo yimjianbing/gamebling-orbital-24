@@ -29,12 +29,4 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.6.1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        permissions:
-        contents: write
-        folder: build # The folder the action should deploy.
-        
 
