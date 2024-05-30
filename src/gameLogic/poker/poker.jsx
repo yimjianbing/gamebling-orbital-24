@@ -234,7 +234,7 @@ alert(players.length);
       }, () => {
         if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
           setTimeout(() => {
-          
+
             this.handleAI()
           }, 1200)
         }

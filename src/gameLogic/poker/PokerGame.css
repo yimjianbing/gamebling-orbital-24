@@ -286,6 +286,7 @@ img {
  	justify-content: flex-end;
  	width: 55%;
  	height: 100%;
+	z-index: 100;
  }
 
  .action-button {
@@ -296,6 +297,7 @@ img {
  	background-color: rgba(242, 242, 242, 0.80);
  	font-size: 28px;
  	color: white;
+	z-index: 100;
  	background-color: #2adb2a;
  	border: 3px solid white;
  	outline: none;
