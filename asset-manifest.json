@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/gamebling-orbital-24/static/css/main.0de51664.css",
-    "main.js": "/gamebling-orbital-24/static/js/main.b920c650.js",
+    "main.js": "/gamebling-orbital-24/static/js/main.193212fb.js",
     "static/js/453.9b3a7815.chunk.js": "/gamebling-orbital-24/static/js/453.9b3a7815.chunk.js",
     "static/media/cardBack.svg": "/gamebling-orbital-24/static/media/cardBack.46bce21d4870b804d318.svg",
     "static/media/background.svg": "/gamebling-orbital-24/static/media/background.3d96d80e5847e093c817010a05b567c5.svg",
@@ -10,15 +10,15 @@
     "static/media/Casino_Chip.svg.png": "/gamebling-orbital-24/static/media/Casino_Chip.svg.8f9f86f3113bba1fdcc1.png",
     "static/media/pot.svg": "/gamebling-orbital-24/static/media/pot.06ecb83b4c64d6f4c304d73836ea9962.svg",
     "static/media/chips.svg": "/gamebling-orbital-24/static/media/chips.38f165f3546d349be6eb4a9d05641b14.svg",
-    "static/media/boy.svg": "/gamebling-orbital-24/static/media/boy.3a6853de80d406ddaf8cd0e1f9568826.svg",
-    "static/media/chip.svg": "/gamebling-orbital-24/static/media/chip.d733e58e41a8684a2d72673a01a6afaf.svg",
+    "static/media/boy.svg": "/gamebling-orbital-24/static/media/boy.aba2831430712e0343b82f03b3cb192e.svg",
+    "static/media/chip.svg": "/gamebling-orbital-24/static/media/chip.af3d671d2bf4520d9a7dbbb5791eaeab.svg",
     "index.html": "/gamebling-orbital-24/index.html",
     "main.0de51664.css.map": "/gamebling-orbital-24/static/css/main.0de51664.css.map",
-    "main.b920c650.js.map": "/gamebling-orbital-24/static/js/main.b920c650.js.map",
+    "main.193212fb.js.map": "/gamebling-orbital-24/static/js/main.193212fb.js.map",
     "453.9b3a7815.chunk.js.map": "/gamebling-orbital-24/static/js/453.9b3a7815.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0de51664.css",
-    "static/js/main.b920c650.js"
+    "static/js/main.193212fb.js"
   ]
 }
