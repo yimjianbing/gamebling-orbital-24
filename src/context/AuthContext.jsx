@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
     setCurrentUserLoggedIn: setCurrentUserLoggedIn,
     updateLoggedIn: updateLoggedIn,
     loggedIn: loggedIn,
+    
   }
 
   return (

@@ -1,0 +1,37 @@
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  z-index: 100 ;
+}
+.Poker {
+  text-align: center;
+  z-index: 100;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+  z-index: 100;
+}
+
+.App-header {
+  background-color: #222;
+  height: 65px;
+  padding: 20px;
+  color: white;
+  z-index: 100;
+}
+
+.App-title {
+  font-size: 1.5em;
+  z-index: 100  ;
+}
+
+.App-intro {
+  font-size: large;
+  z-index: 100;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

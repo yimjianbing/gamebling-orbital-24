@@ -9,10 +9,11 @@ function App() {
 
   return (
     <AuthProvider>
-      <RouterProvider fallbackElement = {<MainMenu />} router={createHashRouter(routes)}></RouterProvider>
-      
+      <RouterProvider
+        fallbackElement={<MainMenu />}
+        router={createHashRouter(routes)}
+      ></RouterProvider>
     </AuthProvider>
-
   );
 }
 

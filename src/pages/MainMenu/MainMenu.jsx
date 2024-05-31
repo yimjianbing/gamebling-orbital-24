@@ -4,10 +4,14 @@ import { auth, signOut } from "../../auth/firebase-config.js";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import ChatRoom from "../../Components/ChatRoom/ChatRoom.jsx";
 import ChatClose from "../../Components/ChatClose/ChatClose.jsx";
+import { useNavigate } from "react-router-dom";
+import { inGameContext } from "../../context/InGameContext.jsx";
 
 export const MainMenu = () => {
+  const navigate = useNavigate();
   const { updateLoggedIn } = useContext(AuthContext);
   const [chatOpen, setChatOpen] = useState(false);
+  const { setInGame } = useContext(inGameContext);
 
   function handleSignOut() {
     signOut(auth)
@@ -21,14 +25,19 @@ export const MainMenu = () => {
       });
   }
 
+  function handlePoker() {
+      navigate(`/poker`);
+      setInGame(true);
+  }
+    
+  
   return (
     <div>
       <div className="mainmenu">
-        {/* <h1 className="title">Main Menu</h1> */}
         <h2 className="title">Choose your gamemode to play!</h2>
         <heading className="boxes">
           <h2 className="mahjong">Mahjong</h2>
-          <h2 className="poker">Poker</h2>
+          <h2 className="poker" onClick ={() => handlePoker()}>Poker</h2>
         </heading>
         <button onClick={() => handleSignOut()} className="signout">
           Sign out
