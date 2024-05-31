@@ -3,7 +3,7 @@ import "./About.css";
 
 const About = () => {
   return (
-    <div className="about">
+    <div className="about" data-testid="about">
       <h1>About Us</h1>
       <p>
         Welcome to GameBling! If you love poker and mahjong like us, look no

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./LoginRegister.css";
 import { HiMiniUser, HiMiniKey } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
@@ -17,6 +17,7 @@ const LoginRegister = () => {
   const [action, setAction] = useState("");
 
   const registerLink = () => {
+    // console.log("help");
     setAction(" active");
   };
 
@@ -37,14 +38,14 @@ const LoginRegister = () => {
   const register = async (e) => {
     e.preventDefault();
 
-    //Validate input fields
-    if (validatePassword(password) == false) {
+    //Validata input fields
+    if (validatePassword(password) === false) {
       alert("Invalid email/password!");
       return;
       //bad input
     }
 
-    if (validateField(name) == false) {
+    if (validateField(name) === false) {
       alert("One or more characters is needed for username!");
       return;
     }
@@ -54,14 +55,14 @@ const LoginRegister = () => {
         alert("User Created!");
       }).then(() => {
       }).catch(function (error) {
-        var errorCode = error.code;
+        // var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
 
     updateProfile(auth.currentUser, {displayName: name})
     .catch(function (error) {
-      var errorCode = error.code;
+      // var errorCode = error.code;
       var errorMessage = error.message;
       alert(errorMessage);
     })
@@ -73,8 +74,8 @@ const LoginRegister = () => {
   const login = async (e) => {
     e.preventDefault();
 
-    //Validate input fields
-    if (validatePassword(password) == false) {
+    //Validata input fields
+    if (validatePassword(password) === false) {
       alert("Invalid email/password!");
       return;
       //bad input
@@ -86,7 +87,7 @@ const LoginRegister = () => {
         navToMainMenu();
       })
       .catch(function (error) {
-        var errorCode = error.code;
+        // var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
@@ -99,6 +100,7 @@ const LoginRegister = () => {
           <h1 className="topOfBox">Login</h1>
           <div className="input-box">
             <input
+              data-testid="loginEmail"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -109,6 +111,7 @@ const LoginRegister = () => {
           </div>
           <div className="input-box">
             <input
+              data-testid="loginPassword"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -123,10 +126,11 @@ const LoginRegister = () => {
               <input type="checkbox" />
               Remember me
             </label>
-            <a href="#">Forgot password?</a>
+            <div>Forgot password?</div>
           </div>
 
           <button
+            data-testid="loginSubmit"
             className="login-register-button"
             type="submit"
             onClick={login}
@@ -136,11 +140,11 @@ const LoginRegister = () => {
 
           <div className="register-link">
             <p className="haveAccount">
-              Don't have an account?
-              <a href="#" onClick={registerLink}>
+              Don't have an account? 
+            </p>
+            <p className="regNavBtn" onClick={registerLink}>
                 {" "}
                 Register
-              </a>
             </p>
           </div>
         </form>
@@ -151,6 +155,7 @@ const LoginRegister = () => {
           <h1 className="topOfBox">Registration</h1>
           <div className="input-box">
             <input
+              data-testid="username"
               type="text"
               value={name}
               placeholder="Username"
@@ -161,6 +166,7 @@ const LoginRegister = () => {
           </div>
           <div className="input-box">
             <input
+              data-testid="registerEmail"
               type="email"
               value={email}
               placeholder="Email"
@@ -171,6 +177,7 @@ const LoginRegister = () => {
           </div>
           <div className="input-box">
             <input
+              data-testid="registerPassword"
               type="password"
               value={password}
               placeholder="Password"
@@ -187,6 +194,7 @@ const LoginRegister = () => {
           </div>
 
           <button
+            data-testid="registerSubmit"
             className="login-register-button"
             type="submit"
             onClick={register}
@@ -197,10 +205,10 @@ const LoginRegister = () => {
           <div className="register-link">
             <p className="haveAccount">
               Already have an account?
-              <a href="#" onClick={loginLink}>
+            </p>
+            <p className="logNavBtn" onClick={loginLink}>
                 {" "}
                 Login
-              </a>
             </p>
           </div>
         </form>
