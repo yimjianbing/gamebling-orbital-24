@@ -1,10 +1,10 @@
+import Layout from "../Components/NavBar/Layout";
 import { Protected } from "../auth/Protected";
+import Poker from "../gameLogic/poker/poker";
 import About from "../pages/About/About";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import LoginRegister from "../pages/LoginRegister/LoginRegister";
-import Layout from "../Components/NavBar/Layout";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
-import Poker from "../gameLogic/poker/Poker";
 
 const RouterBuilder = () => {
   const generalRoutes = [
