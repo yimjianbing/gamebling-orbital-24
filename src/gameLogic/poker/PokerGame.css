@@ -449,6 +449,8 @@ img {
 
 .player-info--stash--container {
 	display: flex;
+	font-size: 1.5em;
+	font-weight: 10;
 	padding: 10px;
 	align-items: center;
 	justify-content: center;
@@ -459,6 +461,7 @@ img {
 
 .player-info--bet--container {
 	display: flex;
+	font-size: 1.5em;
 	align-items: center;
 	justify-content: center;
 	color: white;

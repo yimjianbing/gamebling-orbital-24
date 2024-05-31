@@ -7,8 +7,7 @@ import PlayerStatusNotificationBox from "./PlayerStatusNotificationBox";
 
 import dealerChipImage from "../../../../assets/pokerGame/chip.svg"
 import chipCountImage from "../../../../assets/pokerGame/chips.svg";
-import playerBetImage from "../../../../assets/pokerGame/bet.svg";
-import boyImage from '../../../../assets/pokerGame/chip.svg';
+import playerBetImage from "../../../../assets/pokerGame/Casino_Chip.svg.png";
 
 
 const Player = (props) => {
