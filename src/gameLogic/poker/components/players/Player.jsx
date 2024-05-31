@@ -5,9 +5,11 @@ import HiddenCard from '../cards/HiddenCard';
 
 import PlayerStatusNotificationBox from "./PlayerStatusNotificationBox";
 
-const dealerChipImageURL = "../assets/chip.svg";
-const chipCountImageURL = "../assets/chips.svg";
-const playerBetImageURL = "../assets/bet.svg";
+import dealerChipImage from "../../../../assets/pokerGame/chip.svg"
+import chipCountImage from "../../../../assets/pokerGame/chips.svg";
+import playerBetImage from "../../../../assets/pokerGame/bet.svg";
+import boyImage from '../../../../assets/pokerGame/chip.svg';
+
 
 const Player = (props) => {
   const {
@@ -33,7 +35,7 @@ const Player = (props) => {
     if (hasDealerChip) {
       return (
         <div className="dealer-chip-icon-container">
-          <img src={dealerChipImageURL} alt="Dealer Chip"/>
+          <img src={dealerChipImage} alt="Dealer Chip"/>
         </div>
       )
     } else return null;
@@ -100,11 +102,11 @@ const Player = (props) => {
             {`${name}`}
           </h5>
           <div className="player-info--stash--container">
-            <img className="player-info--stash--image" src={chipCountImageURL} alt="Player Stash"/>
+            <img className="player-info--stash--image" src={chipCountImage} alt="Player Stash"/>
             <h5>{`${chips}`}</h5>
           </div>
           <div className="player-info--bet--container">
-            <img className="player-info--bet--image" src={playerBetImageURL} alt="Player Bet" />
+            <img className="player-info--bet--image" src={playerBetImage} alt="Player Bet" />
             <h5>{`Bet: ${bet}`}</h5>
           </div>
           { renderDealerChip() }

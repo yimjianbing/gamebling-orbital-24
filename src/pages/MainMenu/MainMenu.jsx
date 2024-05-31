@@ -5,12 +5,13 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import ChatRoom from "../../Components/ChatRoom/ChatRoom.jsx";
 import ChatClose from "../../Components/ChatClose/ChatClose.jsx";
 import { useNavigate } from "react-router-dom";
-
+import { inGameContext } from "../../context/InGameContext.jsx";
 
 export const MainMenu = () => {
   const navigate = useNavigate();
   const { updateLoggedIn } = useContext(AuthContext);
   const [chatOpen, setChatOpen] = useState(false);
+  const { setInGame } = useContext(inGameContext);
 
   function handleSignOut() {
     signOut(auth)
@@ -26,7 +27,8 @@ export const MainMenu = () => {
 
   function handlePoker() {
       navigate(`/poker`);
-    }
+      setInGame(true);
+  }
     
   
   return (

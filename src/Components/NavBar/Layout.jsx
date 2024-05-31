@@ -1,13 +1,25 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavBar } from './NavBar';
+import { inGameContext} from '../../context/InGameContext';
 
 const AppLayout = () => {
-  return (
-    <Suspense fallback={null}>
-        <NavBar />
-        <Outlet />
-    </Suspense>
+
+  const { inGame } = useContext(inGameContext);
+  
+  return ( <>
+      {inGame 
+      ? 
+      <Suspense fallback={null}>
+
+          <Outlet />
+        </Suspense> 
+      : <Suspense fallback={null}>
+          <NavBar />
+          <Outlet />
+        </Suspense> }
+        </>
+
   );
 };
 

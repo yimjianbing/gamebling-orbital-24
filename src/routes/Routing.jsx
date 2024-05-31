@@ -1,10 +1,12 @@
 import Layout from "../Components/NavBar/Layout";
 import { Protected } from "../auth/Protected";
+import { InGameProvider } from "../context/InGameContext";
 import Poker from "../gameLogic/poker/poker";
 import About from "../pages/About/About";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import LoginRegister from "../pages/LoginRegister/LoginRegister";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
+// import { InGameProvider } from "../context/InGameContext";
 
 const RouterBuilder = () => {
   const generalRoutes = [
@@ -40,7 +42,7 @@ const RouterBuilder = () => {
 
   const routes = [
     {
-      element: <Layout />,
+      element: <InGameProvider><Layout /></InGameProvider>,
       children: generalRoutes,
     },
   ];
