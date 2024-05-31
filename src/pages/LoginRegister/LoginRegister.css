@@ -119,6 +119,12 @@ form .remember-forgot {
   text-decoration: underline;
 }
 
+.forgotPassword:hover {
+  cursor: pointer;
+  text-decoration: underline;
+
+}
+
 form button {
   width: 100%;
   height: 45px;

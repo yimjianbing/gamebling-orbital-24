@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from '../../auth/firebase-config';
+import { sendPasswordResetEmail } from "firebase/auth";
 import { validateField, validatePassword } from "../../utils/validators";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +34,18 @@ const LoginRegister = () => {
 
   function navToMainMenu() {
     navigate("/mainmenu")
+  }
+
+  function handleForgotPassword() {
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      // Email sent.
+      alert("Password reset email sent!");})
+    .catch((error) => {
+      // An error occurred.
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
   }
 
   const register = async (e) => {
@@ -126,7 +139,7 @@ const LoginRegister = () => {
               <input type="checkbox" />
               Remember me
             </label>
-            <div>Forgot password?</div>
+            <div className="forgotPassword" onClick={handleForgotPassword}>Forgot password?</div>
           </div>
 
           <button
