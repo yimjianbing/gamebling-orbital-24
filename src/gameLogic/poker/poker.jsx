@@ -7,7 +7,7 @@ import 'raf/polyfill';
 
 import React, { Component } from 'react';
 import './PokerGame.css';
-import './Poker.css';
+import './poker.css';
 
 import Exit from './Exit.jsx';
 
@@ -31,7 +31,7 @@ import {
 } from './utils/players.js';
 
 import potImage from '../../../src/assets/pokerGame/pot.svg'
-import tableImage from '../../../src/assets/pokerGame/table-nobg-svg-01.svg'
+// import tableImage from '../../../src/assets/pokerGame/table-nobg-svg-01.svg'
 
 import { 
   determineBlindIndices, 

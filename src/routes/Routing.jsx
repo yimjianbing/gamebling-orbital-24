@@ -1,4 +1,3 @@
-import Layout from "../Components/NavBar/Layout";
 import { Protected } from "../auth/Protected";
 import { InGameProvider } from "../context/InGameContext";
 import Poker from "../gameLogic/poker/poker";
