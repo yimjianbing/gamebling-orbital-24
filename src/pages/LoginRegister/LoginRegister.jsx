@@ -8,10 +8,9 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from '../../auth/firebase-config';
-import { sendPasswordResetEmail } from "firebase/auth";
 import { validateField, validatePassword } from "../../utils/validators";
 import { useNavigate } from "react-router-dom";
-
+import ForgotPassword from "../../Components/ForgotPassword/ForgotPassword";
 
 const LoginRegister = () => {
   const navigate = useNavigate();
@@ -31,22 +30,12 @@ const LoginRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   function navToMainMenu() {
     navigate("/mainmenu")
   }
 
-  function handleForgotPassword() {
-  sendPasswordResetEmail(auth, email)
-    .then(() => {
-      // Email sent.
-      alert("Password reset email sent!");})
-    .catch((error) => {
-      // An error occurred.
-      var errorMessage = error.message;
-      alert(errorMessage);
-    });
-  }
 
   const register = async (e) => {
     e.preventDefault();
@@ -108,6 +97,11 @@ const LoginRegister = () => {
 
   return (
     <div className={`wrapper${action}`}>
+
+      <div className={`forgot-password--wrapper`}>
+        {showForgotPassword ? <ForgotPassword setShowForgotPassword={setShowForgotPassword}/> : null}
+      </div>
+
       <div className="form-box login">
         <form action="">
           <h1 className="topOfBox">Login</h1>
@@ -139,7 +133,7 @@ const LoginRegister = () => {
               <input type="checkbox" />
               Remember me
             </label>
-            <div className="forgotPassword" onClick={handleForgotPassword}>Forgot password?</div>
+            <div className="forgotPassword" onClick={() => setShowForgotPassword(true)}>Forgot password?</div>
           </div>
 
           <button
