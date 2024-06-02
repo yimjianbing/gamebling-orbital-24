@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/gamebling-orbital-24/static/css/main.2fdf190e.css",
-    "main.js": "/gamebling-orbital-24/static/js/main.cdf850eb.js",
+    "main.css": "/gamebling-orbital-24/static/css/main.295fb813.css",
+    "main.js": "/gamebling-orbital-24/static/js/main.d4fe5050.js",
     "static/js/453.9b3a7815.chunk.js": "/gamebling-orbital-24/static/js/453.9b3a7815.chunk.js",
     "static/media/cardBack.svg": "/gamebling-orbital-24/static/media/cardBack.46bce21d4870b804d318.svg",
     "static/media/background.svg": "/gamebling-orbital-24/static/media/background.3d96d80e5847e093c817010a05b567c5.svg",
@@ -66,12 +66,12 @@
     "static/media/bet.svg": "/gamebling-orbital-24/static/media/bet.d55f0ea167382cf19199543b31760439.svg",
     "static/media/chip.svg": "/gamebling-orbital-24/static/media/chip.af3d671d2bf4520d9a7dbbb5791eaeab.svg",
     "index.html": "/gamebling-orbital-24/index.html",
-    "main.2fdf190e.css.map": "/gamebling-orbital-24/static/css/main.2fdf190e.css.map",
-    "main.cdf850eb.js.map": "/gamebling-orbital-24/static/js/main.cdf850eb.js.map",
+    "main.295fb813.css.map": "/gamebling-orbital-24/static/css/main.295fb813.css.map",
+    "main.d4fe5050.js.map": "/gamebling-orbital-24/static/js/main.d4fe5050.js.map",
     "453.9b3a7815.chunk.js.map": "/gamebling-orbital-24/static/js/453.9b3a7815.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2fdf190e.css",
-    "static/js/main.cdf850eb.js"
+    "static/css/main.295fb813.css",
+    "static/js/main.d4fe5050.js"
   ]
 }
