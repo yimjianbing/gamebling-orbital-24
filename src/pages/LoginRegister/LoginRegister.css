@@ -190,3 +190,8 @@ form .register-link {
 .haveAccount {
   font-size: 1.3em;
 }
+
+.forgot-password--wrapper {
+  position: absolute;
+  z-index: 1;
+}
