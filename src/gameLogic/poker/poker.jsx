@@ -330,7 +330,7 @@ imageLoaderRequest.send();
               bestHand.map((card, index) => {
                 // Reset Animation Delay
                 const cardData = {...card, animationDelay: 0}
-                return <Card key={index} cardData={cardData}/>
+                return <Card key={index} cardData={cardData}/> 
               })
             }
           </div>
