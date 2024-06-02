@@ -14,9 +14,7 @@ const Card = (props) => {
     },
     applyFoldedClassname
   } = props;
-  const cardbg = (`../../../../assets/pokerCards/${suit}${cardFace}.png`);
-  // const cardbg = (`../../../../assets/pokerCards/AHeart.png`);
-  console.log(cardbg);
+
 
   return(
     <div 
