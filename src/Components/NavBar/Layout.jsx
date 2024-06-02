@@ -11,7 +11,6 @@ const AppLayout = () => {
       {inGame 
       ? 
       <Suspense fallback={null}>
-
           <Outlet />
         </Suspense> 
       : <Suspense fallback={null}>
