@@ -62,3 +62,13 @@
 .closeChatIcon:hover {
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .chat-room {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        z-index: 100;
+        margin-left: 4px;
+    }
+  }

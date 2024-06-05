@@ -38,7 +38,7 @@
 .mainmenu .boxes{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .mahjong {
@@ -134,4 +134,65 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+@media (max-width: 768px) {
+
+  .mainmenu {
+      /* Adjust styles as needed for mobile layout */
+      /* For example, you might want to adjust font sizes, margins, paddings, etc. */
+      width: 80%;
+      max-height: 60%;
+      font-size: 1.2em;
+  }
+
+  .boxes {
+    display: flex;
+    justify-content: center;
+    /* flex-direction: column; */
+    z-index: -2;
+  }
+
+  .poker, .mahjong {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    background-size: contain;
+    /* background: no-repeat; */
+  }
+
+
+  *{
+      max-width: 390px;
+      /* padding: 10px; */
+  }
+
+  .logo {
+      /* margin-left: 4px; */
+      font-size: 2rem;
+  }
+
+  .navigation a {
+      font-size: 1em;
+      margin-left: 3px;
+      margin-top: 10px;
+  }
+
+  .navigation a:nth-of-type(4) {
+      font-size: 1em;
+      padding: 5px;
+      margin-left: 5px;
+  }
+
+  
+
+  .navigation .btnLogin-popup{
+      margin-left: 0;
+      font-size: 0.7em;
+      padding: 3px;
+      width: 10px;
+      height: 5px;
+  }
+
+
 }

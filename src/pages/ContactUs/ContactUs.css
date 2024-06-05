@@ -13,30 +13,40 @@
     animation: zoom 0.3s ease-in;
 }
   
-  @keyframes zoom {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
-  
-  .icons {
-    font-size: 1.5em;
-    justify-content: space-between;
-    align-items: center;
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
+}
 
-  .icons:hover {
-    cursor: pointer;
+.icons {
+  font-size: 1.5em;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icons:hover {
+  cursor: pointer;
+}
+
+.contact {
+  background-color:rgb(53, 51, 61);
+  color:#d06666; 
+  border-radius: 15px; 
+  padding: 5px;
+}
+
+@media (max-width: 768px) {
+  .contactus {
+      /* Adjust styles as needed for mobile layout */
+      /* For example, you might want to adjust font sizes, margins, paddings, etc. */
+      max-width: 80%;
+      max-height: 60%;
+      font-size: 1.2em;
   }
-  
-  .contact {
-    background-color:rgb(53, 51, 61);
-    color:#d06666; 
-    border-radius: 15px; 
-    padding: 5px;
 }

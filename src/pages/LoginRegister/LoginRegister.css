@@ -1,5 +1,6 @@
 * {
   font-family: "Jersey 15", sans-serif;
+
 }
 
 .wrapper {
@@ -194,4 +195,40 @@ form .register-link {
 .forgot-password--wrapper {
   position: absolute;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+
+  /* .form-box.login {
+    height: 70%;
+    width: 55%;
+    translate: 0;
+  } */
+  .header{
+    z-index: 1;
+  }
+  
+  .wrapper {
+    font-size: 1em;
+  }
+
+  .wrapper.active {
+    font-size: 1em;
+  }
+
+  .logNavBtn {
+    font-size: 14px;
+  }
+
+  .topOfBox {
+    font-size: 30px;
+  }
+
+  .haveAccount {
+    font-size: 1em;
+  }
+
+  .forgot-password--wrapper {
+    /* Adjust styles as needed for mobile layout */
+  }
 }

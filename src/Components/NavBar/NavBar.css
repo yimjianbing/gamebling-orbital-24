@@ -5,25 +5,16 @@
     font-family: "Jersey 15", sans-serif;
 }
 
-header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 100px;
-    background-color:rgb(53, 51, 61);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 99;
-}
 
 header{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 10px 100px;
+    padding-top: 10px ;
+    padding-bottom: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
     background-color:rgb(53, 51, 61);
     display: flex;
     justify-content: space-between;
@@ -58,6 +49,42 @@ header{
 
 }
 
+@media (max-width: 768px) {
+
+    .header{
+        padding: 10px;
+    }
+
+    .logo {
+        /* margin-left: 4px; */
+        font-size: 2rem;
+    }
+
+    .navigation a {
+        font-size: 1em;
+        margin-left: 3px;
+        margin-top: 10px;
+    }
+
+    .navigation a:nth-of-type(4) {
+        font-size: 1em;
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    
+
+    .navigation .btnLogin-popup{
+        margin-left: 0;
+        font-size: 0.7em;
+        padding: 3px;
+        width: 10px;
+        height: 5px;
+    }
+
+
+}
+
 .navigation a::after {
     content: '';
     position: absolute;
@@ -88,7 +115,7 @@ header{
     font-size: 1.5em;
     color: white;
     font-weight: 500;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     transition: 0.5s;
 }
 
@@ -97,3 +124,4 @@ header{
     color: #162938;
     
 }
+
