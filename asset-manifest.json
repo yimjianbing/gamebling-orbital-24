@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/gamebling-orbital-24/static/css/main.295fb813.css",
-    "main.js": "/gamebling-orbital-24/static/js/main.d4fe5050.js",
+    "main.css": "/gamebling-orbital-24/static/css/main.232d5c0b.css",
+    "main.js": "/gamebling-orbital-24/static/js/main.914993d0.js",
     "static/js/453.9b3a7815.chunk.js": "/gamebling-orbital-24/static/js/453.9b3a7815.chunk.js",
     "static/media/cardBack.svg": "/gamebling-orbital-24/static/media/cardBack.46bce21d4870b804d318.svg",
     "static/media/background.svg": "/gamebling-orbital-24/static/media/background.3d96d80e5847e093c817010a05b567c5.svg",
@@ -62,16 +62,16 @@
     "static/media/HeartK.png": "/gamebling-orbital-24/static/media/HeartK.64e46fa5da26f53c716f.png",
     "static/media/Heart4.png": "/gamebling-orbital-24/static/media/Heart4.be7650f46f1fd2016eef.png",
     "static/media/chips.svg": "/gamebling-orbital-24/static/media/chips.38f165f3546d349be6eb4a9d05641b14.svg",
-    "static/media/boy.svg": "/gamebling-orbital-24/static/media/boy.aba2831430712e0343b82f03b3cb192e.svg",
-    "static/media/bet.svg": "/gamebling-orbital-24/static/media/bet.d55f0ea167382cf19199543b31760439.svg",
-    "static/media/chip.svg": "/gamebling-orbital-24/static/media/chip.af3d671d2bf4520d9a7dbbb5791eaeab.svg",
+    "static/media/boy.svg": "/gamebling-orbital-24/static/media/boy.3a6853de80d406ddaf8cd0e1f9568826.svg",
+    "static/media/bet.svg": "/gamebling-orbital-24/static/media/bet.3d18237a876b0ddfd34aa73c14b94dd1.svg",
+    "static/media/chip.svg": "/gamebling-orbital-24/static/media/chip.d733e58e41a8684a2d72673a01a6afaf.svg",
     "index.html": "/gamebling-orbital-24/index.html",
-    "main.295fb813.css.map": "/gamebling-orbital-24/static/css/main.295fb813.css.map",
-    "main.d4fe5050.js.map": "/gamebling-orbital-24/static/js/main.d4fe5050.js.map",
+    "main.232d5c0b.css.map": "/gamebling-orbital-24/static/css/main.232d5c0b.css.map",
+    "main.914993d0.js.map": "/gamebling-orbital-24/static/js/main.914993d0.js.map",
     "453.9b3a7815.chunk.js.map": "/gamebling-orbital-24/static/js/453.9b3a7815.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.295fb813.css",
-    "static/js/main.d4fe5050.js"
+    "static/css/main.232d5c0b.css",
+    "static/js/main.914993d0.js"
   ]
 }
