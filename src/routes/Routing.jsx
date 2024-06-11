@@ -2,7 +2,7 @@ import { Protected } from "../auth/Protected";
 import About from "../pages/About/About";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import LoginRegister from "../pages/LoginRegister/LoginRegister";
-import Layout from "../Components/NavBar/Layout";
+import Layout from "../components/NavBar/Layout";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
 import Poker from "../gameLogic/poker/Poker";
 
