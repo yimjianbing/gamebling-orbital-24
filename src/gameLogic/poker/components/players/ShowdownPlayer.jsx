@@ -1,5 +1,5 @@
 import React from 'react';
-
+import boyImage from '../../../../assets/pokerGame/boy.svg';
 import Card from '../cards/Card';
 
 const renderCards = (cards) => {
@@ -19,7 +19,7 @@ const ShowdownPlayer = (props) => {
       <div className="player-avatar--container">
         <img 
             className="player-avatar--image" 
-            src={avatarURL}  
+            src={avatarURL  || boyImage}  
             alt="Player Avatar"
         />
         <h5 className="player-info--name">

@@ -9,6 +9,8 @@ import React, { Component } from 'react';
 import './PokerGame.css';
 import './Poker.css';
 
+import Exit from './Exit.jsx';
+
 import Spinner from './Spinner.js';
 import WinScreen from './WinScreen.js'
 
@@ -27,6 +29,9 @@ import {
   beginNextRound,
   checkWin
 } from './utils/players.js';
+
+import potImage from '../../../src/assets/pokerGame/pot.svg'
+import tableImage from '../../../src/assets/pokerGame/table-nobg-svg-01.svg'
 
 import { 
   determineBlindIndices, 
@@ -404,13 +409,15 @@ imageLoaderRequest.send();
     return (
       <div className='poker-app--background'>
         <div className="poker-table--container">
-          <img className="poker-table--table-image" src={"../../assets/table-nobg-svg-01.svg"} alt="Poker Table" />
+          {/* <img className="poker-table--table-image" src={tableImage} alt="Poker Table" /> */}
+          <div className='player-container'>
           { this.renderBoard() }
+          </div>
           <div className='community-card-container' >
             { this.renderCommunityCards() }
           </div>
           <div className='pot-container'>
-            <img style={{height: 55, width: 55}} src={'../../assets/pot.svg'} alt="Pot Value"/>
+            <img style={{height: 55, width: 55}} src={potImage} alt="Pot Value"/>
             <h4> {`${this.state.pot}`} </h4>
           </div>
         </div>
@@ -426,8 +433,11 @@ imageLoaderRequest.send();
       </div>
     )
   }
+
+
   
   render() {
+
     return (
       <div className="Poker">
         <div className='poker-table--wrapper'> 
@@ -438,6 +448,7 @@ imageLoaderRequest.send();
           }
         </div>
         <div className='poker-table--container'>
+          <Exit />
         </div>
       </div>
     );

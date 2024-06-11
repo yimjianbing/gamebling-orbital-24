@@ -13,6 +13,7 @@ import {
   dealPrivateCards,
 } from "./cards.js";
 import axios from "axios";
+import boyImage from "../../../assets/pokerGame/boy.svg";
 
 // TODO Generate UUID to simulate User ID and really get a perf match on binding to players when determining winnings
 // const generateTable = async () => {
@@ -83,8 +84,8 @@ const generateTable = () => {
   const users = [
     {
       id: uuid(),
-      name: "Player 1",
-      avatarURL: "/assets/boy.svg",
+      name: "You",
+      avatarURL: "https://img.icons8.com/?size=100&id=rrtYnzKMTlUr&format=png&color=000000",
       cards: [],
       showDownHand: {
         hand: [],
