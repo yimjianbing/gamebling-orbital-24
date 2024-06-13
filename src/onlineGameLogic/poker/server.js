@@ -5,7 +5,7 @@ const socketIO = require("socket.io");
 const server = http.createServer(app); // Create server using http module
 const io = socketIO(server); // Initialize socket.io with the created server
 const admin = require("firebase-admin");
-const firebaseConfig = require("../../../package.json").firebase; // Assuming credentials in package.json (not recommended for production)
+import { firebaseConfig } from "../../auth/firebase-config"; // Assuming credentials in package.json (not recommended for production)
 
 // Initialize Firebase Admin SDK
 admin.initializeApp(firebaseConfig);
