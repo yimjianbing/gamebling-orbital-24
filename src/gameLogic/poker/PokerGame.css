@@ -80,11 +80,12 @@ img {
 	background-color: white;
 	font-size: 3em;
 
-	height: 100px;
-	width: 70px;
+	height: 150px;
+	width: 105px;
 	z-index: -1;
 	margin: 0 1px;
-	border: 2px solid gray;
+	/* border: 2px solid gray; */
+	border-radius: 10px;
 
 	opacity: 0;
 	animation: fade-in-up 0.5s;
@@ -237,7 +238,7 @@ img {
  	justify-content: center;
 	/* top: 50%;
 	left:50%;	 */
- 	top: calc(39.5% - 220px);
+ 	top: calc(39.5% - 260px);
  	left: calc(50% - 400px);
  	
  	width: 800px;
@@ -248,7 +249,8 @@ img {
  .showdown-container--community-cards {
 	display: flex;
 	height: 52px;
-	margin-bottom: 1rem;
+	margin-bottom: 8rem;
+	z-index: 1;
  }
 
  .cardbabmock {
@@ -373,7 +375,7 @@ img {
 
 .pot-container {
 	position: absolute;
-	top: -120%;
+	top: -135%;
 	left: calc(50% - 22.5px);
 	color: white;
 }
@@ -483,7 +485,7 @@ img {
 	width: 100%;
 	height: 100%;
 	background: #809F80;
-	overflow: hidden;
+	/* overflow: hidden; */
 	z-index: 0;
 
 }
@@ -498,16 +500,19 @@ img {
 	display: flex;
    	flex-direction: column;
 	align-items: center;
+	justify-content: space-evenly;
 	position: absolute;
-	overflow: auto;
+	/* overflow: auto; */
 	left: 0;
 	right: 0;
 	top: 0;
 	background-color: rgba(0,0,0,0.85);
 	color: white;
-	height: auto;
+	/* height: auto; */
+	max-height: fit-content;
+	max-width: fit-content;
+	min-width: 100%;
 	min-height: 100%;
-	width: 100%;
 }
 
 .showdown-container--title {
@@ -527,7 +532,9 @@ img {
 	display: flex;
 	align-items: center;
 	margin-bottom: 8px;
-	height: 112px;
+	/* height: 112px; */
+	max-width: fit-content;
+	max-height: fit-content;
 }
 
 
@@ -543,8 +550,14 @@ img {
 	z-index: 2;
 }
 
+.showdown-player--besthand--heading{
+	font-size: 1.5em;
+}
+
 .showdown-player--entity .player-avatar--container {
 	margin-right: 12px;
+	margin-top: 40px;
+	/* padding-top: 40px; */
 }
 
 .showdown-player--entity .player-info--name {
@@ -555,8 +568,7 @@ img {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: auto;
-	height: auto;
+
 }
 
 .player-entity--container {
@@ -581,6 +593,11 @@ img {
 	display: flex;
 	z-index: 2;
 }
+
+.showdownPlayer--cards--heading {
+	font-size: 1.5em;
+}
+
 
 .showdownPlayer--earnings {
 	text-align: center;
@@ -607,6 +624,7 @@ img {
 	color: salmon;
 	padding: 6px;
 	line-height: 1;
+	font-size: 1.5em;
 }
 .showdown--nextRound--button:hover {
 	cursor: pointer;
