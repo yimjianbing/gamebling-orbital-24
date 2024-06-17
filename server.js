@@ -24,9 +24,7 @@ app.get('/api', (req, res) => {
     // res.json({ message: 'Hello from Express!' });
 });
 
-// app.get('* ', (req, res) => {
-//     res.sendFile(__dirname + '/build/index.html');
-// });
+
 
 app.get('/test', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
@@ -35,3 +33,7 @@ app.get('/test', (req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/build/index.html');
 })
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/build/index.html'));
+});

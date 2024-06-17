@@ -9,9 +9,8 @@ const AppLayout = () => {
   
   return ( <>
       {inGame 
-      ? 
-      <Suspense fallback={null}>
-          <Outlet />
+      ? <Suspense fallback={null}>
+          {/* <Outlet /> */}
         </Suspense> 
       : <Suspense fallback={null}>
           <NavBar />
