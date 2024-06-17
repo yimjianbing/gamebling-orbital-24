@@ -1,7 +1,4 @@
 import React from 'react';
-import { 
-  renderUnicodeSuitSymbol 
-} from '../../utils/ui';
 import chipImage from '../../../../assets/pokerGame/bet.svg';
 import './Card.css';
 
