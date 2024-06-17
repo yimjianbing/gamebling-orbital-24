@@ -4,7 +4,6 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const exp = require('constants');
-// const { renderUnicodeSuitSymbol } = require('./src/gameLogic/poker/utils/ui.jsx');
 // console.log("it works");
 
 require('dotenv').config();
