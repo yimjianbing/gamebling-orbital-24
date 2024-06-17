@@ -26,18 +26,8 @@ function App() {
         router={createBrowserRouter(routes)}
         >
       </RouterProvider>
-      <header>{message ? message : "i failed"}</header>
-
+      {/* <header>{message ? message : "i failed"}</header> */}
     </AuthProvider>
-    // <>
-    //     <header>{message}</header>
-    //     <div>test1</div>
-    //     <p>
-    //       <h1>test2</h1>
-    //     </p>
-    // </>
-
-
   );
 }
 

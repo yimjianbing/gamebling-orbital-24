@@ -20,21 +20,19 @@ app.listen(port, () => {
 });
 
 app.get('/api', (req, res) => {
-    console.log("it works fpr /");
+    // console.log("it works fpr /");
     res.send("it works !");
     // res.json({ message: 'Hello from Express!' });
 });
 
-app.get('* ', (req, res) => {
-    res.sendFile(__dirname + '/build/index.html');
-  });
+// app.get('* ', (req, res) => {
+//     res.sendFile(__dirname + '/build/index.html');
+// });
 
 app.get('/test', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
-// app.get('/', (req, res) => {});
-// app.get('/home', (req, res) => {
-//     // res.sendFile(__dirname + '/public/index.html');
-//     console.log("it works");
-//     res.send('Hello World!');
-// });
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/build/index.html');
+})
