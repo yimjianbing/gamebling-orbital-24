@@ -5,7 +5,7 @@
 
 import 'raf/polyfill';
 
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import './PokerGame.css';
 import './poker.css';
 
@@ -53,6 +53,8 @@ import {
 } from './utils/ui.js';
 
 import cloneDeep from 'lodash/cloneDeep';
+
+import { inGameContext } from '../../context/InGameContext.jsx';
 
 class Poker extends Component {
   state = {
@@ -437,6 +439,9 @@ imageLoaderRequest.send();
 
   
   render() {
+
+    const { setInGame } = useContext(inGameContext);
+    setInGame(true);
 
     return (
       <div className="Poker">

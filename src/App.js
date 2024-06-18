@@ -23,7 +23,7 @@ function App() {
     <AuthProvider>
       <RouterProvider
         fallbackElement={<MainMenu />}
-        router={createBrowserRouter(routes)}
+        router={createHashRouter(routes)}
         >
       </RouterProvider>
       {/* <header>{message ? message : "i failed"}</header> */}
