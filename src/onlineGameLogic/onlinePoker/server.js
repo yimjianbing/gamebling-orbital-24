@@ -2,23 +2,25 @@ const express = require("express");
 const http = require("http"); // Import http module first
 const amqp = require("amqplib");
 const cors = require("cors");
-const app = express();
 const admin = require("firebase-admin");
-const serviceAccount = require("../../../firebaseServiceAccount.json");
+const serviceAccount = require("../../firebaseServiceAccount.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://gamebling-orbital-24-default-rtdb.firebaseio.com",
 });
 
-const db = admin.firestore(); // Assuming credentials in package.json (not recommended for production)
-//import { firebaseConfig } from "../../auth/firebase-config"; // Assuming credentials in package.json (not recommended for production)
+const db = admin.firestore();
 
-// Initialize Firebase Admin SDK
+const app = express();
 const port = 5000;
-// Function to create a new game room (unchanged)
+
 app.use(cors());
 app.use(express.json());
+
+app.use("/", (req, res) => {
+  res.send("Welcome to the Poker Server");
+});
 
 let channel, connection;
 
@@ -35,26 +37,22 @@ async function connectToRabbitMQ() {
   }
 }
 
-// API endpoint to add a player to the queue
-app.post("/enqueue", async (req, res) => {
-  const { player } = req.body;
-  if (!player) {
-    return res.status(400).send("Player information is required");
-  }
-
+// Method to add a player to the queue in RabbitMQ
+async function addPlayerToQueue(player) {
   try {
     channel.sendToQueue("player_queue", Buffer.from(JSON.stringify(player)), {
       persistent: true,
     });
-    res.status(200).send("Player added to queue");
+    // alert(player.name + " has joined the game!");
+    console.log("Player added to queue");
   } catch (error) {
-    console.error("Error enqueuing player", error);
-    res.status(500).send("Failed to enqueue player");
+    console.error("Error enqueuing player:", error);
+    throw error;
   }
-});
+}
 
-// API endpoint to move player from queue to game room
-app.post("/dequeue", async (req, res) => {
+// Method to dequeue a player from RabbitMQ and add to poker room in Firebase
+async function dequeuePlayerToPokerRoom() {
   try {
     const msg = await channel.get("player_queue", { noAck: false });
     if (msg) {
@@ -69,15 +67,47 @@ app.post("/dequeue", async (req, res) => {
         players[playerId] = player;
         await gameRoomRef.update({ players });
         channel.ack(msg);
-        res.status(200).send({ playerId, player });
+        console.log("Player moved from queue to poker room");
+        return { playerId, player };
       } else {
-        res.status(404).send("Game room not found");
+        console.log("Game room not found");
+        return null;
       }
     } else {
-      res.status(200).send("Queue is empty");
+      console.log("Queue is empty");
+      return null;
     }
   } catch (error) {
-    console.error("Error dequeuing player", error);
+    console.error("Error dequeuing player:", error);
+    throw error;
+  }
+}
+
+// API endpoint to add a player to the queue
+app.post("/enqueue", async (req, res) => {
+  const { player } = req.body;
+  if (!player) {
+    return res.status(400).send("Player information is required");
+  }
+
+  try {
+    await addPlayerToQueue(player);
+    res.status(200).send("Player added to queue");
+  } catch (error) {
+    res.status(500).send("Failed to enqueue player");
+  }
+});
+
+// API endpoint to move player from queue to game room
+app.post("/dequeue", async (req, res) => {
+  try {
+    const result = await dequeuePlayerToPokerRoom();
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      res.status(200).send("Queue is empty or game room not found");
+    }
+  } catch (error) {
     res.status(500).send("Failed to dequeue player");
   }
 });
@@ -87,3 +117,5 @@ connectToRabbitMQ().then(() => {
     console.log(`Server running at http://localhost:${port}`);
   });
 });
+
+module.exports = { addPlayerToQueue, dequeuePlayerToPokerRoom };

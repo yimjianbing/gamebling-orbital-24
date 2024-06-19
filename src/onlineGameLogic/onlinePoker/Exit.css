@@ -25,7 +25,7 @@ body {
     cursor: pointer;
 }
 
-button:hover {
+.exit:hover {
     background-color: #f44336;
     color: white;
     cursor: pointer;

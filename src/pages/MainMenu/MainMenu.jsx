@@ -7,6 +7,7 @@ import ChatClose from "../../components/ChatClose/ChatClose.jsx";
 import { useNavigate } from "react-router-dom";
 import { inGameContext } from "../../context/InGameContext.jsx";
 
+
 export const MainMenu = () => {
   const navigate = useNavigate();
   const { updateLoggedIn } = useContext(AuthContext);
@@ -29,6 +30,10 @@ export const MainMenu = () => {
       navigate(`/poker`);
       setInGame(true);
   }
+
+  function handleOnlinePoker() {
+    navigate('/OnlinePoker')
+  }
     
   
   return (
@@ -39,6 +44,7 @@ export const MainMenu = () => {
           <h2 className="mahjong">Mahjong</h2>
           <h2 className="poker" onClick ={() => handlePoker()}>Poker</h2>
         </heading>
+        <button onClick ={handleOnlinePoker}> online poker!</button>
         <button onClick={() => handleSignOut()} className="signout">
           Sign out
         </button>
