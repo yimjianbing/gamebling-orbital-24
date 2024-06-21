@@ -39,31 +39,49 @@ async function connectToRabbitMQ() {
 // Method to add a player to the queue in RabbitMQ
 async function addPlayerToQueue(player) {
   try {
-    channel.sendToQueue("player_queue", player, {
+    const playerData = JSON.stringify(player); // Convert player object to JSON string
+    channel.sendToQueue("player_queue", Buffer.from(playerData), {
       persistent: true,
     });
-    //alert(player.name + " has joined the game!");
-    console.log("Player added to queue");
+    console.log("Player added to queue 1");
   } catch (error) {
     console.error("Error enqueuing player:", error);
     throw error;
   }
 }
 
-async function dequeuePlayer() {
-  try {
+async function dequeuePlayer(timeout = 15000) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error("Timeout: No player dequeued within 15 seconds"));
+    }, timeout);
+
+    // Consume messages from "player_queue"
     channel.consume(
       "player_queue",
       (msg) => {
-        const player = JSON.parse(msg.content.toString());
-        console.log("Player dequeued: ${player.name}");
+        clearTimeout(timer); // Clear the timeout since player is dequeued
+        if (msg !== null) {
+          const player = JSON.parse(msg.content.toString());
+          console.log(`Player dequeued: ${player.name}`);
+
+          // Acknowledge the message (mark it as processed)
+          channel.ack(msg);
+          resolve(player); // Resolve the promise with the dequeued player
+        } else {
+          console.log("Queue is empty");
+          resolve(null); // Resolve with null if queue is empty
+        }
       },
-      { noAck: true }
+      { noAck: false } // Ensure messages are not automatically acknowledged
     );
-  } catch (error) {
-    console.error("Error dequeuing player:", error);
-    throw error;
-  }
+
+    // Handle errors during message consumption
+    channel.on("error", (err) => {
+      clearTimeout(timer);
+      reject(err);
+    });
+  });
 }
 
 // Method to dequeue a player from RabbitMQ and add to poker room in Firebase
@@ -108,9 +126,9 @@ app.post("/enqueue", async (req, res) => {
 
   try {
     await addPlayerToQueue(player);
-    res.status(200).send("Player added to queue");
+    res.status(200).json({ message: "Player added to queue" });
   } catch (error) {
-    res.status(500).send("Failed to enqueue player");
+    res.status(500).json({ message: "Failed to enqueue player" });
   }
 });
 

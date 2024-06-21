@@ -34,7 +34,7 @@ function OnlinePoker() {
       })
       .then((data) => {
         console.log(`${player.name} added to the queue.`);
-        alert(`${player.name} added to the queue.`);
+       // alert(`${player.name} added to the queue.`);
       })
       .catch((error) => {
         console.error('Error:', error);
