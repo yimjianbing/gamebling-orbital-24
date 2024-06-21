@@ -1,5 +1,4 @@
 const express = require("express");
-const http = require("http"); // Import http module first
 const amqp = require("amqplib");
 const cors = require("cors");
 const admin = require("firebase-admin");
@@ -18,9 +17,9 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/", (req, res) => {
-  res.send("Welcome to the Poker Server");
-});
+// app.use("/", (req, res) => {
+//   res.send("Welcome to the Poker Server");
+// });
 
 let channel, connection;
 
@@ -40,10 +39,10 @@ async function connectToRabbitMQ() {
 // Method to add a player to the queue in RabbitMQ
 async function addPlayerToQueue(player) {
   try {
-    channel.sendToQueue("player_queue", Buffer.from(JSON.stringify(player)), {
+    channel.sendToQueue("player_queue", player, {
       persistent: true,
     });
-    // alert(player.name + " has joined the game!");
+    //alert(player.name + " has joined the game!");
     console.log("Player added to queue");
   } catch (error) {
     console.error("Error enqueuing player:", error);
@@ -51,40 +50,57 @@ async function addPlayerToQueue(player) {
   }
 }
 
-// Method to dequeue a player from RabbitMQ and add to poker room in Firebase
-async function dequeuePlayerToPokerRoom() {
+async function dequeuePlayer() {
   try {
-    const msg = await channel.get("player_queue", { noAck: false });
-    if (msg) {
-      const player = JSON.parse(msg.content.toString());
-      const gameRoomRef = db.collection("gameRooms").doc("room1");
-      const gameRoomSnap = await gameRoomRef.get();
-
-      if (gameRoomSnap.exists) {
-        const gameRoom = gameRoomSnap.data();
-        const players = gameRoom.players || {};
-        const playerId = `player${Object.keys(players).length + 1}`;
-        players[playerId] = player;
-        await gameRoomRef.update({ players });
-        channel.ack(msg);
-        console.log("Player moved from queue to poker room");
-        return { playerId, player };
-      } else {
-        console.log("Game room not found");
-        return null;
-      }
-    } else {
-      console.log("Queue is empty");
-      return null;
-    }
+    channel.consume(
+      "player_queue",
+      (msg) => {
+        const player = JSON.parse(msg.content.toString());
+        console.log("Player dequeued: ${player.name}");
+      },
+      { noAck: true }
+    );
   } catch (error) {
     console.error("Error dequeuing player:", error);
     throw error;
   }
 }
 
+// Method to dequeue a player from RabbitMQ and add to poker room in Firebase
+// async function dequeuePlayerToPokerRoom() {
+//   try {
+//     const msg = await channel.get("player_queue", { noAck: false });
+//     if (msg) {
+//       const player = JSON.parse(msg.content.toString());
+//       const gameRoomRef = db.collection("gameRooms").doc("room1");
+//       const gameRoomSnap = await gameRoomRef.get();
+
+//       if (gameRoomSnap.exists) {
+//         const gameRoom = gameRoomSnap.data();
+//         const players = gameRoom.players || {};
+//         const playerId = `player${Object.keys(players).length + 1}`;
+//         players[playerId] = player;
+//         await gameRoomRef.update({ players });
+//         channel.ack(msg);
+//         console.log("Player moved from queue to poker room");
+//         return { playerId, player };
+//       } else {
+//         console.log("Game room not found");
+//         return null;
+//       }
+//     } else {
+//       console.log("Queue is empty");
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error("Error dequeuing player:", error);
+//     throw error;
+//   }
+// }
+
 // API endpoint to add a player to the queue
 app.post("/enqueue", async (req, res) => {
+  console.log("Request received to enqueue player");
   const { player } = req.body;
   if (!player) {
     return res.status(400).send("Player information is required");
@@ -101,7 +117,7 @@ app.post("/enqueue", async (req, res) => {
 // API endpoint to move player from queue to game room
 app.post("/dequeue", async (req, res) => {
   try {
-    const result = await dequeuePlayerToPokerRoom();
+    const result = await dequeuePlayer();
     if (result) {
       res.status(200).send(result);
     } else {
@@ -117,5 +133,3 @@ connectToRabbitMQ().then(() => {
     console.log(`Server running at http://localhost:${port}`);
   });
 });
-
-module.exports = { addPlayerToQueue, dequeuePlayerToPokerRoom };
