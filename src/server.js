@@ -2,7 +2,8 @@ const express = require("express");
 const amqp = require("amqplib");
 const cors = require("cors");
 const admin = require("firebase-admin");
-const serviceAccount = require("../../firebaseServiceAccount.json");
+const serviceAccount = require("./firebaseServiceAccount.json");
+const { collection, getDocs, addDoc } = require("firebase/firestore");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -43,7 +44,7 @@ async function addPlayerToQueue(player) {
     channel.sendToQueue("player_queue", Buffer.from(playerData), {
       persistent: true,
     });
-    console.log("Player added to queue 1");
+    console.log("Player added to queue 1", player.id);
   } catch (error) {
     console.error("Error enqueuing player:", error);
     throw error;
@@ -150,4 +151,53 @@ connectToRabbitMQ().then(() => {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+///firebase methods
+async function checkAndCreateRoom() {
+  const roomsCollection = collection(db, "rooms"); // Assuming your collection name is 'rooms'
+  const roomsSnapshot = await getDocs(roomsCollection);
+
+  let emptyRooms = [];
+
+  roomsSnapshot.forEach((doc) => {
+    const roomData = doc.data();
+    const isGameStateEmpty = Object.keys(roomData.gameState).length === 0;
+    const playersArray = roomData.players;
+    const isPlayersArrayNotFull =
+      playersArray.length === 5 &&
+      playersArray.some(
+        (player) => player === null || Object.keys(player).length === 0
+      );
+
+    if (isGameStateEmpty && isPlayersArrayNotFull) {
+      emptyRooms.push({ id: doc.id, ...roomData });
+    }
+  });
+
+  if (emptyRooms.length === 0) {
+    // No empty rooms found, create a new one
+    const newRoom = {
+      gameState: {},
+      players: new Array(5).fill(null),
+    };
+
+    const newRoomRef = await addDoc(roomsCollection, newRoom);
+    console.log(`Created a new room with ID: ${newRoomRef.id}`);
+    return newRoomRef.id;
+  } else {
+    console.log("Empty Rooms:", emptyRooms);
+    return emptyRooms;
+  }
+}
+server.post("/checkAndCreateRoom", async (req, res) => {
+  try {
+    const result = await checkAndCreateRoom();
+    res.status(200).send(result);
+  } catch (error) {
+    console.error("Error checking or creating rooms:", error);
+    res.status(500).send({ error: "Failed to check or create rooms" });
+  }
 });

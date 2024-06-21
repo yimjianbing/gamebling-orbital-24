@@ -4,19 +4,37 @@
 // import 'core-js/es6/set';
 
 import React, { useContext } from 'react';
+import { v1 as uuid } from "uuid";
 import './OnlinePoker.css';
 import { AuthContext } from "../../context/AuthContext";
 import Exit from './Exit'; // Assuming Exit.jsx is in the same directory
-//import { addPlayerToQueue } from './server.js'; // Import the addPlayerToQueue method
+
 
 function OnlinePoker() {
   const { currentUserLoggedIn } = useContext(AuthContext);
 
   const createPlayer = () => {  
     const player = {
-      name: currentUserLoggedIn.displayName || "Anonymous",
+      id: uuid(),
+      name: currentUserLoggedIn.displayName,
+      avatarURL: "https://img.icons8.com/?size=100&id=rrtYnzKMTlUr&format=png&color=000000",
+      cards: [],
+      showDownHand: {
+        hand: [],
+        descendingSortHand: [],
+      },
+      chips: 20000,
+      roundStartChips: 20000,
+      roundEndChips: 20000,
+      currentRoundChipsInvested: 0,
+      bet: 0,
+      betReconciled: false,
+      folded: false,
+      allIn: false,
+      canRaise: true,
+      stackInvestment: 0,
+      robot: false,
     };
-  
     console.log('Player object:', player); // Debugging log
   
     fetch('http://localhost:5000/enqueue', {
