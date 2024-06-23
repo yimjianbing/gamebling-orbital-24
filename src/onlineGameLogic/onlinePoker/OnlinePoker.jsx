@@ -8,12 +8,13 @@ import { v1 as uuid } from "uuid";
 import './OnlinePoker.css';
 import { AuthContext } from "../../context/AuthContext";
 import Exit from './Exit'; // Assuming Exit.jsx is in the same directory
+import axios from 'axios';
 
 
 function OnlinePoker() {
   const { currentUserLoggedIn } = useContext(AuthContext);
 
-  const createPlayer = () => {  
+  const createPlayer = async() => {  
     const player = {
       id: uuid(),
       name: currentUserLoggedIn.displayName,
@@ -37,45 +38,46 @@ function OnlinePoker() {
     };
     console.log('Player object:', player); // Debugging log
   
-    fetch('http://localhost:5000/enqueue', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ player }), // Convert player object to JSON string
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
+    try {
+      const response = await axios.post('http://localhost:5000/enqueue', { player }, {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(`${player.name} added to the queue.`);
-       // alert(`${player.name} added to the queue.`);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert('Failed to add player to the queue. Please try again.');
       });
+      console.log(`${player.name} added to the queue.`);
+      // alert(`${player.name} added to the queue.`);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to add player to the queue. Please try again.');
+    }
   };
 
-  const deque = () => {
-    fetch('http://localhost:5000/dequeue', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.player) {
-          console.log(`Player dequeued: ${data.player.name}`);
-        } else {
-          console.log('No player data received');
+  const deque = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/dequeue', {}, {
+        headers: {
+          'Content-Type': 'application/json',
         }
-      })
-      .catch((error) => console.error('Error:', error));
+      });
+      const data = response.data;
+      if (data) {
+        console.log(`Player dequeued: ${data.name}`);
+        try {
+          const roomResponse = await axios.post('http://localhost:5000/checkAndCreateRoom', { player: data }, {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+          console.log('Player data received:', roomResponse.data);
+        } catch (error) {
+          console.error('Error in room creation or check:', error);
+        }
+      } else {
+        console.log('No player data received');
+      }
+    } catch (error) {
+      console.error('Error dequeuing player:', error);
+    }
   };
   return (
     <div className="Poker">

@@ -4,6 +4,7 @@ const cors = require("cors");
 const admin = require("firebase-admin");
 const serviceAccount = require("./firebaseServiceAccount.json");
 const { collection, getDocs, addDoc } = require("firebase/firestore");
+const axios = require("axios");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -17,10 +18,6 @@ const port = 5000;
 
 app.use(cors());
 app.use(express.json());
-
-// app.use("/", (req, res) => {
-//   res.send("Welcome to the Poker Server");
-// });
 
 let channel, connection;
 
@@ -53,69 +50,57 @@ async function addPlayerToQueue(player) {
 
 async function dequeuePlayer(timeout = 15000) {
   return new Promise((resolve, reject) => {
+    let consumed = false; // Flag to track if a message has been consumed
+
     const timer = setTimeout(() => {
       reject(new Error("Timeout: No player dequeued within 15 seconds"));
     }, timeout);
+
+    // Error handler function
+    const errorHandler = (err) => {
+      if (!consumed) {
+        // Check if a message has already been consumed
+        clearTimeout(timer);
+        reject(err); // Reject only if no message has been consumed
+      }
+    };
+
+    // Attach error listener
+    channel.once("error", errorHandler);
 
     // Consume messages from "player_queue"
     channel.consume(
       "player_queue",
       (msg) => {
-        clearTimeout(timer); // Clear the timeout since player is dequeued
-        if (msg !== null) {
-          const player = JSON.parse(msg.content.toString());
-          console.log(`Player dequeued: ${player.name}`);
+        if (!consumed) {
+          // Check if a message has already been consumed
+          consumed = true; // Set consumed flag to true
+          clearTimeout(timer); // Clear the timeout since player is dequeued
 
-          // Acknowledge the message (mark it as processed)
-          channel.ack(msg);
-          resolve(player); // Resolve the promise with the dequeued player
-        } else {
-          console.log("Queue is empty");
-          resolve(null); // Resolve with null if queue is empty
+          if (msg !== null) {
+            const player = JSON.parse(msg.content.toString());
+            console.log(`Player dequeued: ${player.name}`);
+
+            // Acknowledge the message (mark it as processed)
+            channel.ack(msg);
+            resolve(player); // Resolve the promise with the dequeued player
+          } else {
+            console.log("Queue is empty");
+            resolve(null); // Resolve with null if queue is unexpectedly empty
+          }
         }
       },
       { noAck: false } // Ensure messages are not automatically acknowledged
     );
 
-    // Handle errors during message consumption
-    channel.on("error", (err) => {
-      clearTimeout(timer);
-      reject(err);
-    });
+    // Cleanup function
+    const cleanup = () => {
+      channel.removeListener("error", errorHandler);
+    };
+    channel.on("error", errorHandler);
+    channel.once("error", cleanup);
   });
 }
-
-// Method to dequeue a player from RabbitMQ and add to poker room in Firebase
-// async function dequeuePlayerToPokerRoom() {
-//   try {
-//     const msg = await channel.get("player_queue", { noAck: false });
-//     if (msg) {
-//       const player = JSON.parse(msg.content.toString());
-//       const gameRoomRef = db.collection("gameRooms").doc("room1");
-//       const gameRoomSnap = await gameRoomRef.get();
-
-//       if (gameRoomSnap.exists) {
-//         const gameRoom = gameRoomSnap.data();
-//         const players = gameRoom.players || {};
-//         const playerId = `player${Object.keys(players).length + 1}`;
-//         players[playerId] = player;
-//         await gameRoomRef.update({ players });
-//         channel.ack(msg);
-//         console.log("Player moved from queue to poker room");
-//         return { playerId, player };
-//       } else {
-//         console.log("Game room not found");
-//         return null;
-//       }
-//     } else {
-//       console.log("Queue is empty");
-//       return null;
-//     }
-//   } catch (error) {
-//     console.error("Error dequeuing player:", error);
-//     throw error;
-//   }
-// }
 
 // API endpoint to add a player to the queue
 app.post("/enqueue", async (req, res) => {
@@ -153,48 +138,119 @@ connectToRabbitMQ().then(() => {
   });
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Firebase methods
+async function checkAndCreateRoom(player) {
+  try {
+    console.log("Checking and creating room for player:", player);
+    const roomsCollection = db.collection("GameRooms"); // Correct Firestore usage
+    const roomsSnapshot = await roomsCollection.get();
+    console.log("Rooms snapshot:", roomsSnapshot);
 
-///firebase methods
-async function checkAndCreateRoom() {
-  const roomsCollection = collection(db, "rooms"); // Assuming your collection name is 'rooms'
-  const roomsSnapshot = await getDocs(roomsCollection);
+    let emptyRooms = [];
 
-  let emptyRooms = [];
+    roomsSnapshot.forEach((doc) => {
+      const roomData = doc.data();
+      const isGameStateEmpty = Object.keys(roomData.state || {}).length === 0;
+      const playersArray = roomData.players;
+      const isPlayersArrayNotFull =
+        playersArray.length === 5 &&
+        playersArray.some((p) => p === null || Object.keys(p).length === 0);
 
-  roomsSnapshot.forEach((doc) => {
-    const roomData = doc.data();
-    const isGameStateEmpty = Object.keys(roomData.gameState).length === 0;
-    const playersArray = roomData.players;
-    const isPlayersArrayNotFull =
-      playersArray.length === 5 &&
-      playersArray.some(
-        (player) => player === null || Object.keys(player).length === 0
-      );
+      if (isPlayersArrayNotFull) {
+        emptyRooms.push({ id: doc.id, ...roomData });
+      }
+    });
 
-    if (isGameStateEmpty && isPlayersArrayNotFull) {
-      emptyRooms.push({ id: doc.id, ...roomData });
+    if (emptyRooms.length === 0) {
+      // No empty rooms found, create a new one
+      const newRoom = {
+        state: {
+          loading: true,
+          winnerFound: null,
+          players: null,
+          numPlayersActive: null,
+          numPlayersFolded: null,
+          numPlayersAllIn: null,
+          activePlayerIndex: null,
+          dealerIndex: null,
+          blindIndex: null,
+          deck: null,
+          communityCards: [],
+          pot: null,
+          highBet: null,
+          betInputValue: null,
+          sidePots: [],
+          minBet: 20,
+          phase: "loading",
+          playerHierarchy: [],
+          showDownMessages: [],
+          playActionMessages: [],
+          playerAnimationSwitchboard: {
+            0: { isAnimating: false, content: null },
+            1: { isAnimating: false, content: null },
+            2: { isAnimating: false, content: null },
+            3: { isAnimating: false, content: null },
+            4: { isAnimating: false, content: null },
+            5: { isAnimating: false, content: null },
+          },
+        },
+        players: new Array(5).fill(null),
+      };
+
+      // Add the player to the new room
+      newRoom.players[0] = player;
+
+      const newRoomRef = await roomsCollection.add(newRoom);
+      console.log(`Created a new room with ID: ${newRoomRef.id}`);
+      return newRoomRef.id;
+    } else {
+      console.log("hello world");
+      // Join the first empty room found
+      const roomID = emptyRooms[0].id;
+      await joinRoom(roomID, player);
+      return roomID;
     }
-  });
-
-  if (emptyRooms.length === 0) {
-    // No empty rooms found, create a new one
-    const newRoom = {
-      gameState: {},
-      players: new Array(5).fill(null),
-    };
-
-    const newRoomRef = await addDoc(roomsCollection, newRoom);
-    console.log(`Created a new room with ID: ${newRoomRef.id}`);
-    return newRoomRef.id;
-  } else {
-    console.log("Empty Rooms:", emptyRooms);
-    return emptyRooms;
+  } catch (error) {
+    console.error("Error in checkAndCreateRoom:", error);
+    throw error;
   }
 }
-server.post("/checkAndCreateRoom", async (req, res) => {
+
+async function joinRoom(roomID, player) {
   try {
-    const result = await checkAndCreateRoom();
+    const roomRef = db.collection("GameRooms").doc(roomID);
+    const roomDoc = await roomRef.get();
+    if (!roomDoc.exists) {
+      throw new Error("Room does not exist");
+    }
+
+    const roomData = roomDoc.data();
+    const playersArray = roomData.players;
+    const emptyIndex = playersArray.findIndex(
+      (p) => p === null || Object.keys(p).length === 0
+    );
+
+    if (emptyIndex !== -1) {
+      playersArray[emptyIndex] = player;
+      await roomRef.update({ players: playersArray });
+      return roomID;
+    } else {
+      throw new Error("Room is full");
+    }
+  } catch (error) {
+    console.error("Error in joinRoom:", error);
+    throw error;
+  }
+}
+
+app.post("/checkAndCreateRoom", async (req, res) => {
+  const player = req.body.player;
+  if (!player) {
+    return res.status(400).send({ error: "Player object is required" });
+  }
+  try {
+    const result = await checkAndCreateRoom(player);
     res.status(200).send(result);
   } catch (error) {
     console.error("Error checking or creating rooms:", error);
