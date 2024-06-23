@@ -218,28 +218,44 @@ async function checkAndCreateRoom(player) {
 }
 
 async function joinRoom(roomID, player) {
+  let unsubscribe = null;
+
   try {
     const roomRef = db.collection("GameRooms").doc(roomID);
-    const roomDoc = await roomRef.get();
-    if (!roomDoc.exists) {
-      throw new Error("Room does not exist");
-    }
 
-    const roomData = roomDoc.data();
-    const playersArray = roomData.players;
-    const emptyIndex = playersArray.findIndex(
-      (p) => p === null || Object.keys(p).length === 0
-    );
+    // Set up a listener to monitor the room document
+    unsubscribe = roomRef.onSnapshot(async (roomDoc) => {
+      if (!roomDoc.exists) {
+        throw new Error("Room does not exist");
+      }
 
-    if (emptyIndex !== -1) {
-      playersArray[emptyIndex] = player;
-      await roomRef.update({ players: playersArray });
-      return roomID;
-    } else {
-      throw new Error("Room is full");
-    }
+      const roomData = roomDoc.data();
+      const playersArray = roomData.players;
+      const emptyIndex = playersArray.findIndex(
+        (p) => p === null || Object.keys(p).length === 0
+      );
+
+      if (emptyIndex !== -1) {
+        playersArray[emptyIndex] = player;
+        await roomRef.update({ players: playersArray });
+        console.log(`Player added to room ${roomID}`);
+
+        // Unsubscribe from the listener once the player is added
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      } else {
+        throw new Error("Room is full");
+      }
+    });
   } catch (error) {
     console.error("Error in joinRoom:", error);
+
+    // Ensure to unsubscribe if an error occurs
+    if (unsubscribe) {
+      unsubscribe();
+    }
+
     throw error;
   }
 }

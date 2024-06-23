@@ -51,6 +51,18 @@ function OnlinePoker() {
       alert('Failed to add player to the queue. Please try again.');
     }
   };
+  const checkAndCreateRoom = async (player) => {
+    try {
+      const roomResponse = await axios.post('http://localhost:5000/checkAndCreateRoom', { player }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      console.log('Player data received:', roomResponse.data);
+    } catch (error) {
+      console.error('Error in room creation or check:', error);
+    }
+  };
 
   const deque = async () => {
     try {
