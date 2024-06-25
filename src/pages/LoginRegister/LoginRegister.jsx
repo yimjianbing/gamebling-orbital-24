@@ -10,7 +10,7 @@ import {
 } from '../../auth/firebase-config';
 import { validateField, validatePassword } from "../../utils/validators";
 import { useNavigate } from "react-router-dom";
-import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
+import ForgotPassword from "../../Components/ForgotPassword/ForgotPassword";
 
 const LoginRegister = () => {
   const navigate = useNavigate();
