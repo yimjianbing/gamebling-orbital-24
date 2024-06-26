@@ -110,7 +110,7 @@ async function addPlayerToQueue(player) {
 async function dequeuePlayer(timeout = 15000) {
   return new Promise((resolve, reject) => {
     let consumed = false;
-
+    console.log(consumed);
     const timer = setTimeout(() => {
       if (!consumed) {
         cleanup();
@@ -121,6 +121,7 @@ async function dequeuePlayer(timeout = 15000) {
     const errorHandler = (err) => {
       if (!consumed) {
         cleanup();
+        // consumed = false;
         reject(err);
       }
     };
@@ -132,11 +133,13 @@ async function dequeuePlayer(timeout = 15000) {
 
     // Attach error listener
     channel.once("error", errorHandler);
+    channel.on("error", errorHandler);
 
     // Consume messages from "player_queue"
     channel.consume(
       "player_queue",
       (msg) => {
+        consumed = false;
         if (!consumed) {
           consumed = true;
           cleanup();
@@ -144,6 +147,7 @@ async function dequeuePlayer(timeout = 15000) {
           if (msg !== null) {
             const player = JSON.parse(msg.content.toString());
             console.log(`Player dequeued: ${player.name}`);
+
             channel.ack(msg);
             resolve(player);
           } else {
@@ -154,6 +158,8 @@ async function dequeuePlayer(timeout = 15000) {
       },
       { noAck: false }
     );
+    // channel.on("error", errorHandler);
+    // channel.once("error", cleanup);
   });
 }
 
@@ -176,6 +182,10 @@ app.post("/enqueue", async (req, res) => {
 // API endpoint to move player from queue to game room
 app.post("/dequeue", async (req, res) => {
   try {
+    const queueStatus = await channel.checkQueue("player_queue");
+
+    console.log(`Queue has ${queueStatus.messageCount} message(s)`);
+
     const result = await dequeuePlayer();
     if (result) {
       res.status(200).send(result);
@@ -183,6 +193,7 @@ app.post("/dequeue", async (req, res) => {
       res.status(200).send("Queue is empty or game room not found");
     }
   } catch (error) {
+
     res.status(500).send("Failed to dequeue player");
   }
 });
