@@ -1,0 +1,13 @@
+.profilePic {
+    content:url("../../assets/profile/default\ profile\ avatar.svg");
+    width: 150px;
+    height: auto;
+}
+
+.profileContainer{
+    position: absolute;
+    right: 0px;
+    /* border: 1px solid black; */
+    background-color: rgb(53, 51, 61);
+    border-radius: 5px;
+}

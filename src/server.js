@@ -136,7 +136,7 @@ async function dequeuePlayer(timeout = 15000) {
     channel.on("error", errorHandler);
 
     // Consume messages from "player_queue"
-    channel.consume(
+    const result = channel.consume(
       "player_queue",
       (msg) => {
         consumed = false;
@@ -157,7 +157,11 @@ async function dequeuePlayer(timeout = 15000) {
         }
       },
       { noAck: false }
-    );
+    ).then((result) => {
+      channel.cancel(result.consumerTag);
+    });
+
+   
     // channel.on("error", errorHandler);
     // channel.once("error", cleanup);
   });

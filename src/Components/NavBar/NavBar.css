@@ -97,3 +97,39 @@ header{
     color: #162938;
     
 }
+
+.links {
+    position: relative;
+    right: 10%;
+}
+
+.profileBtn {
+    position: absolute;
+    right: 1%;
+    bottom: 23%;
+    font-size: 2em;
+    color:#d06666;
+    border: 2px solid aliceblue;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.profileBtn:hover {
+    color: aliceblue;
+    cursor: pointer;
+}
+
+/* .profileBtn::after {
+    content: "";
+    position: absolute;
+    top: -10px; 
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    border: 2px solid #d06666;
+    pointer-events: none; 
+    border-radius: 10px;
+} */
