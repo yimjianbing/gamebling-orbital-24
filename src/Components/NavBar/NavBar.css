@@ -98,9 +98,16 @@ header{
     
 }
 
+.links.active {
+    /* position: absolute; */
+    /* right: 10%; */
+    transform: translateX(-10%);
+    transition: transform 0.5s;
+}
+
 .links {
-    position: relative;
-    right: 10%;
+    transform: translateX(10%);
+    transition: transform 0.5s;
 }
 
 .profileBtn {
@@ -115,6 +122,7 @@ header{
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    animation: fadeIn 1s ease-out forwards;
 }
 
 .profileBtn:hover {
@@ -122,14 +130,7 @@ header{
     cursor: pointer;
 }
 
-/* .profileBtn::after {
-    content: "";
-    position: absolute;
-    top: -10px; 
-    right: -10px;
-    bottom: -10px;
-    left: -10px;
-    border: 2px solid #d06666;
-    pointer-events: none; 
-    border-radius: 10px;
-} */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

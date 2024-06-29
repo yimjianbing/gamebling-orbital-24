@@ -212,10 +212,10 @@ connectToRabbitMQ().then(() => {
 // Firebase methods
 async function checkAndCreateRoom(player) {
   try {
-    console.log("Checking and creating room for player:", player);
+    // console.log("Checking and creating room for player:", player);
     const roomsCollection = db.collection("GameRooms"); // Correct Firestore usage
     const roomsSnapshot = await roomsCollection.get();
-    console.log("Rooms snapshot:", roomsSnapshot);
+    // console.log("Rooms snapshot:", roomsSnapshot);
 
     let emptyRooms = [];
 
