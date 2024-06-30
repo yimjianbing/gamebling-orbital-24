@@ -44,7 +44,7 @@ function OnlinePoker() {
 
     try {
       setQueue([...queue, player]);
-      const response = await axios.post('http://localhost:5000/enqueue', { player }, {
+      const response = await axios.post('/api/enqueue', { player }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -58,7 +58,7 @@ function OnlinePoker() {
 
   const checkAndCreateRoom = async (player) => {
     try {
-      const roomResponse = await axios.post('http://localhost:5000/checkAndCreateRoom', { player }, {
+      const roomResponse = await axios.post('/api/checkAndCreateRoom', { player }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -72,7 +72,7 @@ function OnlinePoker() {
   const deque = async () => {
     try {
 
-      const response = await axios.post('http://localhost:5000/dequeue', {}, {
+      const response = await axios.post('/api/dequeue', {}, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -81,7 +81,7 @@ function OnlinePoker() {
       if (data) {
         console.log(`Player dequeued: ${data.name}`);
         try {
-          const roomResponse = await axios.post('http://localhost:5000/checkAndCreateRoom', { player: data }, {
+          const roomResponse = await axios.post('/api/checkAndCreateRoom', { player: data }, {
             headers: {
               'Content-Type': 'application/json',
             }
