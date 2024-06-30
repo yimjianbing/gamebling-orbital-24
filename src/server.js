@@ -48,64 +48,6 @@ async function addPlayerToQueue(player) {
   }
 }
 
-// async function dequeuePlayer(timeout = 15000) {
-//   return new Promise((resolve, reject) => {
-//     let consumed = false; // Flag to track if a message has been consumed
-
-//     const timer = setTimeout(() => {
-//       if (!consumed) {
-//         cleanup();
-//         reject(new Error("Timeout: No player dequeued within 15 seconds"));
-//       }
-//     }, timeout);
-
-//     // Error handler function
-//     const errorHandler = (err) => {
-//       if (!consumed) {
-//         cleanup();
-//         reject(err);
-//       }
-//     };
-
-//     const cleanup = () => {
-//       channel.removeListener("error", errorHandler);
-//       clearTimeout(timer);
-//     };
-
-//     // Attach error listener
-//     channel.once("error", errorHandler);
-
-//     // Consume messages from "player_queue"
-//     channel.consume(
-//       "player_queue",
-//       (msg) => {
-//         if (!consumed) {
-//           // Check if a message has already been consumed
-//           consumed = true; // Set consumed flag to true
-//           cleanup(); // Clear the timeout since player is dequeued
-
-//           if (msg !== null) {
-//             const player = JSON.parse(msg.content.toString());
-//             console.log(`Player dequeued: ${player.name}`);
-
-//             // Acknowledge the message (mark it as processed)
-//             channel.ack(msg);
-//             resolve(player); // Resolve the promise with the dequeued player
-//           } else {
-//             console.log("Queue is empty");
-//             resolve(null); // Resolve with null if queue is unexpectedly empty
-//           }
-//         }
-//       },
-//       { noAck: false } // Ensure messages are not automatically acknowledged
-//     );
-
-//     // Cleanup function
-
-//     // channel.on("error", errorHandler);
-//     // channel.once("error", cleanup);
-//   });
-// }
 
 async function dequeuePlayer(timeout = 15000) {
   return new Promise((resolve, reject) => {

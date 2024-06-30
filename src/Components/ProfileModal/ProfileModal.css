@@ -15,6 +15,7 @@ body {
 
 .profileContainer{
     position: absolute;
+    z-index: 2;
     padding: 10px;
     top: 85px;
     right: 0px;
@@ -96,10 +97,11 @@ body {
 
 .inputContainer input {
     flex: 1;
-    padding: 10px;
+    padding: 4px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1.1em;
 }
 
 .addnewfriend {
@@ -112,18 +114,7 @@ body {
 
 
 
-.logNavBtn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px 0;
-}
 
-.logNavBtn:hover {
-    background-color: #0056b3;
-}
 
 .noFriendReq {
     border: 1px solid #ccc;
@@ -190,7 +181,7 @@ body {
 .sendReqBtn {
     background-color: #007bff;
     color: white;
-    padding: 7px 20px;
+    padding: 4px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.3em;
