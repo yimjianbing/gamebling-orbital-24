@@ -45,9 +45,7 @@ export const MainMenu = () => {
           <h2 className="poker" onClick ={() => handlePoker()}>Poker</h2>
         </heading>
         <button onClick ={handleOnlinePoker}> online poker!</button>
-        <button onClick={() => handleSignOut()} className="signout">
-          Sign out
-        </button>
+
       </div>
       <p>
         {chatOpen ? (

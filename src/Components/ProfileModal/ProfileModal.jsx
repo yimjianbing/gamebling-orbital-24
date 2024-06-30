@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import "./ProfileModal.css";
 import { AuthContext } from '../../context/AuthContext';
 import defaultAvatar from '../../assets/profile/default profile avatar.svg';
-import { db } from "../../auth/firebase-config"
+import { db, auth } from "../../auth/firebase-config"
 import { doc, getDoc, updateDoc, arrayUnion, query, where, collection, getDocs, onSnapshot } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 
 export function ProfileModal() {
-    const { currentUserLoggedIn } = useContext(AuthContext);
+    const { currentUserLoggedIn, updateLoggedIn} = useContext(AuthContext);
     const [ elo, setElo ] = useState(0);
     const [ friendId, setFriendId ] = useState("");
     const [ friendRequest, setFriendRequest ] = useState("");
@@ -174,6 +175,18 @@ export function ProfileModal() {
         }
     };
 
+    function handleSignOut() {
+        signOut(auth)
+          .then(() => {
+            updateLoggedIn(false); //update context to be signedout
+            // alert("successful signout"); // Sign-out successful.
+          })
+          .catch((error) => {
+            var errorMessage = error.message;
+            alert(errorMessage);
+          });
+      }
+
     return (
         currentUserLoggedIn ? (
             <div className="profileContainer">
@@ -225,6 +238,9 @@ export function ProfileModal() {
                         <h3 className="friendUsername">{friend.username}</h3>
                     </div>
                 ))}
+                <button onClick={() => handleSignOut()} className="signout">
+                    Sign out
+                </button>
             </div>
         ) : (
             <div></div>
