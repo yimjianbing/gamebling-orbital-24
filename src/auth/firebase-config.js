@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -31,4 +31,5 @@ export {
   signOut,
   updateProfile,
   db,
+  firebaseConfig,
 };

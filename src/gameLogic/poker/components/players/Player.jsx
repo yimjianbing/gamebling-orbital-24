@@ -2,6 +2,7 @@ import React from 'react';
 
 import Card from '../cards/Card';
 import HiddenCard from '../cards/HiddenCard';
+import {useRef} from 'react';
 
 import PlayerStatusNotificationBox from "./PlayerStatusNotificationBox";
 
@@ -79,6 +80,8 @@ const Player = (props) => {
     }
   }
 
+  const notificationBoxRef = useRef(null);
+
   return (
     <div className={`player-entity--wrapper p${arrayIndex}`}>
       <PlayerStatusNotificationBox
@@ -86,6 +89,7 @@ const Player = (props) => {
         isActive={ifAnimating(arrayIndex)}
         content={playerAnimationSwitchboard[arrayIndex].content}
         endTransition={endTransition}
+        ref={notificationBoxRef}
       />
       <div className='centered-flex-row abscard'>
         { renderPlayerCards() }
@@ -112,7 +116,7 @@ const Player = (props) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Player;

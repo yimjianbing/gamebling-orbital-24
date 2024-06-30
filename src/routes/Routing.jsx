@@ -1,3 +1,4 @@
+//import Layout from "../Components/NavBar/Layout";
 import { Protected } from "../auth/Protected";
 import { InGameProvider } from "../context/InGameContext";
 import Poker from "../gameLogic/poker/poker";
@@ -6,6 +7,7 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import LoginRegister from "../pages/LoginRegister/LoginRegister";
 import Layout from "../Components/NavBar/Layout";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
+import OnlinePoker from "../onlineGameLogic/onlinePoker/OnlinePoker";
 // import { InGameProvider } from "../context/InGameContext";
 
 const RouterBuilder = () => {
@@ -38,6 +40,10 @@ const RouterBuilder = () => {
       path: "/poker",
       element: <Poker />,
     },
+    {
+      path: "/onlinepoker",
+      element: <OnlinePoker />,
+    }
   ];
 
   const routes = [

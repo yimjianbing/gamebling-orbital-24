@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import "./LoginRegister.css";
 import { HiMiniUser, HiMiniKey } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
+import { doc, setDoc, getDoc} from "firebase/firestore";
 import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile
+  updateProfile,
+  db
 } from '../../auth/firebase-config';
+
 import { validateField, validatePassword } from "../../utils/validators";
 import { useNavigate } from "react-router-dom";
 import ForgotPassword from "../../Components/ForgotPassword/ForgotPassword";
@@ -54,7 +57,8 @@ const LoginRegister = () => {
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then(function () {
-        alert("User Created!");
+        // alert("User Created!");
+        navToMainMenu();
       }).then(() => {
       }).catch(function (error) {
         // var errorCode = error.code;
@@ -63,11 +67,27 @@ const LoginRegister = () => {
       });
 
     updateProfile(auth.currentUser, {displayName: name})
+    .then(() => {
+      let user = auth.currentUser;
+      let playerId = user.uid;
+      let friendId = playerId.toString().substring(0, 5);
+
+      const playerRef = doc(db, "userData/" + playerId);
+      const userData = {
+        elo: 1000,
+        gamesWon: 0,
+        friends: [],
+        friendId: friendId,
+        username: user.displayName,
+        pendingFriendRequests: [],
+      };
+      return setDoc(playerRef, userData);
+    })
     .catch(function (error) {
       // var errorCode = error.code;
       var errorMessage = error.message;
       alert(errorMessage);
-    })
+    });
 
   };
 
@@ -84,6 +104,32 @@ const LoginRegister = () => {
     }
 
     signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        let user = auth.currentUser;
+        let playerId = user.uid;
+        let friendId = playerId.toString().substring(0, 5);
+  
+        const playerRef = doc(db, "userData/" + playerId);
+
+        getDoc(playerRef)
+          .then((docSnapshot) => {
+              if (!docSnapshot.exists()) {
+                const userData = {
+                  elo: 1000,
+                  gamesWon: 0,
+                  friends: [],
+                  friendId: friendId,
+                  username: user.displayName,
+                  pendingFriendRequests: [],
+                };
+
+                setDoc(playerRef, userData)
+              }
+          })
+          .catch((error) => {
+            console.error("Error getting document:", error);
+          });;
+      })
       .then(function () {
         // alert("User Logged in successful!");
         navToMainMenu();
