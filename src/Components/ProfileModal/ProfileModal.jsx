@@ -11,6 +11,7 @@ export function ProfileModal() {
     const [ friendId, setFriendId ] = useState("");
     const [ friendRequest, setFriendRequest ] = useState("");
     const [ pendingFriendRequests, setPendingFriendRequests ] = useState([]);
+    const [ friends, setFriends ] = useState([]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -25,14 +26,25 @@ export function ProfileModal() {
                         setElo(docSnap.data().elo); // Set the elo value in state
                         setFriendId(docSnap.data().friendId); // Set the friendId value in state
                         const pendingFriendRequestsData = [];
-                        docSnap.data().pendingFriendRequests.forEach((doc) => {
+                        docSnap.data().pendingFriendRequests.forEach((doc, index) => {
                             pendingFriendRequestsData.push({ 
                                 username: doc.username, 
                                 uid: doc.friendId,
-                                id: doc.id 
+                                id: index
                             });
                         });
+                        console.log(pendingFriendRequestsData)
                         setPendingFriendRequests(pendingFriendRequestsData);
+
+                        const friendsData = [];
+                        docSnap.data().friends.forEach((doc, index) => {
+                            friendsData.push({ 
+                                username: doc.username, 
+                                uid: doc.friendId,
+                                id: index
+                            });
+                        });
+                        setFriends(friendsData);
                     } else {
                         console.log("No such document!");
                     }
@@ -80,9 +92,73 @@ export function ProfileModal() {
     
     };
 
-    const handleAcceptReq = async (key) => {
+    const handleAcceptReq = async (index) => {
+        if (currentUserLoggedIn) {
+            const playerRef = doc(db, "userData/" + currentUserLoggedIn.uid); // Corrected the path to use as parameters
 
+            try {
+                const docSnap = await getDoc(playerRef);
+                if (docSnap.exists()) {
+                    const pendingFriendRequestsData = docSnap.data().pendingFriendRequests;
+                    const friendToAdd = pendingFriendRequestsData[index];
+                    const friendsData = docSnap.data().friends;
+                    friendsData.push(friendToAdd);
+                    pendingFriendRequestsData.splice(index, 1);
+                    // console.log(friendsData, pendingFriendRequestsData);
+
+                    await updateDoc(playerRef, {
+                        friends: friendsData,
+                        pendingFriendRequests: pendingFriendRequestsData
+                    });
+
+                    //update the sender freind list too!
+
+                    const senderRef = doc(db, "userData/" + friendToAdd.friendId); 
+                    const senderDocSnap = await getDoc(senderRef);
+                    if (senderDocSnap.exists()) {
+                        const senderFriendsData = senderDocSnap.data().friends;
+                        const userToAdd = {
+                            username: currentUserLoggedIn.displayName,
+                            friendId: currentUserLoggedIn.uid
+                        };
+                        senderFriendsData.push(userToAdd);
+
+                        await updateDoc(senderRef, {
+                            friends: senderFriendsData
+                        });
+                    } else {
+                        console.log("No such document!");
+                    }
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error getting document:", error);
+            }
+        }
     }
+
+    const handleRejectReq = async (index) => {
+        if (currentUserLoggedIn) {
+            const playerRef = doc(db, "userData/" + currentUserLoggedIn.uid); // Corrected the path to use as parameters
+
+            try {
+                const docSnap = await getDoc(playerRef);
+                if (docSnap.exists()) {
+                    const pendingFriendRequestsData = docSnap.data().pendingFriendRequests;
+                    pendingFriendRequestsData.splice(index, 1);
+
+                    await updateDoc(playerRef, {
+                        pendingFriendRequests: pendingFriendRequestsData
+                    });
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error getting document:", error);
+            }
+        }
+    };
 
     return (
         currentUserLoggedIn ? (
@@ -108,8 +184,8 @@ export function ProfileModal() {
                 {pendingFriendRequests.map((req) => (
                     <div key={req.id} className="message">
                         <strong>{req.username}:</strong>
-                        <div className="acceptReq" onClick={handleAcceptReq(key)}> Accept </div>
-                        <div className="rejectReq" onClick={handleRejectReq(key)}> Decline </div>
+                        <div className="acceptReq" onClick={() => handleAcceptReq(req.id)}> Accept </div>
+                        <div className="rejectReq" onClick={() => handleRejectReq(req.id)}> Decline </div>
                     </div>
                 ))}
             </div>
