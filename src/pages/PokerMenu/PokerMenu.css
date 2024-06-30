@@ -1,0 +1,59 @@
+.pokerMenuWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    animation: zoom 0.3s ease-in;
+}
+
+.pokerOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.onlinePoker{
+
+}
+
+.onlinePoker:hover{
+    cursor: pointer;
+    color:aliceblue;
+    text-decoration: underline;
+    transition: 0.2s ease-in;
+    font-size: 2em;
+
+}
+
+.offlinePoker {
+
+}
+
+.offlinePoker:hover{
+    cursor: pointer;
+    color:aliceblue;
+    text-decoration: underline;
+    transition: 0.2s ease-in;
+    font-size: 2em;
+}
+
+@keyframes zoom {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+}

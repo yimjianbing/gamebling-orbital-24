@@ -12,7 +12,6 @@ export const MainMenu = () => {
   const navigate = useNavigate();
   const { updateLoggedIn } = useContext(AuthContext);
   const [chatOpen, setChatOpen] = useState(false);
-  const { setInGame } = useContext(inGameContext);
 
   function handleSignOut() {
     signOut(auth)
@@ -27,15 +26,9 @@ export const MainMenu = () => {
   }
 
   function handlePoker() {
-      navigate(`/poker`);
-      setInGame(true);
-  }
-
-  function handleOnlinePoker() {
-    navigate('/OnlinePoker')
+      navigate(`/pokerMenu`);
   }
     
-  
   return (
     <div>
       <div className="mainmenu">
@@ -44,7 +37,6 @@ export const MainMenu = () => {
           <h2 className="mahjong">Mahjong</h2>
           <h2 className="poker" onClick ={() => handlePoker()}>Poker</h2>
         </heading>
-        <button onClick ={handleOnlinePoker}> online poker!</button>
 
       </div>
       <p>

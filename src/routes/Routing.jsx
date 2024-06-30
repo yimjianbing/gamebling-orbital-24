@@ -8,7 +8,7 @@ import LoginRegister from "../pages/LoginRegister/LoginRegister";
 import Layout from "../Components/NavBar/Layout";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
 import OnlinePoker from "../onlineGameLogic/onlinePoker/OnlinePoker";
-// import { InGameProvider } from "../context/InGameContext";
+import { PokerMenu } from "../pages/PokerMenu/PokerMenu";
 
 const RouterBuilder = () => {
   const generalRoutes = [
@@ -43,12 +43,20 @@ const RouterBuilder = () => {
     {
       path: "/onlinepoker",
       element: <OnlinePoker />,
-    }
+    },
+    {
+      path: "/pokermenu",
+      element: <PokerMenu />,
+    },
   ];
 
   const routes = [
     {
-      element: <InGameProvider><Layout /></InGameProvider>,
+      element: (
+        <InGameProvider>
+          <Layout />
+        </InGameProvider>
+      ),
       children: generalRoutes,
     },
   ];
