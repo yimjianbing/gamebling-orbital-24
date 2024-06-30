@@ -19,10 +19,12 @@ export const PokerMenu = () => {
   return (
     <div className="pokerMenuWrapper">
       <div className="pokerMenu">
-        <h2>Do you want to pay online or offline?</h2>
+        <h2>Do you want to play online or offline?</h2>
         <heading className="pokerOptions">
           <h2 className="onlinePoker" onClick={handleOnlinePoker}>
-            Online
+            Online 
+            <br/>
+            (not fully implemented)
           </h2>
           <h2 className="offlinePoker" onClick={handleOfflinePoker}>
             Offline

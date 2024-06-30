@@ -19,7 +19,7 @@
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    padding: 20px;
+    padding: 30px;
 }
 
 .onlinePoker{
@@ -31,7 +31,7 @@
     color:aliceblue;
     text-decoration: underline;
     transition: 0.2s ease-in;
-    font-size: 2em;
+    transform: scale(1.35);
 
 }
 
@@ -44,7 +44,7 @@
     color:aliceblue;
     text-decoration: underline;
     transition: 0.2s ease-in;
-    font-size: 2em;
+    transform: scale(1.35);
 }
 
 @keyframes zoom {
