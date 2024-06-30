@@ -4,6 +4,10 @@
       {
         "src": "backend/api/server.js",
         "use": "@vercel/node"
+      },
+      {
+        "src": "build/**/*",
+        "use": "@vercel/static"
       }
     ],
     "routes": [
@@ -15,6 +19,9 @@
         "src": "/(.*)",
         "dest": "/build/$1"
       }
-    ]
+    ],
+    "framework": {
+        "name": "create-react-app"
+    }
   }
   
