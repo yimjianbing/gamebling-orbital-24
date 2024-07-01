@@ -62,7 +62,7 @@ function OnlinePoker() {
       });
       console.log('Player data received:', roomResponse.data);
     } catch (error) {
-      // console.error('Error in room creation or check:', error);
+      console.error('Error in room creation or check:', error);
     }
   };
 
@@ -85,13 +85,13 @@ function OnlinePoker() {
           });
           console.log('Player data received:', roomResponse.data);
         } catch (error) {
-          // console.error('Error in room creation or check:', error);
+          console.error('Error in room creation or check:', error);
         }
       } else {
-        // console.log('No player data received');
+        console.log('No player data received');
       }
     } catch (error) {
-      // console.error('Error dequeuing player:', error);
+      console.error('Error dequeuing player:', error);
     }
   };
   return (
