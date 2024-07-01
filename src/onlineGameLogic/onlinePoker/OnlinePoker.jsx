@@ -71,7 +71,7 @@ function OnlinePoker() {
 
   const deque = async () => {
     try {
-
+      setQueue([]);
       const response = await axios.post('/api/dequeue', {}, {
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ function OnlinePoker() {
               'Content-Type': 'application/json',
             }
           });
-          setQueue([]);
+          
           console.log('Player data received:', roomResponse.data);
         } catch (error) {
           console.error('Error in room creation or check:', error);
