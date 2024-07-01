@@ -12,7 +12,7 @@ export const Skins = () => {
     return (
         <div className="skinsWrapper">
             <div className="skins">
-                <h1>Choose your skin</h1>
+                <h1>Choose your poker skin</h1>
                 <br />
                 <div className="skinOptions">
                     <div className="skin1" onClick={() => handleSkinChange("")}>default</div>
