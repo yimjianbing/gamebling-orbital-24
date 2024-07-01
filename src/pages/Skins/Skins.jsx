@@ -3,10 +3,10 @@ import { SkinsContext } from "../../context/SkinsContext";
 import "./Skins.css";
 
 export const Skins = () => {
-    const {setSkinNumber} = useContext(AuthContext);
+    const {setSkin} = useContext(AuthContext);
 
-    const handleSkinChange = (skinNumber) => {
-        setSkinNumber(skinNumber);
+    const handleSkinChange = (skin) => {
+        setSkin(skinNumber);
     }
 
     return (
@@ -14,12 +14,9 @@ export const Skins = () => {
             <div className="skins">
                 <h2>Choose your skin</h2>
                 <div className="skinOptions">
-                    <h2 className="skin1" onClick={() => handleSkinChange(1)}>Skin 1</h2>
-                    <h2 className="skin2" onClick={() => handleSkinChange(2)}>Skin 2</h2>
-                    <h2 className="skin3" onClick={() => handleSkinChange(3)}>Skin 3</h2>
-                    <h2 className="skin4" onClick={() => handleSkinChange(4)}>Skin 4</h2>
-                    <h2 className="skin5" onClick={() => handleSkinChange(5)}>Skin 5</h2>
-                    <h2 className="skin6" onClick={() => handleSkinChange(6)}>Skin 6</h2>
+                    <div className="skin1" onClick={() => handleSkinChange("black")}>Skin 1</div>
+                    <div className="skin2" onClick={() => handleSkinChange("white")}>Skin 2</div>
+                    <div className="skin3" onClick={() => handleSkinChange("pixel")}>Skin 3</div>
                 </div>
             </div>
         </div>

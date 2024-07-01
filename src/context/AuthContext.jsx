@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [skinNumber, setSkinNumber] = useState(0);
+  const [skin, setSkin] = useState("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,8 +35,8 @@ export function AuthProvider({ children }) {
     setCurrentUserLoggedIn: setCurrentUserLoggedIn,
     updateLoggedIn: updateLoggedIn,
     loggedIn: loggedIn,
-    skinNumber: skinNumber,
-    setSkinNumber: setSkinNumber
+    skin: skin,
+    setSkin: setSkin
   }
 
   return (

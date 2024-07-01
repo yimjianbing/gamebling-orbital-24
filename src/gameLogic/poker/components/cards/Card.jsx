@@ -1,11 +1,15 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import { 
   renderUnicodeSuitSymbol 
 } from '../../utils/ui';
 import chipImage from '../../../../assets/pokerGame/bet.svg';
 import './Card.css';
+import { AuthContext } from '../../../../context/AuthContext';
 
 const Card = (props) => {
+
+  const { skin } = useContext(AuthContext);
+
   const { 
     cardData: {
       suit,
@@ -14,6 +18,7 @@ const Card = (props) => {
     },
     applyFoldedClassname
   } = props;
+
 
 
   return(
