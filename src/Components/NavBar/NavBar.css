@@ -49,13 +49,13 @@ header{
     margin-left: 40px;
 }
 
-.navigation a:nth-of-type(4) {
+
+.btnLogin-popup {
     font-size: 1.5em;
     padding-left: 35px;
     padding-right: 35px;
     padding-top: 8px;
     padding-bottom: 8px;
-
 }
 
 .navigation a::after {

@@ -14,7 +14,7 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -110,7 +110,7 @@ async function dequeuePlayer(timeout = 15000) {
 }
 
 // API endpoint to add a player to the queue
-app.post("/enqueue", async (req, res) => {
+app.post("/api/enqueue", async (req, res) => {
   console.log("Request received to enqueue player");
   const { player } = req.body;
   if (!player) {
@@ -126,7 +126,7 @@ app.post("/enqueue", async (req, res) => {
 });
 
 // API endpoint to move player from queue to game room
-app.post("/dequeue", async (req, res) => {
+app.post("/api/dequeue", async (req, res) => {
   try {
     const queueStatus = await channel.checkQueue("player_queue");
 
@@ -272,7 +272,7 @@ async function joinRoom(roomID, player) {
   }
 }
 
-app.post("/checkAndCreateRoom", async (req, res) => {
+app.post("/api/checkAndCreateRoom", async (req, res) => {
   const player = req.body.player;
   if (!player) {
     return res.status(400).send({ error: "Player object is required" });
@@ -285,3 +285,5 @@ app.post("/checkAndCreateRoom", async (req, res) => {
     res.status(500).send({ error: "Failed to check or create rooms" });
   }
 });
+
+module.exports = app;

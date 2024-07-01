@@ -1,4 +1,4 @@
-import { RouterProvider, createHashRouter } from "react-router-dom";
+import { RouterProvider, createHashRouter, createBrowserRouter } from "react-router-dom";
 import { useMemo } from "react";
 import RouterBuilder from "./routes/Routing.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -12,7 +12,8 @@ function App() {
     <AuthProvider>
       <RouterProvider
         fallbackElement={<MainMenu />}
-        router={createHashRouter(routes)}
+        // router={createHashRouter(routes)}
+        router={createBrowserRouter(routes)}
       ></RouterProvider>
     </AuthProvider>
   );
