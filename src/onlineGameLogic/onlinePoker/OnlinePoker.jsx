@@ -41,7 +41,7 @@ function OnlinePoker() {
 
     try {
       setQueue([...queue, player]);
-      const response = await axios.post('/api/enqueue', { player }, {
+      const response = await axios.post('https://gamebling-orbital-24.vercel.app/api/enqueue', { player }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -55,7 +55,7 @@ function OnlinePoker() {
 
   const checkAndCreateRoom = async (player) => {
     try {
-      const roomResponse = await axios.post('/api/checkAndCreateRoom', { player }, {
+      const roomResponse = await axios.post('https://gamebling-orbital-24.vercel.app/api/checkAndCreateRoom', { player }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -69,7 +69,7 @@ function OnlinePoker() {
   const deque = async () => {
     try {
       setQueue([]);
-      const response = await axios.post('/api/dequeue', {}, {
+      const response = await axios.post('https://gamebling-orbital-24.vercel.app/api/dequeue', {}, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -78,7 +78,7 @@ function OnlinePoker() {
       if (data) {
         console.log(`Player dequeued: ${data.name}`);
         try {
-          const roomResponse = await axios.post('/api/checkAndCreateRoom', { player: data }, {
+          const roomResponse = await axios.post('https://gamebling-orbital-24.vercel.app/api/checkAndCreateRoom', { player: data }, {
             headers: {
               'Content-Type': 'application/json',
             }
