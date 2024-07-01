@@ -3,7 +3,8 @@ import {
   renderUnicodeSuitSymbol 
 } from '../../utils/ui';
 import chipImage from '../../../../assets/pokerGame/bet.svg';
-import './Card.css';
+import './defaultCard.css';
+import './whiteCard.css'
 import { AuthContext } from '../../../../context/AuthContext';
 
 const Card = (props) => {
@@ -27,7 +28,7 @@ const Card = (props) => {
       className={`playing-card cardIn ${(applyFoldedClassname ? ' folded' : '')}`} 
       style={{animationDelay: `${(applyFoldedClassname) ?  0 : animationDelay}ms`}}>
       <h6
-        className={`${suit}${cardFace}`}
+        className={`${suit}${cardFace}${skin}`}
         style={{
           // color: `${(suit === 'Diamond' || suit === 'Heart') ? 'red' : 'black'}`,
           // backgroundImage: `url(${chipImage})`,

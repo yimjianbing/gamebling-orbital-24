@@ -9,6 +9,7 @@ import Layout from "../Components/NavBar/Layout";
 import { MainMenu } from "../pages/MainMenu/MainMenu";
 import OnlinePoker from "../onlineGameLogic/onlinePoker/OnlinePoker";
 import { PokerMenu } from "../pages/PokerMenu/PokerMenu";
+import { Skins } from "../pages/Skins/Skins";
 
 const RouterBuilder = () => {
   const generalRoutes = [
@@ -48,6 +49,10 @@ const RouterBuilder = () => {
       path: "/pokermenu",
       element: <PokerMenu />,
     },
+    {
+      path: "/skins",
+      element: <Skins />,
+    }
   ];
 
   const routes = [

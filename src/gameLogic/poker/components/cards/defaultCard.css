@@ -221,15 +221,7 @@
     width: 70px;
     background-image: url(../../../../assets/pokerCards/Spade10.png);
 }
-/*
 
-@for $i from 2 through 10 {
-    .Spade#{$i} {
-        height: 100px;
-        width: 70px;
-        background-image: url(../../../../assets/pokerCards/Spade#{$i}.png);
-    }
-} */
 
 .SpadeA {
     height: 100px;
