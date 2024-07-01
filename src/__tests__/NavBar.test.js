@@ -2,23 +2,35 @@ import { render, screen} from '@testing-library/react';
 import { NavBar } from '../Components/NavBar/NavBar';
 import { MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { AuthContext } from '../context/AuthContext';
 
-describe('NavBar Component', () => {
-    test('renders NavBar component', () => {
-        const history = createMemoryHistory();
-        render(
-            <MemoryRouter history={history}>
-                <NavBar />
-            </MemoryRouter>
-        );
-    });
+test('NavBar Component', () => {
+    const history = createMemoryHistory();
+    const mockAuthContext = {
+        loggedIn: true,
+        // any other expected values
+    };
+    render(
+        <AuthContext.Provider value={mockAuthContext}>
+        <MemoryRouter>
+            <NavBar />
+        </MemoryRouter>
+        </AuthContext.Provider>
+    );
+});
 
     test('navigates to about page on button click', () => {
         const history = createMemoryHistory();
+        const mockAuthContext = {
+            loggedIn: true,
+            // any other expected values
+        };
         render(
-            <MemoryRouter history={history}>
+            <AuthContext.Provider value={mockAuthContext}>
+            <MemoryRouter>
                 <NavBar />
             </MemoryRouter>
+            </AuthContext.Provider>
         );
         expect(screen.getByTestId('home')).toHaveAttribute('href', '/');
         expect(screen.getByTestId('about')).toHaveAttribute('href', '/about');
@@ -26,4 +38,3 @@ describe('NavBar Component', () => {
         expect(screen.getByTestId('mainmenu')).toHaveAttribute('href', '/mainmenu');
                 
     });
-});
