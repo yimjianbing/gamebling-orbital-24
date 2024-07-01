@@ -24,8 +24,7 @@ let channel, connection;
 // Connect to RabbitMQ
 async function connectToRabbitMQ() {
   try {
-    // connection = await amqp.connect("amqp://localhost");
-    connection = await amqp.connect("amqp://gamebling-orbital-24.vercel.app");
+    connection = await amqp.connect("amqp://localhost");
     channel = await connection.createChannel();
     await channel.assertQueue("player_queue", { durable: true });
     console.log("Connected to RabbitMQ");

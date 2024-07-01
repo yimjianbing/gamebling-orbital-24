@@ -52,7 +52,7 @@ function OnlinePoker() {
       console.log("queue:" + queue);
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to add player to the queue. Please try again.');
+      // alert('Failed to add player to the queue. Please try again.');
     }
   };
 
