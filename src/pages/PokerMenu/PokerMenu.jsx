@@ -23,8 +23,6 @@ export const PokerMenu = () => {
         <heading className="pokerOptions">
           <h2 className="onlinePoker" onClick={handleOnlinePoker}>
             Online 
-            <br/>
-            (not fully implemented)
           </h2>
           <h2 className="offlinePoker" onClick={handleOfflinePoker}>
             Offline
