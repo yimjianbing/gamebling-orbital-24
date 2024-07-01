@@ -8,7 +8,7 @@ import { v1 as uuid } from "uuid";
 import './OnlinePoker.css';
 import { AuthContext } from "../../context/AuthContext";
 import Exit from './Exit'; // Assuming Exit.jsx is in the same directory
-const axios = require("axios");
+import axios from 'axios';
 
 
 function OnlinePoker() {
