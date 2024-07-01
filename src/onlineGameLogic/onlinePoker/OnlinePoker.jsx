@@ -37,9 +37,6 @@ function OnlinePoker() {
       stackInvestment: 0,
       robot: false,
     };
-    // console.log('Player object:', player); // Debugging log
-    console.log('Player playerncwrijnonouincowuieonwe');
-
 
 
     try {
@@ -51,7 +48,7 @@ function OnlinePoker() {
       });
       console.log("queue:" + queue);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
       // alert('Failed to add player to the queue. Please try again.');
     }
   };
@@ -65,13 +62,13 @@ function OnlinePoker() {
       });
       console.log('Player data received:', roomResponse.data);
     } catch (error) {
-      console.error('Error in room creation or check:', error);
+      // console.error('Error in room creation or check:', error);
     }
   };
 
   const deque = async () => {
     try {
-
+      setQueue([]);
       const response = await axios.post('/api/dequeue', {}, {
         headers: {
           'Content-Type': 'application/json',
@@ -86,16 +83,15 @@ function OnlinePoker() {
               'Content-Type': 'application/json',
             }
           });
-          setQueue([]);
           console.log('Player data received:', roomResponse.data);
         } catch (error) {
-          console.error('Error in room creation or check:', error);
+          // console.error('Error in room creation or check:', error);
         }
       } else {
-        console.log('No player data received');
+        // console.log('No player data received');
       }
     } catch (error) {
-      console.error('Error dequeuing player:', error);
+      // console.error('Error dequeuing player:', error);
     }
   };
   return (
