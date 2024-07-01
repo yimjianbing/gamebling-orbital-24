@@ -56,7 +56,7 @@ export const ChatRoom = ({ setChatOpen }) => {
       </nav>
       <div className="messages">
         {messages.map((message) => (
-          <div key={message.id} className="message">
+          <div key={message.id} className="message1">
             <strong>{message.user}:</strong> {message.text}
           </div>
         ))}
