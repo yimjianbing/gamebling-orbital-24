@@ -2,7 +2,7 @@ const express = require("express");
 const amqp = require("amqplib");
 const cors = require("cors");
 const admin = require("firebase-admin");
-const serviceAccount = require("../src/firebaseServiceAccount.json");
+const serviceAccount = require("../../src/firebaseServiceAccount.json");
 const { collection, getDocs, addDoc } = require("firebase/firestore");
 const axios = require("axios");
 
