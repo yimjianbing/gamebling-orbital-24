@@ -5,6 +5,7 @@ import {
 import chipImage from '../../../../assets/pokerGame/bet.svg';
 import './defaultCard.css';
 import './whiteCard.css'
+import './blackCard.css'
 import { AuthContext } from '../../../../context/AuthContext';
 
 const Card = (props) => {
