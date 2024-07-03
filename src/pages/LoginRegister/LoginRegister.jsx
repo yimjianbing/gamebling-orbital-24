@@ -13,7 +13,7 @@ import {
 
 import { validateField, validatePassword } from "../../utils/validators";
 import { useNavigate } from "react-router-dom";
-import ForgotPassword from "../../Components/ForgotPassword/ForgotPassword";
+import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
 
 const LoginRegister = () => {
   const navigate = useNavigate();
