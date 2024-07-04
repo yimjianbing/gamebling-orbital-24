@@ -153,12 +153,12 @@ const dealPrivateCards = (state) => {
   }
   const newCards = cardsConverter(state.players[0].cards);
   const newCards2 = cardsConverter(state.players[2].cards);
-  const newCards3 = cardsConverter(state.players[1].cards);
-  const newCards4 = cardsConverter(state.players[3].cards);
+
   const odds = calculateEquity(
     [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
-    []
+    cardsConverter(state.communityCards)
   );
+  state.odds = odds[0].wins / 1000;
   console.log("player cards:", newCards);
   console.log("odds are this:", odds[0].wins / 1000);
 
@@ -178,6 +178,14 @@ const dealFlop = (state) => {
   state.deck = mutableDeckCopy;
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting2";
+
+  const newCards = cardsConverter(state.players[0].cards);
+  const newCards2 = cardsConverter(state.players[2].cards);
+  const odds = calculateEquity(
+    [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
+    cardsConverter(state.communityCards)
+  );
+  state.odds = odds[0].wins / 1000;
   console.log("River: ", state.communityCards);
 
   return state;
@@ -192,6 +200,14 @@ const dealTurn = (state) => {
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting3";
 
+  const newCards = cardsConverter(state.players[0].cards);
+  const newCards2 = cardsConverter(state.players[2].cards);
+  const odds = calculateEquity(
+    [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
+    cardsConverter(state.communityCards)
+  );
+  state.odds = odds[0].wins / 1000;
+
   return state;
 };
 
@@ -204,6 +220,14 @@ const dealRiver = (state) => {
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting4";
   console.log("River: ", state.communityCards);
+
+  const newCards = cardsConverter(state.players[0].cards);
+  const newCards2 = cardsConverter(state.players[2].cards);
+  const odds = calculateEquity(
+    [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
+    cardsConverter(state.communityCards)
+  );
+  state.odds = odds[0].wins / 1000;
 
   return state;
 };
