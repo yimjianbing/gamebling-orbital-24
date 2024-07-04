@@ -180,6 +180,7 @@ const dealFlop = (state) => {
   state.deck = mutableDeckCopy;
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting2";
+  console.log("River: ", state.communityCards);
 
   return state;
 };
@@ -204,6 +205,7 @@ const dealRiver = (state) => {
   state.deck = mutableDeckCopy;
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting4";
+  console.log("River: ", state.communityCards);
 
   return state;
 };

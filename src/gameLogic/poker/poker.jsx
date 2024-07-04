@@ -8,6 +8,7 @@ import 'raf/polyfill';
 import React, { Component } from 'react';
 import './PokerGame.css';
 import './poker.css';
+import {calculateEquity} from '../../oddsCalculator/calculate.js'
 
 import Exit from './Exit.jsx';
 
