@@ -35,3 +35,23 @@ h1, h2, h3, h4, h5, h6 {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.odds-bar-container {
+  position: absolute;
+  top: 20px; /* Adjust this value to position it vertically */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Adjust max-width if necessary */
+  height: 20px; /* Adjust the height as needed */
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.odds-bar {
+  height: 100%;
+  background-color: #76c7c0;
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+}

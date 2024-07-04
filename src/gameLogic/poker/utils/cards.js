@@ -3,6 +3,7 @@ import {
   handleOverflowIndex,
   determinePhaseStartActivePlayer,
 } from "./players.js";
+import { calculateEquity } from "../../../oddsCalculator/calculate.js";
 
 const totalNumCards = 52;
 const suits = ["Heart", "Spade", "Club", "Diamond"];
@@ -59,24 +60,11 @@ const generateDeckOfCards = () => {
 };
 
 const shuffle = (deck) => {
-  let shuffledDeck = new Array(totalNumCards);
-  let filledSlots = [];
-  for (let i = 0; i < totalNumCards; i++) {
-    if (i === 51) {
-      // Fill last undefined slot when only 1 card left to shuffle
-      const lastSlot = shuffledDeck.findIndex((el) => typeof el == "undefined");
-      shuffledDeck[lastSlot] = deck[i];
-      filledSlots.push(lastSlot);
-    } else {
-      let shuffleToPosition = randomizePosition(0, totalNumCards - 1);
-      while (filledSlots.includes(shuffleToPosition)) {
-        shuffleToPosition = randomizePosition(0, totalNumCards - 1);
-      }
-      shuffledDeck[shuffleToPosition] = deck[i];
-      filledSlots.push(shuffleToPosition);
-    }
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]]; // Swap elements
   }
-  return shuffledDeck;
+  return deck;
 };
 
 const popCards = (deck, numToPop) => {
@@ -163,6 +151,16 @@ const dealPrivateCards = (state) => {
     );
     state.phase = "betting1";
   }
+  const newCards = cardsConverter(state.players[0].cards);
+  const newCards2 = cardsConverter(state.players[2].cards);
+  const newCards3 = cardsConverter(state.players[1].cards);
+  const newCards4 = cardsConverter(state.players[3].cards);
+  const odds = calculateEquity(
+    [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
+    []
+  );
+  console.log("player cards:", newCards);
+  console.log("odds are this:", odds[0].wins / 1000);
 
   return state;
 };
@@ -1260,6 +1258,21 @@ const checkLowStraight = (valueSetCopy) => {
       concurrentCardValuesLow,
     };
   }
+};
+const cardsConverter = (cards) => {
+  // Mapping suits to single-letter representation
+  const suitMap = {
+    Heart: "h",
+    Spade: "s",
+    Club: "c",
+    Diamond: "d",
+  };
+
+  return cards.map((card) => {
+    const cardValue = card.cardFace === "10" ? "T" : card.cardFace;
+    const suitValue = suitMap[card.suit];
+    return `${cardValue}${suitValue}`;
+  });
 };
 
 const buildValueSet = (hand) => {

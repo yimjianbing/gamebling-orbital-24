@@ -57,6 +57,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 class Poker extends Component {
   state = {
+    odds: 10.0,
     loading: true,
     winnerFound: null,
     players: null,
@@ -85,6 +86,7 @@ class Poker extends Component {
       4: {isAnimating: false, content: null},
       5: {isAnimating: false, content: null}
     }
+
   }
 
   cardAnimationDelay = 0;
@@ -367,6 +369,16 @@ imageLoaderRequest.send();
         }
       })
   }
+  renderOddsBar() {
+    const { odds } = this.state;
+    console.log("odds rendered: ", odds)
+
+    return (
+      <div className="odds-bar-container">
+        <div className="odds-bar" style={{ width: `${odds}%` }}></div>
+      </div>
+    );
+  }
 
   renderActionButtons = () => {
     const { highBet, players, activePlayerIndex, phase, betInputValue } = this.state
@@ -427,6 +439,9 @@ imageLoaderRequest.send();
           <div className='action-buttons'>
               { this.renderActionButtons() }
           </div>
+          <div className='odds-calculator'>
+          { this.renderOddsBar() }
+        </div>
           <div className='slider-boi'>
             { (!this.state.loading)  && renderActionMenu(highBet, players, activePlayerIndex, phase, this.handleBetInputChange)}
           </div>
