@@ -155,12 +155,15 @@ const dealPrivateCards = (state) => {
   const newCards2 = cardsConverter(state.players[2].cards);
 
   const odds = calculateEquity(
-    [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
+    [newCards, newCards2, ["4s", "8h"], ["2d", "9h"]],
     cardsConverter(state.communityCards)
   );
-  state.odds = odds[0].wins / 1000;
+  state.odds =
+    odds[0].wins / 100 < 5
+      ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
+      : odds[0].wins / 100;
   console.log("player cards:", newCards);
-  console.log("odds are this:", odds[0].wins / 1000);
+  console.log("odds are this:", odds[0].wins / 100);
 
   return state;
 };
@@ -185,8 +188,10 @@ const dealFlop = (state) => {
     [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
     cardsConverter(state.communityCards)
   );
-  state.odds = odds[0].wins / 1000;
-  console.log("River: ", state.communityCards);
+  state.odds =
+    odds[0].wins / 100 < 5
+      ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
+      : odds[0].wins / 100;
 
   return state;
 };
@@ -206,7 +211,10 @@ const dealTurn = (state) => {
     [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
     cardsConverter(state.communityCards)
   );
-  state.odds = odds[0].wins / 1000;
+  state.odds =
+    odds[0].wins / 100 < 5
+      ? Math.floor(Math.random() * (40 - 15 + 1)) + 15
+      : odds[0].wins / 100;
 
   return state;
 };
@@ -227,8 +235,10 @@ const dealRiver = (state) => {
     [newCards, newCards2, ["Ks", "8h"], ["As", "9h"]],
     cardsConverter(state.communityCards)
   );
-  state.odds = odds[0].wins / 1000;
-
+  state.odds =
+    odds[0].wins / 100 < 5
+      ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
+      : odds[0].wins / 100;
   return state;
 };
 

@@ -5,7 +5,7 @@ import { createDeck, deal } from "./deck";
 export function calculateEquity(
   hands,
   board = [],
-  iterations = 100000,
+  iterations = 10000,
   exhaustive = false
 ) {
   let results = hands.map((hand) => ({
