@@ -1,6 +1,5 @@
 import { dealFlop, dealTurn, dealRiver, showDown } from "./cards.js";
 import { determineNextActivePlayer } from "./players.js";
-import { calculateEquity } from "../../../oddsCalculator/calculate.js";
 
 const determineBlindIndices = (dealerIndex, numPlayers) => {
   return {
