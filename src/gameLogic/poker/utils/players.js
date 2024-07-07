@@ -15,77 +15,13 @@ import {
 // import axios from "axios";
 import boyImage from "../../../assets/pokerGame/boy.svg";
 
-// TODO Generate UUID to simulate User ID and really get a perf match on binding to players when determining winnings
-// const generateTable = async () => {
-//   const users = [
-//     {
-//       id: uuid(),
-//       name: "Player 1",
-//       avatarURL: "/assets/boy.svg",
-//       cards: [],
-//       showDownHand: {
-//         hand: [],
-//         descendingSortHand: [],
-//       },
-//       chips: 20000,
-//       roundStartChips: 20000,
-//       roundEndChips: 20000,
-//       currentRoundChipsInvested: 0,
-//       bet: 0,
-//       betReconciled: false,
-//       folded: false,
-//       allIn: false,
-//       canRaise: true,
-//       stackInvestment: 0,
-//       robot: false,
-//     },
-//   ];
-
-//   const response = await axios.get(
-//     `https://randomuser.me/api/?results=4&nat=us,gb,fr`
-//   );
-//   alert(response.data.results);
-//   response.data.results
-//     .map((user) => {
-//       const randomizedChips =
-//         Math.floor(Math.random() * (20000 - 18000)) + 18000;
-//       return {
-//         id: uuid(),
-//         name: `${user.name.first
-//           .charAt(0)
-//           .toUpperCase()}${user.name.first.slice(1)} ${user.name.last
-//           .charAt(0)
-//           .toUpperCase()}${user.name.last.slice(1)}`,
-//         avatarURL: user.picture.large,
-//         cards: [],
-//         chips: randomizedChips,
-//         roundStartChips: randomizedChips,
-//         roundEndChips: randomizedChips,
-//         currentRoundChipsInvested: 0,
-//         showDownHand: {
-//           hand: [],
-//           descendingSortHand: [],
-//         },
-//         bet: 0,
-//         betReconciled: false,
-//         folded: false,
-//         allIn: false,
-//         robot: true,
-//         canRaise: true,
-//         stackInvestment: 0,
-//       };
-//     })
-//     .forEach((user) => users.push(user));
-
-//   return users;
-// };
-
 const generateTable = () => {
   const users = [
     {
       id: uuid(),
       name: "You",
-      avatarURL: "https://img.icons8.com/?size=100&id=rrtYnzKMTlUr&format=png&color=000000",
+      avatarURL:
+        "https://img.icons8.com/?size=100&id=rrtYnzKMTlUr&format=png&color=000000",
       cards: [],
       showDownHand: {
         hand: [],
