@@ -21,8 +21,6 @@ const Card = (props) => {
     applyFoldedClassname
   } = props;
 
-
-
   return(
     <div 
       key={`${suit} ${cardFace}`} 
@@ -31,14 +29,11 @@ const Card = (props) => {
       <h6
         className={`${suit}${cardFace}${skin}`}
         style={{
-          // color: `${(suit === 'Diamond' || suit === 'Heart') ? 'red' : 'black'}`,
-          // backgroundImage: `url(${chipImage})`,
           backgroundSize: 'cover',
           height: '150px',
           width: '105px',
         }} 
         >
-        {/* {`${cardFace} ${renderUnicodeSuitSymbol(suit)}` } */}
       </h6>
     </div>
   )

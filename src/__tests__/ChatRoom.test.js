@@ -1,6 +1,6 @@
 import { render as rtlRender, screen, fireEvent } from '@testing-library/react';
 import { AuthContext } from '../context/AuthContext';
-import ChatRoom from '../Components/ChatRoom/ChatRoom';
+import ChatRoom from '../components/ChatRoom/ChatRoom';
 
 function render(ui, { providerProps, ...renderOptions }) {
     return rtlRender(

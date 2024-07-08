@@ -1,5 +1,5 @@
 import { render, screen} from '@testing-library/react';
-import { NavBar } from '../Components/NavBar/NavBar';
+import { NavBar } from '../components/NavBar/NavBar';
 import { MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { AuthContext } from '../context/AuthContext';

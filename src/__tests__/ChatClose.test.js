@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ChatClose from '../Components/ChatClose/ChatClose';
+import ChatClose from '../components/ChatClose/ChatClose';
 
 describe('chatClose Component', () => {
     test('renders chatClose component', () => {
