@@ -18,7 +18,9 @@ const port = 3000;
 
 app.use(cors(
   {
-    origin: [""]
+    origin: ["https://https://gamebling-orbital-24-8ruf-backend.vercel.app"],
+    methods: ["GET", "POST"],
+    credentials: true,
   }
 ));
 app.use(express.json());
