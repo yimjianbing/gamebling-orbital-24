@@ -15,8 +15,6 @@ function OnlinePoker() {
   const { currentUserLoggedIn } = useContext(AuthContext);
   const [ queue, setQueue ] = useState([]); // [ { id: 'uuid', name: 'playerName' }, ...
 
-  axios.defaults.withCredentials = true;
-
   const createPlayer = async() => {  
     const player = {
       id: uuid(),
@@ -40,10 +38,9 @@ function OnlinePoker() {
       robot: false,
     };
 
-
     try {
       setQueue([...queue, player]);
-      const response = await axios.post('https://gamebling-orbital-24-8ruf-backend.vercel.app/api/enqueue', { player }, {
+      const response = await axios.post('http://localhost:5000/api/enqueue', { player }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -57,7 +54,7 @@ function OnlinePoker() {
 
   const checkAndCreateRoom = async (player) => {
     try {
-      const roomResponse = await axios.post('https://gamebling-orbital-24-8ruf-backend.vercel.app/api/checkAndCreateRoom', { player }, {
+      const roomResponse = await axios.post('http://localhost:5000/api/checkAndCreateRoom', { player }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -70,8 +67,8 @@ function OnlinePoker() {
 
   const deque = async () => {
     try {
-      setQueue([]);
-      const response = await axios.post('https://gamebling-orbital-24-8ruf-backend.vercel.app/api/dequeue', {}, {
+
+      const response = await axios.post('http://localhost:5000/api/dequeue', {}, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -80,11 +77,12 @@ function OnlinePoker() {
       if (data) {
         console.log(`Player dequeued: ${data.name}`);
         try {
-          const roomResponse = await axios.post('https://gamebling-orbital-24-8ruf-backend.vercel.app/api/checkAndCreateRoom', { player: data }, {
+          const roomResponse = await axios.post('http://localhost:5000/api/checkAndCreateRoom', { player: data }, {
             headers: {
               'Content-Type': 'application/json',
             }
           });
+          setQueue([]);
           console.log('Player data received:', roomResponse.data);
         } catch (error) {
           console.error('Error in room creation or check:', error);

@@ -14,15 +14,9 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
-app.use(cors(
-  {
-    origin: ["https://https://gamebling-orbital-24-8ruf-backend.vercel.app"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  }
-));
+app.use(cors());
 app.use(express.json());
 
 let channel, connection;
