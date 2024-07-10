@@ -47,6 +47,17 @@
     transform: scale(1.35);
 }
 
+.tutorial {
+
+}
+
+.tutorial:hover{
+    cursor: pointer;
+    color:aliceblue;
+    text-decoration: underline;
+    transition: 0.2s ease-in;
+    transform: scale(1.35);
+}
 @keyframes zoom {
     0% {
       transform: scale(0);
@@ -57,3 +68,26 @@
       opacity: 1;
     }
 }
+
+.dropdown {
+    background-color: grey;
+    position: absolute;
+    top: -100%;
+    left: 102%; /* Position the dropdown to the right of the tutorial */
+    backdrop-filter: blur(30px);
+    border: 1px solid #ccc;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 150px;
+  }
+  
+  .dropdown p {
+    margin: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown p:hover {
+    background-color: rgb(170, 170, 170)
+    ; /* Highlight color on hover */
+  }

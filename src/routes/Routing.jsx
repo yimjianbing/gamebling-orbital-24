@@ -1,6 +1,7 @@
 //import Layout from "../Components/NavBar/Layout";
 import { Protected } from "../auth/Protected";
 import { InGameProvider } from "../context/InGameContext";
+import { TutorialProvider } from "../context/TutorialContext";
 import Poker from "../gameLogic/poker/poker";
 import About from "../pages/About/About";
 import ContactUs from "../pages/ContactUs/ContactUs";
@@ -10,6 +11,8 @@ import { MainMenu } from "../pages/MainMenu/MainMenu";
 import OnlinePoker from "../onlineGameLogic/onlinePoker/OnlinePoker";
 import { PokerMenu } from "../pages/PokerMenu/PokerMenu";
 import { Skins } from "../pages/Skins/Skins";
+import  Tutorial  from "../gameLogic/poker/Tutorial";
+
 
 const RouterBuilder = () => {
   const generalRoutes = [
@@ -38,6 +41,12 @@ const RouterBuilder = () => {
       ),
     },
     {
+      path: "/tutorial",
+      element: (<TutorialProvider>
+        <Tutorial />
+        </TutorialProvider>),
+    },
+    {
       path: "/poker",
       element: <Poker />,
     },
@@ -47,7 +56,9 @@ const RouterBuilder = () => {
     },
     {
       path: "/pokermenu",
-      element: <PokerMenu />,
+      element: (<TutorialProvider>
+        <PokerMenu />
+        </TutorialProvider>),
     },
     {
       path: "/skins",
