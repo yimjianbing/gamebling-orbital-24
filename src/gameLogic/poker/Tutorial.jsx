@@ -6,7 +6,6 @@
 import 'raf/polyfill';
 
 import React, { Component } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import './PokerGame.css';
 import './poker.css';
 
@@ -24,7 +23,6 @@ import {
   generateDeckOfCards, 
   shuffle, 
   dealPrivateCards,
-  configureDeck
 } from './utils/cards.js';
 
 import { 
@@ -59,9 +57,6 @@ import cloneDeep from 'lodash/cloneDeep';
 
 class Tutorial extends Component {
   state = {
-    
-    gameName: null,
-    reservedCards: null,
     odds: 10.0,
     loading: true,
     winnerFound: null,
@@ -94,15 +89,11 @@ class Tutorial extends Component {
 
   }
 
-  
-
   cardAnimationDelay = 0;
   
   loadTable = () => {
 
   }
-
-  
 
  componentDidMount() {
   
@@ -305,7 +296,7 @@ imageLoaderRequest.send();
   }
 
   runGameLoop = () => {
-    const newState = dealPrivateCards(cloneDeep(this.state)) 
+    const newState = dealPrivateCards(cloneDeep(this.state)) // this is the error
     this.setState(newState, () => {
       if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
         setTimeout(() => {
@@ -379,6 +370,7 @@ imageLoaderRequest.send();
       })
   }
   renderOddsBar() {
+    console.log("hello im here")
     const { odds } = this.state;
     console.log("odds rendered: ", odds)
 
@@ -462,12 +454,6 @@ imageLoaderRequest.send();
 
   
   render() {
-
-    //console.log("location: ", location);
-    //const query = new URLSearchParams(location.search);
-   // const gameName = query.get('gameName');
-  //  this.setState({ gameName });
-   // console.log("gameName: ", gameName);
 
     return (
       <div className="Poker">
