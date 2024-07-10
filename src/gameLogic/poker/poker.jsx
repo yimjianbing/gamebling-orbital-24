@@ -8,7 +8,7 @@ import 'raf/polyfill';
 import React, { Component } from 'react';
 import './PokerGame.css';
 import './poker.css';
-
+import { inGameContext } from '../../context/InGameContext.jsx';
 
 import Exit from './Exit.jsx';
 
@@ -56,6 +56,9 @@ import {
 import cloneDeep from 'lodash/cloneDeep';
 
 class Poker extends Component {
+
+  static contextType = inGameContext;
+
   state = {
     odds: 10.0,
     loading: true,
@@ -104,6 +107,8 @@ class Poker extends Component {
     const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
 
     const imageLoaderRequest = new XMLHttpRequest();
+
+    this.context.setInGame(true);
 
 
 imageLoaderRequest.addEventListener("load", e => {
