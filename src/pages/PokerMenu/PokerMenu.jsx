@@ -2,11 +2,12 @@ import {React, useContext, useState} from "react";
 import "./PokerMenu.css";
 import { useNavigate } from "react-router-dom";
 import { inGameContext } from "../../context/InGameContext";
-import { MyContext } from "../../context/InGameContext";
+import { TutorialContext } from "../../context/TutorialContext";
 
 export const PokerMenu = () => {
   const navigate = useNavigate();
   const { setInGame } = useContext(inGameContext);
+  const { setOption } = useContext(TutorialContext);
   const [showDropdown, setShowDropdown] = useState(false);
 
   function handleOnlinePoker() {
@@ -19,6 +20,7 @@ export const PokerMenu = () => {
   }
 
   function handleTutorial(gameName) {
+    setOption(gameName);
     navigate(`/tutorial?gameName=${gameName}`);
   }
 
