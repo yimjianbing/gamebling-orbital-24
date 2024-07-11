@@ -58,11 +58,10 @@ import cloneDeep from 'lodash/cloneDeep';
 
 class Tutorial extends Component {
 
-  static contextType = inGameContext;
-  static tutorialContext = TutorialContext;
+  static contextType = TutorialContext;
 
   state = {
-    tutorialType: null, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
+    tutorialType: this.context.selectedOption, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
     odds: 10.0,
     loading: true,
     winnerFound: null,
@@ -111,7 +110,7 @@ class Tutorial extends Component {
 
     const imageLoaderRequest = new XMLHttpRequest();
 
-    this.context.setInGame(true);
+    // this.context.setInGame(true);
 
 
 imageLoaderRequest.addEventListener("load", e => {
@@ -156,6 +155,7 @@ imageLoaderRequest.send();
 
     this.setState(prevState => ({
       // loading: false,
+      tutorialType: this.context.selectedOption,
       players: playersBoughtIn,
       numPlayersActive: playersBoughtIn.length,
       numPlayersFolded: 0,
@@ -312,6 +312,7 @@ imageLoaderRequest.send();
         }, 1200)
       }
     })
+    this.setState({tutorialType: this.context.selectedOption});
   }
 
   renderRankTie = (rankSnapshot) => {
@@ -462,9 +463,10 @@ imageLoaderRequest.send();
   
   render() {
  return (
-    <TutorialContext.Consumer>
-      {tutorialContext => {
-        console.log("Selected Option: ", tutorialContext.selectedOption);
+    <inGameContext.Consumer>
+      {inGameContext => {
+        inGameContext.setInGame(true);
+        console.log(this.state.tutorialType);
         return (
           <div className="Poker">
             <div className='poker-table--wrapper'>
@@ -480,7 +482,7 @@ imageLoaderRequest.send();
           </div>
         );
       }}
-    </TutorialContext.Consumer>
+    </inGameContext.Consumer>
   );
   }
 }
