@@ -1334,7 +1334,44 @@ const dealMissingCommunityCards = (state) => {
   return state;
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+// for tutorial//
+
+const configureDeck = (state) => {
+  const gameName = state.gameName; // Default hand type for player 0
+  const flushSuit = "hearts"; // Default suit for flush, can be changed based on handType
+  let handCards = [];
+
+  switch (gameName) {
+    case "flush":
+      // Ensure player 0 gets a flush
+      handCards = state.deck
+        .filter((card) => card.suit === flushSuit)
+        .slice(0, 2);
+      break;
+    case "straight":
+      // Ensure player 0 gets a straight
+      handCards = ["2h", "3h", "4h", "5h", "6h"].map((rank) => ({
+        rank,
+        suit: "hearts",
+      }));
+      handCards = handCards.slice(0, 2);
+      break;
+    // Add more cases for other hand types
+    default:
+      break;
+  }
+
+  // Remove the chosen cards from the deck
+  state.deck = state.deck.filter((card) => !handCards.includes(card));
+
+  // Assign the cards to player 0
+  state.players[0].cards = handCards;
+  return state;
+};
+
 export {
+  configureDeck,
   generateDeckOfCards,
   shuffle,
   popCards,

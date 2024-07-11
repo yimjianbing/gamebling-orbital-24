@@ -14,9 +14,13 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [""],
+  })
+);
 app.use(express.json());
 
 let channel, connection;
@@ -48,7 +52,6 @@ async function addPlayerToQueue(player) {
   }
 }
 
-
 async function dequeuePlayer(timeout = 15000) {
   return new Promise((resolve, reject) => {
     let consumed = false;
@@ -78,32 +81,33 @@ async function dequeuePlayer(timeout = 15000) {
     channel.on("error", errorHandler);
 
     // Consume messages from "player_queue"
-    const result = channel.consume(
-      "player_queue",
-      (msg) => {
-        consumed = false;
-        if (!consumed) {
-          consumed = true;
-          cleanup();
+    const result = channel
+      .consume(
+        "player_queue",
+        (msg) => {
+          consumed = false;
+          if (!consumed) {
+            consumed = true;
+            cleanup();
 
-          if (msg !== null) {
-            const player = JSON.parse(msg.content.toString());
-            console.log(`Player dequeued: ${player.name}`);
+            if (msg !== null) {
+              const player = JSON.parse(msg.content.toString());
+              console.log(`Player dequeued: ${player.name}`);
 
-            channel.ack(msg);
-            resolve(player);
-          } else {
-            console.log("Queue is empty");
-            resolve(null);
+              channel.ack(msg);
+              resolve(player);
+            } else {
+              console.log("Queue is empty");
+              resolve(null);
+            }
           }
-        }
-      },
-      { noAck: false }
-    ).then((result) => {
-      channel.cancel(result.consumerTag);
-    });
+        },
+        { noAck: false }
+      )
+      .then((result) => {
+        channel.cancel(result.consumerTag);
+      });
 
-   
     // channel.on("error", errorHandler);
     // channel.once("error", cleanup);
   });
@@ -139,7 +143,6 @@ app.post("/api/dequeue", async (req, res) => {
       res.status(200).send("Queue is empty or game room not found");
     }
   } catch (error) {
-
     res.status(500).send("Failed to dequeue player");
   }
 });

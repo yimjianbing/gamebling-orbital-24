@@ -38,9 +38,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .odds-bar-container {
   position: absolute;
-  top: 20px; /* Adjust this value to position it vertically */
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 10%; /* Adjust this value to position it vertically from the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset by 50% to fully center horizontally */
   width: 80%; /* Adjust the width as needed */
   max-width: 400px; /* Adjust max-width if necessary */
   height: 20px; /* Adjust the height as needed */
@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .odds-bar {
-  height: 100%;
+  height: 100%; /* Set height to 100% to fill the container */
   background-image: linear-gradient(
     to right, 
     red 0%, 

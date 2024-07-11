@@ -15,4 +15,7 @@ export const InGameProvider = ({children}) => {
             {children}
         </inGameContext.Provider>
     );
+
+
 };
+
