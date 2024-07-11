@@ -5,10 +5,11 @@
 
 import 'raf/polyfill';
 
-import React, { Component, useContext, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import './PokerGame.css';
 import './poker.css';
-
+import { inGameContext } from '../../context/InGameContext.jsx';
+import { TutorialContext } from '../../context/TutorialContext.jsx';
 
 import Exit from './Exit.jsx';
 
@@ -55,12 +56,13 @@ import {
 
 import cloneDeep from 'lodash/cloneDeep';
 
-import { TutorialContext } from '../../context/TutorialContext.jsx';
+class Tutorial extends Component {
 
-const Tutorial = () => {
-  const { selectedOption } = useContext(TutorialContext);
+  static contextType = inGameContext;
+  static tutorialContext = TutorialContext;
 
-  const [state, setState] = useState({
+  state = {
+    tutorialType: null, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
     odds: 10.0,
     loading: true,
     winnerFound: null,
@@ -83,36 +85,77 @@ const Tutorial = () => {
     showDownMessages: [],
     playActionMessages: [],
     playerAnimationSwitchboard: {
-      0: { isAnimating: false, content: null },
-      1: { isAnimating: false, content: null },
-      2: { isAnimating: false, content: null },
-      3: { isAnimating: false, content: null },
-      4: { isAnimating: false, content: null },
-      5: { isAnimating: false, content: null }
-    },
-  });
+      0: {isAnimating: false, content: null},
+      1: {isAnimating: false, content: null},
+      2: {isAnimating: false, content: null},
+      3: {isAnimating: false, content: null},
+      4: {isAnimating: false, content: null},
+      5: {isAnimating: false, content: null}
+    }
 
-  useEffect(() => {
-    // Logic from componentDidMount
-    const players = generateTable();
+  }
+
+  cardAnimationDelay = 0;
+  
+  loadTable = () => {
+
+  }
+
+ componentDidMount() {
+  
+    const players =  generateTable();
     const dealerIndex = Math.floor(Math.random() * Math.floor(players.length));
-    const blindIndices = determineBlindIndices(dealerIndex, players.length);
-    const playersBoughtIn = anteUpBlinds(players, blindIndices, state.minBet);
+    const blindIndicies = determineBlindIndices(dealerIndex, players.length);
+    
+    const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
 
     const imageLoaderRequest = new XMLHttpRequest();
-    imageLoaderRequest.addEventListener("load", (e) => {
-      console.log("Image Loaded!", e);
-      setState((prevState) => ({ ...prevState, loading: false }));
-    });
-    imageLoaderRequest.addEventListener("error", (e) => {
-      console.log("Error loading image", e);
-    });
 
-    imageLoaderRequest.open("GET", "./assets/table-nobg-svg-01.svg");
-    imageLoaderRequest.send();
+    this.context.setInGame(true);
 
-    setState((prevState) => ({
-      ...prevState,
+
+imageLoaderRequest.addEventListener("load", e => {
+    console.log(`${e.type}`);
+    console.log(e);
+    console.log("Image Loaded!");
+    this.setState({
+      loading: false,
+    })
+});
+
+imageLoaderRequest.addEventListener("error", e => {
+    console.log(`${e.type}`);
+    console.log(e);
+});
+
+
+imageLoaderRequest.addEventListener("loadstart", e => {
+    console.log(`${e.type}`);
+    console.log(e);
+});
+
+imageLoaderRequest.addEventListener("loadend", e => {
+    console.log(`${e.type}`);
+    console.log(e);
+});
+
+imageLoaderRequest.addEventListener("abort", e => {
+    console.log(`${e.type}`);
+    console.log(e);
+});
+
+imageLoaderRequest.addEventListener("progress", e => {
+    console.log(`${e.type}`);
+    console.log(e);
+});
+
+imageLoaderRequest.open("GET", "./assets/table-nobg-svg-01.svg");
+imageLoaderRequest.send();
+
+
+
+    this.setState(prevState => ({
+      // loading: false,
       players: playersBoughtIn,
       numPlayersActive: playersBoughtIn.length,
       numPlayersFolded: 0,
@@ -120,145 +163,166 @@ const Tutorial = () => {
       activePlayerIndex: dealerIndex,
       dealerIndex,
       blindIndex: {
-        big: blindIndices.bigBlindIndex,
-        small: blindIndices.smallBlindIndex,
+        big: blindIndicies.bigBlindIndex,
+        small: blindIndicies.smallBlindIndex,
       },
       deck: shuffle(generateDeckOfCards()),
       pot: 0,
       highBet: prevState.minBet,
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
-    }));
-
-    // Call runGameLoop after state is updated
-    runGameLoop();
-  }, []);
-
-  const handleBetInputChange = (val, min, max) => {
-    if (val === '') val = min;
-    if (val > max) val = max;
-    setState((prevState) => ({
-      ...prevState,
-      betInputValue: parseInt(val, 10),
-    }));
-  };
-
-  const changeSliderInput = (val) => {
-    setState((prevState) => ({
-      ...prevState,
-      betInputValue: val[0],
-    }));
-  };
-
-  const pushAnimationState = (index, content) => {
-    const newAnimationSwitchboard = {
-      ...state.playerAnimationSwitchboard,
-      [index]: { isAnimating: true, content },
-    };
-    setState((prevState) => ({
-      ...prevState,
-      playerAnimationSwitchboard: newAnimationSwitchboard,
-    }));
-  };
-
-  const popAnimationState = (index) => {
-    const persistContent = state.playerAnimationSwitchboard[index].content;
-    const newAnimationSwitchboard = {
-      ...state.playerAnimationSwitchboard,
-      [index]: { isAnimating: false, content: persistContent },
-    };
-    setState((prevState) => ({
-      ...prevState,
-      playerAnimationSwitchboard: newAnimationSwitchboard,
-    }));
-  };
-
-  const handleBetInputSubmit = (bet, min, max) => {
-    pushAnimationState(
-      state.activePlayerIndex,
-      `${renderActionButtonText(state.highBet, state.betInputValue, state.players[state.activePlayerIndex])} ${(bet > state.players[state.activePlayerIndex].bet) ? (bet) : ""}`
-    );
-    const newState = handleBet(cloneDeep(state), parseInt(bet, 10), parseInt(min, 10), parseInt(max, 10));
-    setState(newState, () => {
-      if (state.players[state.activePlayerIndex].robot && state.phase !== 'showdown') {
-        setTimeout(handleAI, 1200);
-      }
+    }), () => {
+      // This callback runs after the state has been updated
+      console.log("deck in state", this.state.deck);
+      console.log("players in state", this.state.players);
+      this.runGameLoop();
     });
-  };
+}
 
-  const handleFold = () => {
-    const newState = handleFold(cloneDeep(state));
-    setState(newState, () => {
-      if (state.players[state.activePlayerIndex].robot && state.phase !== 'showdown') {
-        setTimeout(handleAI, 1200);
-      }
-    });
-  };
+  handleBetInputChange = (val, min, max) => {
+    if (val === '') val = min
+    if (val > max) val = max
+      this.setState({
+        betInputValue: parseInt(val, 10),
+      });
+  }
+  
+  changeSliderInput = (val) => {
+    this.setState({
+      betInputValue: val[0]
+    })
+  }
 
-  const handleAI = () => {
-    const newState = handleAIUtil(cloneDeep(state), pushAnimationState);
-    setState({
-      ...newState,
-      betInputValue: newState.minBet,
-    }, () => {
-      if (state.players[state.activePlayerIndex].robot && state.phase !== 'showdown') {
-        setTimeout(handleAI, 1200);
-      }
-    });
-  };
+  pushAnimationState = (index, content) => {
+    const newAnimationSwitchboard = Object.assign(
+      {}, 
+      this.state.playerAnimationSwitchboard,
+      {[index]: {isAnimating: true, content}}     
+    )
+    this.setState({playerAnimationSwitchboard: newAnimationSwitchboard});
+  }
 
-  const renderBoard = () => {
-    const { players, activePlayerIndex, dealerIndex, clearCards, phase, playerAnimationSwitchboard } = state;
+  popAnimationState = (index) => {
+    const persistContent = this.state.playerAnimationSwitchboard[index].content;
+    const newAnimationSwitchboard = Object.assign(
+      {}, 
+      this.state.playerAnimationSwitchboard,
+      {[index]: {isAnimating: false, content: persistContent}}     
+    )
+    this.setState({playerAnimationSwitchboard: newAnimationSwitchboard});
+  }
+
+  handleBetInputSubmit = (bet, min, max) => {
+    const {playerAnimationSwitchboard, ...appState} = this.state;
+    const { activePlayerIndex } = appState;
+    this.pushAnimationState(activePlayerIndex, `${renderActionButtonText(this.state.highBet, this.state.betInputValue, this.state.players[this.state.activePlayerIndex])} ${(bet > this.state.players[this.state.activePlayerIndex].bet) ? (bet) : ""}`);
+    const newState = handleBet(cloneDeep(appState), parseInt(bet, 10), parseInt(min, 10), parseInt(max, 10));
+      this.setState(newState, () => {
+        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+          setTimeout(() => {
+          
+            this.handleAI()
+          }, 1200)
+        }
+      });
+  }
+
+  handleFold = () => {
+    const {playerAnimationSwitchboard, ...appState} = this.state
+    const newState = handleFold(cloneDeep(appState));
+      this.setState(newState, () => {
+        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+          setTimeout(() => {
+          
+            this.handleAI()
+          }, 1200)
+        }
+      })
+  }
+
+  handleAI = () => {
+    const {playerAnimationSwitchboard, ...appState} = this.state;
+    const newState = handleAIUtil(cloneDeep(appState), this.pushAnimationState)
+
+      this.setState({
+            ...newState,
+            betInputValue: newState.minBet
+      }, () => {
+        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+          setTimeout(() => {
+
+            this.handleAI()
+          }, 1200)
+        }
+      })
+  }
+
+  renderBoard = () => {
+    const { 
+      players,
+      activePlayerIndex,
+      dealerIndex,
+      clearCards,
+      phase,
+      playerAnimationSwitchboard
+    } = this.state;
+    // Reverse Players Array for the sake of taking turns counter-clockwise.
     const reversedPlayers = players.reduce((result, player, index) => {
-      const isActive = index === activePlayerIndex;
-      const hasDealerChip = index === dealerIndex;
+      
+      const isActive = (index === activePlayerIndex);
+      const hasDealerChip = (index === dealerIndex);
+
 
       result.unshift(
-        <Player
-          key={index}
-          arrayIndex={index}
-          isActive={isActive}
-          hasDealerChip={hasDealerChip}
-          player={player}
-          clearCards={clearCards}
-          phase={phase}
-          playerAnimationSwitchboard={playerAnimationSwitchboard}
-          endTransition={popAnimationState}
-        />
-      );
-      return result;
+          <Player
+            key={index}
+            arrayIndex={index}
+            isActive={isActive}
+            hasDealerChip={hasDealerChip}
+            player={player}
+            clearCards={clearCards}
+            phase={phase}
+            playerAnimationSwitchboard={playerAnimationSwitchboard}      
+            endTransition={this.popAnimationState}
+          />
+      )
+      return result
     }, []);
     return reversedPlayers.map(component => component);
-  };
+  }
 
-  const renderCommunityCards = (purgeAnimation) => {
-    return state.communityCards.map((card, index) => {
-      let cardData = { ...card };
+  renderCommunityCards = (purgeAnimation) => {
+    return this.state.communityCards.map((card, index) => {
+      let cardData = {...card};
       if (purgeAnimation) {
         cardData.animationDelay = 0;
       }
-      return (
-        <Card key={index} cardData={cardData} />
+      return(
+        <Card key={index} cardData={cardData}/>
       );
     });
-  };
+  }
 
-  const runGameLoop = () => {
-    const newState = dealPrivateCards(cloneDeep(state)); // this is the error
-    setState(newState, () => {
-      if (state.players[state.activePlayerIndex].robot && state.phase !== 'showdown') {
-        setTimeout(handleAI, 1200);
+  runGameLoop = () => {
+    const newState = dealPrivateCards(cloneDeep(this.state)) // this is the error
+    this.setState(newState, () => {
+      if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+        setTimeout(() => {
+          this.handleAI()
+        }, 1200)
       }
-    });
-  };
+    })
+  }
 
-  const renderRankTie = (rankSnapshot) => {
-    return rankSnapshot.map(player => renderRankWinner(player));
-  };
+  renderRankTie = (rankSnapshot) => {
+    return rankSnapshot.map(player => {
+      return this.renderRankWinner(player);
+    })
+  }
 
-  const renderRankWinner = (player) => {
+  renderRankWinner = (player) => {
     const { name, bestHand, handRank } = player;
-    const playerStateData = state.players.find(statePlayer => statePlayer.name === name);
+    const playerStateData = this.state.players.find(statePlayer => statePlayer.name === name);
     return (
       <div className="showdown-player--entity" key={name}>
         <ShowdownPlayer
@@ -272,12 +336,12 @@ const Tutorial = () => {
           <h5 className="showdown-player--besthand--heading">
             Best Hand
           </h5>
-          <div className='showdown-player--besthand--cards' style={{ alignItems: 'center' }}>
+          <div className='showdown-player--besthand--cards' style={{alignItems: 'center'}}>
             {
               bestHand.map((card, index) => {
                 // Reset Animation Delay
-                const cardData = { ...card, animationDelay: 0 }
-                return <Card key={index} cardData={cardData} />
+                const cardData = {...card, animationDelay: 0}
+                return <Card key={index} cardData={cardData}/> 
               })
             }
           </div>
@@ -287,125 +351,138 @@ const Tutorial = () => {
         </div>
         {renderNetPlayerEarnings(playerStateData.roundEndChips, playerStateData.roundStartChips)}
       </div>
-    );
-  };
+    )
+  }
 
-  const renderBestHands = () => {
-    const { playerHierarchy } = state;
+  renderBestHands = () => {
+    const { playerHierarchy } = this.state;
 
     return playerHierarchy.map(rankSnapshot => {
       const tie = Array.isArray(rankSnapshot);
-      return tie ? renderRankTie(rankSnapshot) : renderRankWinner(rankSnapshot);
-    });
-  };
+      return tie ? this.renderRankTie(rankSnapshot) : this.renderRankWinner(rankSnapshot);
+    })
+  }
 
-  const handleNextRound = () => {
-    setState({ clearCards: true });
-    const newState = beginNextRound(cloneDeep(state));
+  handleNextRound = () => {
+    this.setState({clearCards: true})
+    const newState = beginNextRound(cloneDeep(this.state))
     // Check win condition
-    if (checkWin(newState.players)) {
-      setState({ winnerFound: true });
+    if(checkWin(newState.players)) {
+      this.setState({ winnerFound: true })
       return;
     }
-    setState(newState, () => {
-      if (state.players[state.activePlayerIndex].robot && state.phase !== 'showdown') {
-        setTimeout(handleAI, 1200);
-      }
-    });
-  };
+      this.setState(newState, () => {
+        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+          setTimeout(() => this.handleAI(), 1200)
+        }
+      })
+  }
+  renderOddsBar() {
+    const { odds } = this.state;
+    console.log("odds rendered: ", odds)
 
-  const renderOddsBar = () => {
-    const { odds } = state;
     return (
       <div className="odds-bar-container">
         <div className="odds-bar" style={{ width: `${odds}%` }}></div>
       </div>
     );
-  };
+  }
 
-  const renderActionButtons = () => {
-    const { highBet, players, activePlayerIndex, phase, betInputValue } = state;
-    const min = determineMinBet(highBet, players[activePlayerIndex].chips, players[activePlayerIndex].bet);
-    const max = players[activePlayerIndex].chips + players[activePlayerIndex].bet;
-    return (players[activePlayerIndex].robot || phase === 'showdown') ? null : (
-      <>
-        <button className='action-button' onClick={() => handleBetInputSubmit(betInputValue, min, max)}>
+  renderActionButtons = () => {
+    const { highBet, players, activePlayerIndex, phase, betInputValue } = this.state
+    const min = determineMinBet(highBet, players[activePlayerIndex].chips, players[activePlayerIndex].bet)
+    const max = players[activePlayerIndex].chips + players[activePlayerIndex].bet
+    return ((players[activePlayerIndex].robot) || (phase === 'showdown')) ? null : (
+      <React.Fragment>
+        <button className='action-button' onClick={() => this.handleBetInputSubmit(betInputValue, min, max)}>
           {renderActionButtonText(highBet, betInputValue, players[activePlayerIndex])}
         </button>
-        <button className='fold-button' onClick={handleFold}>
+        <button className='fold-button' onClick={() => this.handleFold()}>
           Fold
         </button>
-      </>
-    );
-  };
+      </React.Fragment>
+      )
+  }
 
-  const renderShowdown = () => {
-    return (
+  renderShowdown = () => {
+    return(
       <div className='showdown-container--wrapper'>
         <h5 className="showdown-container--title">
           Round Complete!
         </h5>
         <div className="showdown-container--messages">
-          {renderShowdownMessages(state.showDownMessages)}
+          { renderShowdownMessages(this.state.showDownMessages)}
         </div>
         <h5 className="showdown-container--community-card-label">
           Community Cards
         </h5>
         <div className='showdown-container--community-cards'>
-          {renderCommunityCards(true)}
+          { this.renderCommunityCards(true) }
         </div>
-        <button className="showdown--nextRound--button" onClick={handleNextRound}> Next Round </button>
-        {renderBestHands()}
+        <button className="showdown--nextRound--button" onClick={() => this.handleNextRound()}> Next Round </button>
+          { this.renderBestHands() }
       </div>
-    );
-  };
+    )
+  }
 
-  const renderGame = () => {
-    const { highBet, players, activePlayerIndex, phase } = state;
+  renderGame = () => {
+    const { highBet, players, activePlayerIndex, phase } = this.state;
     return (
       <div className='poker-app--background'>
         <div className="poker-table--container">
+          {/* <img className="poker-table--table-image" src={tableImage} alt="Poker Table" /> */}
           <div className='player-container'>
-            {renderBoard()}
+          { this.renderBoard() }
           </div>
-          <div className='community-card-container'>
-            {renderCommunityCards()}
+          <div className='community-card-container' >
+            { this.renderCommunityCards() }
           </div>
           <div className='pot-container'>
-            <img style={{ height: 55, width: 55 }} src={potImage} alt="Pot Value" />
-            <h4> {`${state.pot}`} </h4>
+            <img style={{height: 55, width: 55}} src={potImage} alt="Pot Value"/>
+            <h4> {`${this.state.pot}`} </h4>
           </div>
         </div>
-        {state.phase === 'showdown' && renderShowdown()}
-        <div className='game-action-bar'>
+        { (this.state.phase === 'showdown') && this.renderShowdown() } 
+        <div className='game-action-bar' >
           <div className='action-buttons'>
-            {renderActionButtons()}
+              { this.renderActionButtons() }
           </div>
           <div className='odds-calculator'>
-            {renderOddsBar()}
-          </div>
+          { this.renderOddsBar() }
+        </div>
           <div className='slider-boi'>
-            {!state.loading && renderActionMenu(highBet, players, activePlayerIndex, phase, handleBetInputChange)}
+            { (!this.state.loading)  && renderActionMenu(highBet, players, activePlayerIndex, phase, this.handleBetInputChange)}
           </div>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
-  return (
-    <div className="Poker">
-      <div className='poker-table--wrapper'>
-        {
-          state.loading ? <Spinner /> :
-            state.winnerFound ? <WinScreen /> :
-              renderGame()
-        }
-      </div>
-      <div className='poker-table--container'>
-        <Exit />
-      </div>
-    </div>
+
+  
+  render() {
+ return (
+    <TutorialContext.Consumer>
+      {tutorialContext => {
+        console.log("Selected Option: ", tutorialContext.selectedOption);
+        return (
+          <div className="Poker">
+            <div className='poker-table--wrapper'>
+              { 
+                this.state.loading ? <Spinner /> : 
+                this.state.winnerFound ? <WinScreen /> : 
+                this.renderGame()
+              }
+            </div>
+            <div className='poker-table--container'>
+              <Exit />
+            </div>
+          </div>
+        );
+      }}
+    </TutorialContext.Consumer>
   );
-};
+  }
+}
 
 export default Tutorial;
