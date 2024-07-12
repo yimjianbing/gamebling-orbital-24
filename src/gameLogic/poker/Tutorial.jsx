@@ -24,6 +24,7 @@ import {
   generateDeckOfCards, 
   shuffle, 
   dealPrivateCards,
+  configureDeck,
 } from './utils/cards.js';
 
 import { 
@@ -73,6 +74,7 @@ class Tutorial extends Component {
     dealerIndex: null,
     blindIndex: null,
     deck: null,
+    riggedDeck: null,
     communityCards: [],
     pot: null,
     highBet: null,
@@ -167,17 +169,20 @@ imageLoaderRequest.send();
         small: blindIndicies.smallBlindIndex,
       },
       deck: shuffle(generateDeckOfCards()),
+      riggedDeck: null,
       pot: 0,
       highBet: prevState.minBet,
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
     }), () => {
-      // This callback runs after the state has been updated
-      console.log("deck in state", this.state.deck);
-      console.log("players in state", this.state.players);
-      this.runGameLoop();
+      const configuredState = configureDeck(this.state); // Configure the deck based on the tutorial type
+      this.setState(configuredState, () => {
+        console.log("Deck in state:", this.state.deck);
+        console.log("Players in state:", this.state.players);
+        this.runGameLoop();
+      });
     });
-}
+  }
 
   handleBetInputChange = (val, min, max) => {
     if (val === '') val = min
@@ -312,9 +317,9 @@ imageLoaderRequest.send();
         }, 1200)
       }
     })
-    this.setState({tutorialType: this.context.selectedOption});
   }
 
+  
   renderRankTie = (rankSnapshot) => {
     return rankSnapshot.map(player => {
       return this.renderRankWinner(player);

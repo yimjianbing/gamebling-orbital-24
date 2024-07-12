@@ -104,11 +104,12 @@ const popShowdownCards = (deck, numToPop) => {
 };
 
 const dealPrivateCards = (state) => {
-  if (!state || !state.players || !state.deck) {
+  if (!state || !state.players || !state.deck || !state.riggedDeck) {
     console.error("State or required properties are missing or null", state);
     console.error("Deck: ", state.deck);
     console.error("Players: ", state.players);
     console.error("State: ", state);
+    console.error("Rigged Deck: ", state.riggedDeck);
     throw new Error("Invalid state object");
   }
 
@@ -116,26 +117,45 @@ const dealPrivateCards = (state) => {
   let animationDelay = 0;
 
   while (state.players[state.activePlayerIndex].cards.length < 2) {
-    const { mutableDeckCopy, chosenCards } = popCards(state.deck, 1);
+    if (state.activePlayerIndex == 0) {
+      console.log("Rigged Deck: ", state.riggedDeck);
+      const { mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 1);
 
-    if (!chosenCards) {
-      console.error("No cards were chosen", state.deck);
-      throw new Error("Failed to pop cards from the deck");
+      if (!chosenCards) {
+        console.error("No cards were chosen", state.deck);
+        throw new Error("Failed to pop cards from the deck");
+      }
+
+      chosenCards.forEach((card) => {
+        card.animationDelay = animationDelay;
+        animationDelay += 250;
+      });
+
+      const newDeck = [...mutableDeckCopy];
+      state.players[state.activePlayerIndex].cards = chosenCards;
+      state.riggedDeck = newDeck;
+    } else {
+      const { mutableDeckCopy, chosenCards } = popCards(state.deck, 1);
+
+      if (!chosenCards) {
+        console.error("No cards were chosen", state.deck);
+        throw new Error("Failed to pop cards from the deck");
+      }
+
+      chosenCards.animationDelay = animationDelay;
+      animationDelay += 250;
+
+      const newDeck = [...mutableDeckCopy];
+      state.players[state.activePlayerIndex].cards.push(chosenCards);
+      state.deck = newDeck;
+
+      state.activePlayerIndex = handleOverflowIndex(
+        state.activePlayerIndex,
+        1,
+        state.players.length,
+        "up"
+      );
     }
-
-    chosenCards.animationDelay = animationDelay;
-    animationDelay += 250;
-
-    const newDeck = [...mutableDeckCopy];
-    state.players[state.activePlayerIndex].cards.push(chosenCards);
-    state.deck = newDeck;
-
-    state.activePlayerIndex = handleOverflowIndex(
-      state.activePlayerIndex,
-      1,
-      state.players.length,
-      "up"
-    );
 
     if (state.players[state.activePlayerIndex].cards.length === 2) {
       break;
@@ -1338,35 +1358,56 @@ const dealMissingCommunityCards = (state) => {
 // for tutorial//
 
 const configureDeck = (state) => {
-  const gameName = state.gameName; // Default hand type for player 0
+  const deck = state.deck;
+  const gameName = state.gameName;
   const flushSuit = "hearts"; // Default suit for flush, can be changed based on handType
-  let handCards = [];
+  let riggedCards = [];
 
   switch (gameName) {
+    case "pair":
+      riggedCards = [
+        { cardFace: "6", suit: "Heart", value: VALUE_MAP["6"] },
+        { cardFace: "6", suit: "Diamond", value: VALUE_MAP["6"] },
+      ];
+      break;
+    case "double pair":
+      riggedCards = [
+        { cardFace: "3", suit: "Heart", value: VALUE_MAP["3"] },
+        { cardFace: "3", suit: "Diamond", value: VALUE_MAP["3"] },
+        { cardFace: "2", suit: "Club", value: VALUE_MAP["2"] },
+        { cardFace: "6", suit: "Spade", value: VALUE_MAP["6"] },
+        { cardFace: "J", suit: "Heart", value: VALUE_MAP["J"] },
+        { cardFace: "K", suit: "Diamond", value: VALUE_MAP["K"] },
+        { cardFace: "6", suit: "Diamond", value: VALUE_MAP["6"] },
+      ];
+      break;
     case "flush":
-      // Ensure player 0 gets a flush
-      handCards = state.deck
-        .filter((card) => card.suit === flushSuit)
-        .slice(0, 2);
+      riggedCards = deck.filter((card) => card.suit === flushSuit).slice(0, 7); // 2 for player, 5 for river
       break;
     case "straight":
-      // Ensure player 0 gets a straight
-      handCards = ["2h", "3h", "4h", "5h", "6h"].map((rank) => ({
-        rank,
-        suit: "hearts",
+      const straightRanks = ["2", "3", "4", "5", "6"];
+      riggedCards = straightRanks.map((rank) => ({
+        cardFace: rank,
+        suit: "Heart",
+        value: VALUE_MAP[rank],
       }));
-      handCards = handCards.slice(0, 2);
       break;
     // Add more cases for other hand types
     default:
       break;
   }
 
-  // Remove the chosen cards from the deck
-  state.deck = state.deck.filter((card) => !handCards.includes(card));
+  state.riggedDeck = riggedCards;
+  console.log("please", riggedCards);
+  console.log("test deck", state.riggedDeck);
+  // state.deck = deck.filter(
+  //   (card) =>
+  //     !riggedCards.some(
+  //       (riggedCard) =>
+  //         riggedCard.cardFace === card.cardFace && riggedCard.suit === card.suit
+  //     )
+  // );
 
-  // Assign the cards to player 0
-  state.players[0].cards = handCards;
   return state;
 };
 
