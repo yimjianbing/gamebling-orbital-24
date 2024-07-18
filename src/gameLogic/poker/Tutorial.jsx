@@ -111,6 +111,12 @@ class Tutorial extends Component {
     const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
 
     const imageLoaderRequest = new XMLHttpRequest();
+    const { selectedOption } = this.context;
+
+    if (selectedOption && !this.state.tutorialType) {
+      this.setState({ tutorialType: selectedOption });
+      console.log("Tutorial: selectedOption:", selectedOption);
+    }
 
     // this.context.setInGame(true);
 
@@ -157,7 +163,7 @@ imageLoaderRequest.send();
 
     this.setState(prevState => ({
       // loading: false,
-      tutorialType: prevState.tutorialType,
+      tutorialType: this.context.selectedOption,
       players: playersBoughtIn,
       numPlayersActive: playersBoughtIn.length,
       numPlayersFolded: 0,
@@ -175,7 +181,7 @@ imageLoaderRequest.send();
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
     }), () => {
-      const configuredState = configureDeck(this.context.selectedOption ,this.state); // Configure the deck based on the tutorial type
+      const configuredState = configureDeck("Double Pair" ,this.state); // Configure the deck based on the tutorial type
       this.setState(configuredState, () => {
         console.log("Deck in state:", configuredState.deck);
         console.log("Players in state:", configuredState.players);
@@ -185,6 +191,7 @@ imageLoaderRequest.send();
       });
     });
   }
+
 
   handleBetInputChange = (val, min, max) => {
     if (val === '') val = min
@@ -470,8 +477,7 @@ imageLoaderRequest.send();
 
   
   render() {
-    const { selectedOption, setOption } = this.context;
-    console.log("rendered", selectedOption);
+    console.log("context", this.context);
  return (
     <inGameContext.Consumer>
       {inGameContext => {
@@ -492,9 +498,9 @@ imageLoaderRequest.send();
         );
       }}
     </inGameContext.Consumer>
+
   );
   }
 }
-Tutorial.contextType = TutorialContext;
 
 export default Tutorial;
