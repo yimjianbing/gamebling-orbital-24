@@ -59,7 +59,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 class Tutorial extends Component {
 
-  static contextType = TutorialProvider;
+  static contextType = TutorialContext;
 
   state = {
     tutorialType: this.context.selectedOption, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
@@ -181,7 +181,7 @@ imageLoaderRequest.send();
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
     }), () => {
-      const configuredState = configureDeck("Double Pair" ,this.state); // Configure the deck based on the tutorial type
+      const configuredState = configureDeck(this.state.tutorialType ,this.state); // Configure the deck based on the tutorial type
       this.setState(configuredState, () => {
         console.log("Deck in state:", configuredState.deck);
         console.log("Players in state:", configuredState.players);
@@ -477,7 +477,8 @@ imageLoaderRequest.send();
 
   
   render() {
-    console.log("context", this.context);
+    const { selectedOption } = this.context;
+    console.log("Tutorial context:", this.context);
  return (
     <inGameContext.Consumer>
       {inGameContext => {

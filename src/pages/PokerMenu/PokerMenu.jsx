@@ -18,17 +18,15 @@ export const PokerMenu = () => {
     navigate(`/poker`);
     setInGame(true);
   }
-  useEffect(() => {
-    if (selectedOption) {
-      console.log("Navigating to /tutorial with gameName:", selectedOption);
-      navigate(`/tutorial?gameName=${selectedOption}`);
-    }
-  }, [selectedOption, navigate]);
-
-  function handleTutorial(gameName) {
+  
+  const handleTutorial = (gameName) => {
     console.log("Setting option in Menu:", gameName);
     setOption(gameName);
-  }
+    setTimeout(() => {
+      console.log("Navigating to /tutorial with gameName:", gameName);
+      navigate(`/tutorial?gameName=${gameName}`);
+    }, 1000); // 1 second delay
+  };
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
