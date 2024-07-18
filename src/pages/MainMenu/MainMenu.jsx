@@ -34,10 +34,10 @@ export const MainMenu = () => {
     <div>
       <div className="mainmenu">
         <h2 className="title">Choose your gamemode to play!</h2>
-        <heading className="boxes">
+        <div className="boxes">
           <h2 className="mahjong">Mahjong</h2>
           <h2 className="poker" onClick ={() => handlePoker()}>Poker</h2>
-        </heading>
+        </div>
 
       </div>
       <p>

@@ -20,7 +20,6 @@ export const PokerMenu = () => {
   }
 
   function handleTutorial(gameName) {
-    alert(gameName);
     setOption(gameName);
     navigate(`/tutorial?gameName=${gameName}`);
   }

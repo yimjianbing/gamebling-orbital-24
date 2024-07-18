@@ -104,73 +104,70 @@ const popShowdownCards = (deck, numToPop) => {
 };
 
 const dealPrivateCards = (state) => {
-  if (!state || !state.players || !state.deck || !state.riggedDeck) {
+  if (!state || !state.players || !state.deck) {
     console.error("State or required properties are missing or null", state);
-    console.error("Deck: ", state.deck);
-    console.error("Players: ", state.players);
-    console.error("State: ", state);
-    console.error("Rigged Deck: ", state.riggedDeck);
     throw new Error("Invalid state object");
   }
 
   state.clearCards = false;
   let animationDelay = 0;
 
-  while (state.players[state.activePlayerIndex].cards.length < 2) {
-    if (state.activePlayerIndex == 0) {
+  // Initialize player index
+  let playerIndex = state.activePlayerIndex;
+
+  while (state.players.some((player) => player.cards.length < 2)) {
+    let chosenCards, mutableDeckCopy;
+
+    if (playerIndex === 0) {
       console.log("Rigged Deck: ", state.riggedDeck);
-      const { mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 1);
+      ({ mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 1));
+    } else {
+      ({ mutableDeckCopy, chosenCards } = popCards(state.deck, 1));
+    }
 
-      if (!chosenCards) {
-        console.error("No cards were chosen", state.deck);
-        throw new Error("Failed to pop cards from the deck");
-      }
+    if (!chosenCards) {
+      console.error("No cards were chosen", state.deck);
+      throw new Error("Failed to pop cards from the deck");
+    }
 
-      chosenCards.forEach((card) => {
-        card.animationDelay = animationDelay;
-        animationDelay += 250;
-      });
+    if (!Array.isArray(chosenCards)) {
+      chosenCards = [chosenCards];
+    }
 
-      const newDeck = [...mutableDeckCopy];
-      state.players[state.activePlayerIndex].cards = chosenCards;
+    chosenCards.forEach((card) => {
+      card.animationDelay = animationDelay;
+      animationDelay += 250;
+    });
+
+    const newDeck = [...mutableDeckCopy];
+
+    if (playerIndex === 0) {
+      state.players[playerIndex].cards.push(...chosenCards);
       state.riggedDeck = newDeck;
     } else {
-      const { mutableDeckCopy, chosenCards } = popCards(state.deck, 1);
-
-      if (!chosenCards) {
-        console.error("No cards were chosen", state.deck);
-        throw new Error("Failed to pop cards from the deck");
-      }
-
-      chosenCards.animationDelay = animationDelay;
-      animationDelay += 250;
-
-      const newDeck = [...mutableDeckCopy];
-      state.players[state.activePlayerIndex].cards.push(chosenCards);
+      state.players[playerIndex].cards.push(...chosenCards);
       state.deck = newDeck;
-
-      state.activePlayerIndex = handleOverflowIndex(
-        state.activePlayerIndex,
-        1,
-        state.players.length,
-        "up"
-      );
     }
 
-    if (state.players[state.activePlayerIndex].cards.length === 2) {
-      break;
-    }
-  }
-
-  if (state.players[state.activePlayerIndex].cards.length === 2) {
-    state.activePlayerIndex = handleOverflowIndex(
-      state.blindIndex.big,
+    // Move to the next player
+    playerIndex = handleOverflowIndex(
+      playerIndex,
       1,
       state.players.length,
       "up"
     );
-    state.phase = "betting1";
   }
+
+  // Reset active player index to the next player after the big blind
+  state.activePlayerIndex = handleOverflowIndex(
+    state.blindIndex.big,
+    1,
+    state.players.length,
+    "up"
+  );
+
+  state.phase = "betting1";
+
   const newCards = cardsConverter(state.players[0].cards);
   const newCards2 = cardsConverter(state.players[2].cards);
 
@@ -178,10 +175,12 @@ const dealPrivateCards = (state) => {
     [newCards, newCards2, ["4s", "8h"], ["2d", "9h"]],
     cardsConverter(state.communityCards)
   );
+
   state.odds =
     odds[0].wins / 100 < 5
       ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
       : odds[0].wins / 100;
+
   console.log("player cards:", newCards);
   console.log("odds are this:", odds[0].wins / 100);
 
@@ -1357,20 +1356,24 @@ const dealMissingCommunityCards = (state) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // for tutorial//
 
-const configureDeck = (state) => {
-  const deck = state.deck;
-  const gameName = state.gameName;
+const configureDeck = (tutorialType, state) => {
+  const deck = [...state.deck]; // Make a copy of the deck
+  // const tutorialType = state.tutorialType;
+  console.log("Configuring Deck for Tutorial");
+  console.log("Tutorial Type: ", tutorialType);
   const flushSuit = "hearts"; // Default suit for flush, can be changed based on handType
   let riggedCards = [];
 
-  switch (gameName) {
-    case "pair":
+  switch (tutorialType) {
+    case "Pair":
+      console.log("Pair");
       riggedCards = [
         { cardFace: "6", suit: "Heart", value: VALUE_MAP["6"] },
         { cardFace: "6", suit: "Diamond", value: VALUE_MAP["6"] },
       ];
       break;
-    case "double pair":
+    case "Double Pair":
+      console.log("Double Pair");
       riggedCards = [
         { cardFace: "3", suit: "Heart", value: VALUE_MAP["3"] },
         { cardFace: "3", suit: "Diamond", value: VALUE_MAP["3"] },
@@ -1381,10 +1384,12 @@ const configureDeck = (state) => {
         { cardFace: "6", suit: "Diamond", value: VALUE_MAP["6"] },
       ];
       break;
-    case "flush":
+    case "Flush":
+      console.log("Flush");
       riggedCards = deck.filter((card) => card.suit === flushSuit).slice(0, 7); // 2 for player, 5 for river
       break;
-    case "straight":
+    case "Straight":
+      console.log("Straight");
       const straightRanks = ["2", "3", "4", "5", "6"];
       riggedCards = straightRanks.map((rank) => ({
         cardFace: rank,
@@ -1397,17 +1402,25 @@ const configureDeck = (state) => {
       break;
   }
 
-  state.riggedDeck = riggedCards;
-  console.log("please", riggedCards);
-  console.log("test deck", state.riggedDeck);
-  // state.deck = deck.filter(
-  //   (card) =>
-  //     !riggedCards.some(
-  //       (riggedCard) =>
-  //         riggedCard.cardFace === card.cardFace && riggedCard.suit === card.suit
-  //     )
-  // );
+  if (riggedCards.length === 0) {
+    console.error(
+      "Error: No cards were added. Please check the tutorialType and ensure the deck is properly configured."
+    );
+  } else {
+    // Remove rigged cards from the deck
+    riggedCards.forEach((riggedCard) => {
+      const index = deck.findIndex(
+        (card) =>
+          card.cardFace === riggedCard.cardFace && card.suit === riggedCard.suit
+      );
+      if (index > -1) {
+        deck.splice(index, 1); // Remove the card from the deck
+      }
+    });
+  }
 
+  state.riggedDeck = riggedCards;
+  state.deck = deck; // Update the state with the modified deck
   return state;
 };
 

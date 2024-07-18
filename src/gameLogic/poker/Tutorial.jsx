@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import './PokerGame.css';
 import './poker.css';
 import { inGameContext } from '../../context/InGameContext.jsx';
-import { TutorialContext } from '../../context/TutorialContext.jsx';
+import { TutorialContext, TutorialProvider } from '../../context/TutorialContext.jsx';
 
 import Exit from './Exit.jsx';
 
@@ -59,7 +59,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 class Tutorial extends Component {
 
-  static contextType = TutorialContext;
+  static contextType = TutorialProvider;
 
   state = {
     tutorialType: this.context.selectedOption, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
@@ -157,7 +157,7 @@ imageLoaderRequest.send();
 
     this.setState(prevState => ({
       // loading: false,
-      tutorialType: this.context.selectedOption,
+      tutorialType: prevState.tutorialType,
       players: playersBoughtIn,
       numPlayersActive: playersBoughtIn.length,
       numPlayersFolded: 0,
@@ -175,10 +175,12 @@ imageLoaderRequest.send();
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
     }), () => {
-      const configuredState = configureDeck(this.state); // Configure the deck based on the tutorial type
+      const configuredState = configureDeck(this.context.selectedOption ,this.state); // Configure the deck based on the tutorial type
       this.setState(configuredState, () => {
-        console.log("Deck in state:", this.state.deck);
-        console.log("Players in state:", this.state.players);
+        console.log("Deck in state:", configuredState.deck);
+        console.log("Players in state:", configuredState.players);
+        console.log("tutorialType in state:", configuredState.tutorialType);
+        console.log("rigged deck in state:", configuredState.riggedDeck);
         this.runGameLoop();
       });
     });
@@ -432,6 +434,7 @@ imageLoaderRequest.send();
   }
 
   renderGame = () => {
+    console.log("rendering: ", this.state);
     const { highBet, players, activePlayerIndex, phase } = this.state;
     return (
       <div className='poker-app--background'>
@@ -467,18 +470,19 @@ imageLoaderRequest.send();
 
   
   render() {
+    const { selectedOption, setOption } = this.context;
+    console.log("rendered", selectedOption);
  return (
     <inGameContext.Consumer>
       {inGameContext => {
         inGameContext.setInGame(true);
-        console.log(this.state.tutorialType);
         return (
           <div className="Poker">
             <div className='poker-table--wrapper'>
-              { 
+              {
                 this.state.loading ? <Spinner /> : 
                 this.state.winnerFound ? <WinScreen /> : 
-                this.renderGame()
+                this.renderGame() //sort it here.
               }
             </div>
             <div className='poker-table--container'>
@@ -491,5 +495,6 @@ imageLoaderRequest.send();
   );
   }
 }
+Tutorial.contextType = TutorialContext;
 
 export default Tutorial;
