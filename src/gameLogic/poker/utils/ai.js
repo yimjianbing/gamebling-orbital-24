@@ -14,12 +14,6 @@ import { renderActionButtonText } from "./ui.js";
 const handleAI = (state, pushAnimationState) => {
   const { highBet } = state;
   const activePlayer = state.players[state.activePlayerIndex];
-
-  // Check if the active player is an AI player
-  if (!activePlayer.isAI) {
-    return; // Exit if the active player is not an AI
-  }
-
   const min = determineMinBet(highBet, activePlayer.chips, activePlayer.bet);
   const max = activePlayer.chips + activePlayer.bet;
   const totalInvestment =
@@ -34,7 +28,6 @@ const handleAI = (state, pushAnimationState) => {
   const preFlopValues = activePlayer.cards.map((el) => el.value);
   const highCard = Math.max(...preFlopValues);
   const lowCard = Math.min(...preFlopValues);
-
   switch (state.phase) {
     case "betting1": {
       const suited = Object.entries(suitHistogram).find(
@@ -67,9 +60,7 @@ const handleAI = (state, pushAnimationState) => {
                 betValue = highBet;
               }
             }
-            if (betValue > max) {
-              activePlayer.canRaise = false;
-            }
+            if (betValue > max) activePlayer.canRaise = false;
             pushAnimationState(
               state.activePlayerIndex,
               `${renderActionButtonText(
@@ -80,6 +71,7 @@ const handleAI = (state, pushAnimationState) => {
             );
             return handleBet(state, betValue, min, max);
           } else {
+            // Do not render the bet value if it's a "check"
             pushAnimationState(
               state.activePlayerIndex,
               `${renderActionButtonText(highBet, callValue, activePlayer)} ${
@@ -104,12 +96,12 @@ const handleAI = (state, pushAnimationState) => {
     }
     case "betting2":
     case "betting3":
-    case "betting4": {
+    case "betting4":
       const {
         isPair,
         isTwoPair,
         isThreeOfAKind,
-        isFourOfAkind,
+        isFourOfAKind,
         isFullHouse,
         frequencyHistogramMetaData,
       } = analyzeHistogram(descendingSortHand, frequencyHistogram);
@@ -243,7 +235,6 @@ const handleAI = (state, pushAnimationState) => {
         pushAnimationState(state.activePlayerIndex, `FOLD`);
         return handleFold(state);
       }
-    }
     default:
       throw Error("Handle AI Running during incorrect phase");
   }
