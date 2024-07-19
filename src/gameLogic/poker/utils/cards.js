@@ -110,7 +110,7 @@ const dealPrivateCards = (state) => {
   }
 
   state.clearCards = false;
-  let animationDelay = 0;
+  let animationDelay = 1000;
 
   // Initialize player index
   let playerIndex = state.activePlayerIndex;
@@ -189,7 +189,7 @@ const dealPrivateCards = (state) => {
 
 const dealFlop = (state) => {
   let animationDelay = 0;
-  const { mutableDeckCopy, chosenCards } = popCards(state.deck, 3);
+  const { mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 3);
 
   for (let card of chosenCards) {
     card.animationDelay = animationDelay;
@@ -197,7 +197,7 @@ const dealFlop = (state) => {
     state.communityCards.push(card);
   }
 
-  state.deck = mutableDeckCopy;
+  state.riggedDeck = mutableDeckCopy;
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting2";
 
@@ -239,11 +239,11 @@ const dealTurn = (state) => {
 };
 
 const dealRiver = (state) => {
-  const { mutableDeckCopy, chosenCards } = popCards(state.deck, 1);
+  const { mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 1);
   chosenCards.animationDelay = 0;
 
   state.communityCards.push(chosenCards);
-  state.deck = mutableDeckCopy;
+  state.riggedDeck = mutableDeckCopy;
   state = determinePhaseStartActivePlayer(state);
   state.phase = "betting4";
   console.log("River: ", state.communityCards);
@@ -1358,10 +1358,9 @@ const dealMissingCommunityCards = (state) => {
 
 const configureDeck = (tutorialType, state) => {
   const deck = [...state.deck]; // Make a copy of the deck
-  // const tutorialType = state.tutorialType;
   console.log("Configuring Deck for Tutorial");
   console.log("Tutorial Type: ", tutorialType);
-  const flushSuit = "hearts"; // Default suit for flush, can be changed based on handType
+  const flushSuit = "Heart"; // Default suit for flush, can be changed based on handType
   let riggedCards = [];
 
   switch (tutorialType) {
@@ -1390,14 +1389,43 @@ const configureDeck = (tutorialType, state) => {
       break;
     case "Straight":
       console.log("Straight");
-      const straightRanks = ["2", "3", "4", "5", "6"];
-      riggedCards = straightRanks.map((rank) => ({
+      const startIndex = Math.floor(Math.random() * (9 - 4)); // Ensure we don't go out of bounds for a straight
+      const straightRanks = cards.slice(startIndex, startIndex + 5);
+
+      const shuffledSuits = [...suits].sort(() => 0.5 - Math.random());
+      riggedCards = straightRanks.map((rank, index) => ({
         cardFace: rank,
-        suit: "Heart",
+        suit: shuffledSuits[index],
         value: VALUE_MAP[rank],
       }));
       break;
-    // Add more cases for other hand types
+    case "Full House":
+      console.log("Full House");
+      riggedCards = [
+        { cardFace: "K", suit: "Heart", value: VALUE_MAP["K"] },
+        { cardFace: "K", suit: "Diamond", value: VALUE_MAP["K"] },
+        { cardFace: "K", suit: "Club", value: VALUE_MAP["K"] },
+        { cardFace: "9", suit: "Heart", value: VALUE_MAP["9"] },
+        { cardFace: "9", suit: "Spade", value: VALUE_MAP["9"] },
+      ];
+      break;
+    case "Three of a Kind":
+      console.log("Three of a Kind");
+      riggedCards = [
+        { cardFace: "8", suit: "Heart", value: VALUE_MAP["8"] },
+        { cardFace: "8", suit: "Diamond", value: VALUE_MAP["8"] },
+        { cardFace: "8", suit: "Spade", value: VALUE_MAP["8"] },
+      ];
+      break;
+    case "Four of a Kind":
+      console.log("Four of a Kind");
+      riggedCards = [
+        { cardFace: "5", suit: "Heart", value: VALUE_MAP["5"] },
+        { cardFace: "5", suit: "Diamond", value: VALUE_MAP["5"] },
+        { cardFace: "5", suit: "Club", value: VALUE_MAP["5"] },
+        { cardFace: "5", suit: "Spade", value: VALUE_MAP["5"] },
+      ];
+      break;
     default:
       break;
   }
