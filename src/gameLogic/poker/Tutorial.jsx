@@ -267,7 +267,7 @@ imageLoaderRequest.send();
           setTimeout(() => {
 
             this.handleAI()
-          }, 1200)
+          }, 1900)
         }
       })
   }

@@ -120,6 +120,7 @@ const dealPrivateCards = (state) => {
 
     if (playerIndex === 0) {
       console.log("Rigged Deck: ", state.riggedDeck);
+      //mutableDeckCopy = shuffle(mutableDeckCopy);
       ({ mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 1));
     } else {
       ({ mutableDeckCopy, chosenCards } = popCards(state.deck, 1));
@@ -188,7 +189,7 @@ const dealPrivateCards = (state) => {
 };
 
 const dealFlop = (state) => {
-  let animationDelay = 0;
+  let animationDelay = 1200;
   const { mutableDeckCopy, chosenCards } = popCards(state.riggedDeck, 3);
 
   for (let card of chosenCards) {
@@ -1369,6 +1370,11 @@ const configureDeck = (tutorialType, state) => {
       riggedCards = [
         { cardFace: "6", suit: "Heart", value: VALUE_MAP["6"] },
         { cardFace: "6", suit: "Diamond", value: VALUE_MAP["6"] },
+        { cardFace: "10", suit: "Heart", value: VALUE_MAP["10"] },
+        { cardFace: "3", suit: "Diamond", value: VALUE_MAP["3"] },
+        { cardFace: "2", suit: "Club", value: VALUE_MAP["2"] },
+        { cardFace: "4", suit: "Heart", value: VALUE_MAP["4"] },
+        { cardFace: "K", suit: "Diamond", value: VALUE_MAP["K"] },
       ];
       break;
     case "Double Pair":
@@ -1386,6 +1392,27 @@ const configureDeck = (tutorialType, state) => {
     case "Flush":
       console.log("Flush");
       riggedCards = deck.filter((card) => card.suit === flushSuit).slice(0, 7); // 2 for player, 5 for river
+
+      // Check if the selected cards form a straight flush and adjust if necessary
+      const sortedRiggedCards = riggedCards.sort((a, b) => a.value - b.value);
+      for (let i = 0; i < sortedRiggedCards.length - 4; i++) {
+        const isStraightFlush = sortedRiggedCards
+          .slice(i, i + 5)
+          .every(
+            (card, index, arr) =>
+              index === 0 || card.value === arr[index - 1].value + 1
+          );
+
+        if (isStraightFlush) {
+          // Replace one card to break the sequence
+          riggedCards[i] = deck.find(
+            (card) =>
+              card.suit === flushSuit &&
+              card.value !== sortedRiggedCards[i].value + 1
+          );
+          break;
+        }
+      }
       break;
     case "Straight":
       console.log("Straight");
@@ -1401,12 +1428,15 @@ const configureDeck = (tutorialType, state) => {
       break;
     case "Full House":
       console.log("Full House");
+      //const randomNumber = Math.floor(Math.random() * 10);
       riggedCards = [
         { cardFace: "K", suit: "Heart", value: VALUE_MAP["K"] },
         { cardFace: "K", suit: "Diamond", value: VALUE_MAP["K"] },
         { cardFace: "K", suit: "Club", value: VALUE_MAP["K"] },
         { cardFace: "9", suit: "Heart", value: VALUE_MAP["9"] },
         { cardFace: "9", suit: "Spade", value: VALUE_MAP["9"] },
+        { cardFace: "7", suit: "Diamond", value: VALUE_MAP["7"] },
+        { cardFace: "3", suit: "Heart", value: VALUE_MAP["3"] },
       ];
       break;
     case "Three of a Kind":
@@ -1415,6 +1445,10 @@ const configureDeck = (tutorialType, state) => {
         { cardFace: "8", suit: "Heart", value: VALUE_MAP["8"] },
         { cardFace: "8", suit: "Diamond", value: VALUE_MAP["8"] },
         { cardFace: "8", suit: "Spade", value: VALUE_MAP["8"] },
+        { cardFace: "9", suit: "Club", value: VALUE_MAP["9"] },
+        { cardFace: "4", suit: "Heart", value: VALUE_MAP["4"] },
+        { cardFace: "2", suit: "Diamond", value: VALUE_MAP["2"] },
+        { cardFace: "K", suit: "Heart", value: VALUE_MAP["K"] },
       ];
       break;
     case "Four of a Kind":
@@ -1424,6 +1458,9 @@ const configureDeck = (tutorialType, state) => {
         { cardFace: "5", suit: "Diamond", value: VALUE_MAP["5"] },
         { cardFace: "5", suit: "Club", value: VALUE_MAP["5"] },
         { cardFace: "5", suit: "Spade", value: VALUE_MAP["5"] },
+        { cardFace: "4", suit: "Heart", value: VALUE_MAP["4"] },
+        { cardFace: "2", suit: "Diamond", value: VALUE_MAP["2"] },
+        { cardFace: "K", suit: "Heart", value: VALUE_MAP["K"] },
       ];
       break;
     default:
