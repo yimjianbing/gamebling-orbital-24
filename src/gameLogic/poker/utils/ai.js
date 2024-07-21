@@ -12,8 +12,14 @@ import {
 import { renderActionButtonText } from "./ui.js";
 
 const handleAI = (state, pushAnimationState) => {
+  console.log("handlingAI");
   const { highBet } = state;
   const activePlayer = state.players[state.activePlayerIndex];
+  if (!activePlayer.robot) {
+    alert("not robot");
+    setTimeout(() => {}, 15000);
+    return;
+  }
   const min = determineMinBet(highBet, activePlayer.chips, activePlayer.bet);
   const max = activePlayer.chips + activePlayer.bet;
   const totalInvestment =
