@@ -2,7 +2,7 @@
 import { Protected } from "../auth/Protected";
 import { InGameProvider } from "../context/InGameContext";
 import { TutorialProvider } from "../context/TutorialContext";
-import Poker from "../pokerLogic/poker/poker";
+import Poker from "../gameLogic/poker/poker";
 import About from "../pages/About/About";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import LoginRegister from "../pages/LoginRegister/LoginRegister";
