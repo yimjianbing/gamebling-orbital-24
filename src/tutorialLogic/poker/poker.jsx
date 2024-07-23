@@ -219,8 +219,7 @@ imageLoaderRequest.send();
           setTimeout(() => {
           
             this.handleAI()
-         
-          }, 2000)// might be wrong
+          }, 1200)
         }
       });
   }
@@ -233,7 +232,7 @@ imageLoaderRequest.send();
           setTimeout(() => {
           
             this.handleAI()
-          }, 2000)
+          }, 1200)
         }
       })
   }
@@ -248,9 +247,9 @@ imageLoaderRequest.send();
       }, () => {
         if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
           setTimeout(() => {
-            console.log("Player name: ", this.state.players[this.state.activePlayerIndex]);
+
             this.handleAI()
-          }, 1000)
+          }, 1200)
         }
       })
   }
