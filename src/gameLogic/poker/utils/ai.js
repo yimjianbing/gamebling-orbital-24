@@ -16,10 +16,11 @@ const handleAI = (state, pushAnimationState) => {
   const { highBet } = state;
   const activePlayer = state.players[state.activePlayerIndex];
   if (!activePlayer.robot) {
-    alert("not robot");
     setTimeout(() => {}, 15000);
+    alert("not robot");
     return;
   }
+
   const min = determineMinBet(highBet, activePlayer.chips, activePlayer.bet);
   const max = activePlayer.chips + activePlayer.bet;
   const totalInvestment =
