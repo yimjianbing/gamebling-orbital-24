@@ -1,0 +1,67 @@
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  z-index: 100 ;
+}
+.Poker {
+  text-align: center;
+  z-index: 100;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+  z-index: 100;
+}
+
+.App-header {
+  background-color: #222;
+  height: 65px;
+  padding: 20px;
+  color: white;
+  z-index: 100;
+}
+
+.App-title {
+  font-size: 1.5em;
+  z-index: 100  ;
+}
+
+.App-intro {
+  font-size: large;
+  z-index: 100;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.odds-bar-container {
+  position: absolute;
+  bottom: 10%; /* Adjust this value to position it vertically from the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset by 50% to fully center horizontally */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Adjust max-width if necessary */
+  height: 20px; /* Adjust the height as needed */
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.odds-bar {
+  height: 100%; /* Set height to 100% to fill the container */
+  background-image: linear-gradient(
+    to right, 
+    red 0%, 
+    rgb(255, 111, 0) 10%, /* Red-orange at 10% */
+    orange 39%,           /* Orange at 39% */
+    yellow 50%,           /* Yellow at 50% */
+    rgb(129, 194, 65) 70%, /* Light green at 70% */
+    rgb(72, 170, 61) 80%,  /* Medium green at 80% */
+    green 100%            /* Green at 100% */
+  );
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+  width: 0%; /* Initial width */
+}
