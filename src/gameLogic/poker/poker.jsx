@@ -376,7 +376,7 @@ imageLoaderRequest.send();
   }
   renderOddsBar() {
     const { odds } = this.state;
-    console.log("odds rendered: ", odds)
+    console.log("odds rendered : ", odds)
 
     return (
       <div className="odds-bar-container">
