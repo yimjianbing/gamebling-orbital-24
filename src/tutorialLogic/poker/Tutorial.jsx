@@ -8,7 +8,8 @@ import 'raf/polyfill';
 import React, { Component } from 'react';
 import './PokerGame.css';
 import './poker.css';
-
+import { inGameContext } from '../../context/InGameContext.jsx';
+import { TutorialContext, TutorialProvider } from '../../context/TutorialContext.jsx';
 
 import Exit from './Exit.jsx';
 
@@ -23,6 +24,7 @@ import {
   generateDeckOfCards, 
   shuffle, 
   dealPrivateCards,
+  configureDeck,
 } from './utils/cards.js';
 
 import { 
@@ -56,7 +58,11 @@ import {
 import cloneDeep from 'lodash/cloneDeep';
 
 class Tutorial extends Component {
+
+  static contextType = TutorialContext;
+
   state = {
+    tutorialType: this.context.selectedOption, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
     odds: 10.0,
     loading: true,
     winnerFound: null,
@@ -68,6 +74,7 @@ class Tutorial extends Component {
     dealerIndex: null,
     blindIndex: null,
     deck: null,
+    riggedDeck: null,
     communityCards: [],
     pot: null,
     highBet: null,
@@ -104,6 +111,14 @@ class Tutorial extends Component {
     const playersBoughtIn = anteUpBlinds(players, blindIndicies, this.state.minBet);
 
     const imageLoaderRequest = new XMLHttpRequest();
+    const { selectedOption } = this.context;
+
+    if (selectedOption && !this.state.tutorialType) {
+      this.setState({ tutorialType: selectedOption });
+      console.log("Tutorial: selectedOption:", selectedOption);
+    }
+
+    // this.context.setInGame(true);
 
 
 imageLoaderRequest.addEventListener("load", e => {
@@ -148,6 +163,7 @@ imageLoaderRequest.send();
 
     this.setState(prevState => ({
       // loading: false,
+      tutorialType: this.context.selectedOption,
       players: playersBoughtIn,
       numPlayersActive: playersBoughtIn.length,
       numPlayersFolded: 0,
@@ -159,17 +175,23 @@ imageLoaderRequest.send();
         small: blindIndicies.smallBlindIndex,
       },
       deck: shuffle(generateDeckOfCards()),
+      riggedDeck: null,
       pot: 0,
       highBet: prevState.minBet,
       betInputValue: prevState.minBet,
       phase: 'initialDeal',
     }), () => {
-      // This callback runs after the state has been updated
-      console.log("deck in state", this.state.deck);
-      console.log("players in state", this.state.players);
-      this.runGameLoop();
+      const configuredState = configureDeck(this.state.tutorialType ,this.state); // Configure the deck based on the tutorial type
+      this.setState(configuredState, () => {
+        console.log("Deck in state:", configuredState.deck);
+        console.log("Players in state:", configuredState.players);
+        console.log("tutorialType in state:", configuredState.tutorialType);
+        console.log("rigged deck in state:", configuredState.riggedDeck);
+        this.runGameLoop();
+      });
     });
-}
+  }
+
 
   handleBetInputChange = (val, min, max) => {
     if (val === '') val = min
@@ -209,6 +231,7 @@ imageLoaderRequest.send();
     const { activePlayerIndex } = appState;
     this.pushAnimationState(activePlayerIndex, `${renderActionButtonText(this.state.highBet, this.state.betInputValue, this.state.players[this.state.activePlayerIndex])} ${(bet > this.state.players[this.state.activePlayerIndex].bet) ? (bet) : ""}`);
     const newState = handleBet(cloneDeep(appState), parseInt(bet, 10), parseInt(min, 10), parseInt(max, 10));
+
       this.setState(newState, () => {
         if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
           setTimeout(() => {
@@ -244,7 +267,7 @@ imageLoaderRequest.send();
           setTimeout(() => {
 
             this.handleAI()
-          }, 1200)
+          }, 1900)
         }
       })
   }
@@ -306,6 +329,7 @@ imageLoaderRequest.send();
     })
   }
 
+  
   renderRankTie = (rankSnapshot) => {
     return rankSnapshot.map(player => {
       return this.renderRankWinner(player);
@@ -370,7 +394,6 @@ imageLoaderRequest.send();
       })
   }
   renderOddsBar() {
-    console.log("hello im here")
     const { odds } = this.state;
     console.log("odds rendered: ", odds)
 
@@ -419,6 +442,7 @@ imageLoaderRequest.send();
   }
 
   renderGame = () => {
+    console.log("rendering: ", this.state);
     const { highBet, players, activePlayerIndex, phase } = this.state;
     return (
       <div className='poker-app--background'>
@@ -454,21 +478,30 @@ imageLoaderRequest.send();
 
   
   render() {
+    const { selectedOption } = this.context;
+    console.log("Tutorial context:", this.context);
+ return (
+    <inGameContext.Consumer>
+      {inGameContext => {
+        inGameContext.setInGame(true);
+        return (
+          <div className="Poker">
+            <div className='poker-table--wrapper'>
+              {
+                this.state.loading ? <Spinner /> : 
+                this.state.winnerFound ? <WinScreen /> : 
+                this.renderGame() //sort it here.
+              }
+            </div>
+            <div className='poker-table--container'>
+              <Exit />
+            </div>
+          </div>
+        );
+      }}
+    </inGameContext.Consumer>
 
-    return (
-      <div className="Poker">
-        <div className='poker-table--wrapper'> 
-          { 
-           (this.state.loading) ? <Spinner /> : 
-           (this.state.winnerFound) ? <WinScreen /> : 
-            this.renderGame()
-          }
-        </div>
-        <div className='poker-table--container'>
-          <Exit />
-        </div>
-      </div>
-    );
+  );
   }
 }
 

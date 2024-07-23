@@ -1,12 +1,13 @@
-import {React, useContext, useState} from "react";
+import {React, useContext, useState, useEffect} from "react";
 import "./PokerMenu.css";
 import { useNavigate } from "react-router-dom";
 import { inGameContext } from "../../context/InGameContext";
-import { MyContext } from "../../context/InGameContext";
+import { TutorialContext, TutorialProvider } from "../../context/TutorialContext";
 
 export const PokerMenu = () => {
   const navigate = useNavigate();
   const { setInGame } = useContext(inGameContext);
+  const { setOption, selectedOption } = useContext(TutorialContext);
   const [showDropdown, setShowDropdown] = useState(false);
 
   function handleOnlinePoker() {
@@ -17,10 +18,15 @@ export const PokerMenu = () => {
     navigate(`/poker`);
     setInGame(true);
   }
-
-  function handleTutorial(gameName) {
-    navigate(`/tutorial?gameName=${gameName}`);
-  }
+  
+  const handleTutorial = (gameName) => {
+    console.log("Setting option in Menu:", gameName);
+    setOption(gameName);
+    setTimeout(() => {
+      console.log("Navigating to /tutorial with gameName:", gameName);
+      navigate(`/tutorial?gameName=${gameName}`);
+    }, 1000); // 1 second delay
+  };
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
@@ -61,6 +67,6 @@ export const PokerMenu = () => {
           </div>
         </heading>
       </div>
-    </div>
+    </div> 
   );
 };
