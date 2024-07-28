@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .odds-bar-container {
   position: absolute;
-  bottom: 10%; /* Adjust this value to position it vertically from the bottom */
+  bottom: 5%; /* Adjust this value to position it vertically from the bottom */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Offset by 50% to fully center horizontally */
   width: 80%; /* Adjust the width as needed */
