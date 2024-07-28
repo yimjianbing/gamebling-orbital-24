@@ -11,7 +11,7 @@ import { MainMenu } from "../pages/MainMenu/MainMenu";
 import OnlinePoker from "../onlineGameLogic/onlinePoker/OnlinePoker";
 import { PokerMenu } from "../pages/PokerMenu/PokerMenu";
 import { Skins } from "../pages/Skins/Skins";
-import  Tutorial  from "../tutorialLogic/poker/Tutorial";
+import Tutorial  from "../tutorialLogic/poker/Tutorial";
 import Rules from "../tutorialLogic/poker/Rules";
 import { TutorialMenu } from "../pages/TutorialMenu/TutorialMenu";
 import { Friends } from "../pages/Friends/Friends";

@@ -1,0 +1,13 @@
+.profilePic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.filler .profilePic {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}

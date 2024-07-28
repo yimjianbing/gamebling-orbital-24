@@ -2,15 +2,17 @@ import React, {useState, useEffect, useContext } from 'react';
 import "./Friends.css";
 import { AuthContext } from "../../context/AuthContext";
 import { db, auth } from "../../auth/firebase-config"
+import defaultAvatar from '../../assets/profile/default profile avatar.svg';
 import { doc, getDoc, updateDoc, arrayUnion, query, where, collection, getDocs, onSnapshot } from "firebase/firestore";
+import ProfilePic from '../../components/ProfilePic/ProfilePic';
 
 export const Friends = () => {
     const { currentUserLoggedIn, updateLoggedIn} = useContext(AuthContext);
     const [ elo, setElo ] = useState(0);
-    const [ friendId, setFriendId ] = useState("");
     const [ friendRequest, setFriendRequest ] = useState("");
     const [ pendingFriendRequests, setPendingFriendRequests ] = useState([]);
     const [ friends, setFriends ] = useState([]);
+    const [profilePicPaths, setProfilePicPaths] = useState({});
 
     useEffect(() => {
         if (currentUserLoggedIn) {
@@ -21,7 +23,6 @@ export const Friends = () => {
                 if (docSnap.exists()) {
                     console.log("Document data:", docSnap.data());
                     setElo(docSnap.data().elo); // Set the elo value in state
-                    setFriendId(docSnap.data().friendId); // Set the friendId value in state
                     
                     const pendingFriendRequestsData = [];
                     docSnap.data().pendingFriendRequests.forEach((doc, index) => {
@@ -31,7 +32,6 @@ export const Friends = () => {
                             id: index
                         });
                     });
-                    console.log(pendingFriendRequestsData);
                     setPendingFriendRequests(pendingFriendRequestsData);
     
                     const friendsData = [];
@@ -43,6 +43,8 @@ export const Friends = () => {
                         });
                     });
                     setFriends(friendsData);
+                    console.log("friendsData");
+                    console.log(friendsData);
                 } else {
                     console.log("No such document!");
                 }
@@ -54,6 +56,28 @@ export const Friends = () => {
             return () => unsubscribe();
         }
     }, [currentUserLoggedIn]);
+
+    
+  useEffect(() => {
+    const fetchProfilePicPaths = async () => {
+      const paths = {};
+      for (const friend of friends) {
+        const friendId = friend.uid.toString().substring(0, 5);
+        const docRef = doc(db, "usersPicture", friendId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          paths[friend.uid] = docSnap.data().profilePic;
+        } else {
+          paths[friend.uid] = "";
+        }
+      }
+      setProfilePicPaths(paths);
+    };
+
+    if (friends.length > 0) {
+      fetchProfilePicPaths();
+    }
+  }, [friends]);
 
     const handleImgError = (e) => {
         e.target.src = "../../assets/profile/default profile avatar.svg"; // Path to your default image
@@ -178,32 +202,35 @@ export const Friends = () => {
             <div className="friends">
                 <div className="bigFont">Your Friends</div>
                 <div className="friendOptions">
-                    <div className="friendsList">
+                    <div className="friendsListWrapper">
                         <h1>Friends</h1>
                         <div className="friendsList">
-                            {friends.map((friend, index) => {
-                                return (
-                                    <div key={index} className="friend">
-                                        <img src="../../assets/profile/default profile avatar.svg" alt="profile" onError={handleImgError} />
-                                        <p>{friend.username}</p>
-                                    </div>
-                                );
-                            })}
+                            {friends.length > 0 
+                                ? friends.map((friend, index) => {
+                                        const path = profilePicPaths[friend.uid];
+                                        return (
+                                            <>
+                                                <div key={index} className="friend">
+                                                <ProfilePic key={index} filePath={path} className="smallProfilePic" />                                                    <h2>{friend.username}</h2>
+                                                </div>
+                                            </>
+                                        );
+                                    })
+                                : <h4 className="noFriends">No friends yet!</h4>}
                         </div>
                     </div>
                     <div className="pendingFriendRequests">
                         <h1>Pending Friend Requests</h1>
                         <div className="pendingFriendRequests">
-                            {pendingFriendRequests.map((friend, index) => {
-                                return (
-                                    <div key={index} className="friend">
-                                        <img src="../../assets/profile/default profile avatar.svg" alt="profile" onError={handleImgError} />
-                                        <p>{friend.username}</p>
-                                        <button onClick={() => handleAcceptReq(index)}>Accept</button>
-                                        <button onClick={() => handleRejectReq(index)}>Reject</button>
-                                    </div>
-                                );
-                            })}
+                        {pendingFriendRequests.length > 0 
+                            ? pendingFriendRequests.map((req) => (
+                                <div key={req.id} className="message">
+                                    <strong>{req.username}:</strong>
+                                    <div className="acceptReq" onClick={() => handleAcceptReq(req.id)}> Accept </div>
+                                    <div className="rejectReq" onClick={() => handleRejectReq(req.id)}> Decline </div>
+                                </div>
+                            )) 
+                            : <h4 className="noFriendReq">No pending friend requests !</h4>}
                         </div>
                     </div>
                     <div className="sendFriendRequest">

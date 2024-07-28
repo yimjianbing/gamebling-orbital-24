@@ -40,13 +40,6 @@ export const PokerMenu = () => {
           <h2 className="offlinePoker" onClick={handleOfflinePoker}>
             No
           </h2>
-          {/* <div 
-            className="tutorial"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-
-          </div> */}
         </heading>
       </div>
     </div> 
