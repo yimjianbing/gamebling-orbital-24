@@ -33,6 +33,7 @@ export function NavBar() {
           <Link to="/about" data-testid="about">About</Link>
           <Link to="/contactus" data-testid="contactus"> Contact Us</Link>
           {loggedIn ? <Link to="/skins" data-testid="skins">Skins</Link> : <></>}
+          {loggedIn ? <Link to="/friends" data-testid="friends">Your Friends</Link> : <></>}
           <Link to="/mainmenu" className="btnLogin-popup" data-testid="mainmenu">Play</Link>
         </nav>
         {loggedIn ? <p className="profileBtn" onClick={() => handleProfileModal()}> Profile </p> : <></>}</div>

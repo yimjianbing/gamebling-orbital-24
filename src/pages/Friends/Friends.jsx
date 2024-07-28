@@ -1,12 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import "./ProfileModal.css";
-import { AuthContext } from '../../context/AuthContext';
-import defaultAvatar from '../../assets/profile/default profile avatar.svg';
+import React, {useState, useEffect, useContext } from 'react';
+import "./Friends.css";
+import { AuthContext } from "../../context/AuthContext";
 import { db, auth } from "../../auth/firebase-config"
 import { doc, getDoc, updateDoc, arrayUnion, query, where, collection, getDocs, onSnapshot } from "firebase/firestore";
-import { signOut } from "firebase/auth";
 
-export function ProfileModal() {
+export const Friends = () => {
     const { currentUserLoggedIn, updateLoggedIn} = useContext(AuthContext);
     const [ elo, setElo ] = useState(0);
     const [ friendId, setFriendId ] = useState("");
@@ -175,73 +173,46 @@ export function ProfileModal() {
         }
     };
 
-    function handleSignOut() {
-        signOut(auth)
-          .then(() => {
-            updateLoggedIn(false); //update context to be signedout
-            // alert("successful signout"); // Sign-out successful.
-          })
-          .catch((error) => {
-            var errorMessage = error.message;
-            alert(errorMessage);
-          });
-      }
-
     return (
-        currentUserLoggedIn ? (
-            <div className="profileContainer">
-                <div className="yourProfile">Your Profile</div>
-                <br/>
-                <img src={currentUserLoggedIn.photoURL != null ? require(currentUserLoggedIn.photoURL) : defaultAvatar} className="profilePic" onError={handleImgError} />
-                <div className="name">{currentUserLoggedIn.displayName}</div>
-                <br />
-                <div className="eloAndIdContainer">
-                    
-                    <div className="eloWrapper">Current Elo: <div className="elo">{elo}</div></div>
-                    
-                    <div className="eloWrapper">Your Friend ID: <h2 className="yourFriendId">{friendId}</h2></div>
-                    
+        <div className="friendsWrapper">
+            <div className="friends">
+                <div className="bigFont">Your Friends</div>
+                <div className="friendOptions">
+                    <div className="friendsList">
+                        <h1>Friends</h1>
+                        <div className="friendsList">
+                            {friends.map((friend, index) => {
+                                return (
+                                    <div key={index} className="friend">
+                                        <img src="../../assets/profile/default profile avatar.svg" alt="profile" onError={handleImgError} />
+                                        <p>{friend.username}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className="pendingFriendRequests">
+                        <h1>Pending Friend Requests</h1>
+                        <div className="pendingFriendRequests">
+                            {pendingFriendRequests.map((friend, index) => {
+                                return (
+                                    <div key={index} className="friend">
+                                        <img src="../../assets/profile/default profile avatar.svg" alt="profile" onError={handleImgError} />
+                                        <p>{friend.username}</p>
+                                        <button onClick={() => handleAcceptReq(index)}>Accept</button>
+                                        <button onClick={() => handleRejectReq(index)}>Reject</button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className="sendFriendRequest">
+                        <h1>Send Friend Request</h1>
+                        <input type="text" placeholder="Friend ID" value={friendRequest} onChange={(e) => setFriendRequest(e.target.value)} />
+                        <button onClick={handleSendFriendRequest}>Send</button>
+                    </div>
                 </div>
-
-                <div className="addnewfriend">Add new friends using their friend ID!</div>
-
-                <form className="friendRequestForm">
-                    <label className="addnewfriend" htmlFor="addFriend">Send Friend Request:</label>
-                    <div className="inputContainer">
-                        <input 
-                            type="text" 
-                            placeholder="Friend Id" 
-                            value={friendRequest}
-                            onChange={(e) => setFriendRequest(e.target.value)}
-                            required
-                        />
-                        <button type="button" className="sendReqBtn" onClick={handleSendFriendRequest}>Send</button>
-                    </div>
-                </form>
-                <br />
-
-                <h3>Your current friend requests:</h3>
-                {pendingFriendRequests.length > 0 
-                ? pendingFriendRequests.map((req) => (
-                    <div key={req.id} className="message">
-                        <strong>{req.username}:</strong>
-                        <div className="acceptReq" onClick={() => handleAcceptReq(req.id)}> Accept </div>
-                        <div className="rejectReq" onClick={() => handleRejectReq(req.id)}> Decline </div>
-                    </div>
-                )) 
-                : <h4 className="noFriendReq">No pending friend requests !</h4>}
-                <br/>
-                {/* {friends.map((friend) => (
-                    <div key={friend.id} className="message">
-                        <h3 className="friendUsername">{friend.username}</h3>
-                    </div>
-                ))} */}
-                <button onClick={() => handleSignOut()} className="signout">
-                    Sign out
-                </button>
             </div>
-        ) : (
-            <div></div>
-        )
+        </div>
     );
-};
+}
