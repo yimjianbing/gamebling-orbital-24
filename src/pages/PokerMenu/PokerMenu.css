@@ -88,6 +88,10 @@
   }
   
   .dropdown p:hover {
-    background-color: rgb(170, 170, 170)
-    ; /* Highlight color on hover */
+    background-color: rgb(170, 170, 170); /* Highlight color on hover */
+  }
+
+  .pokerMenuTitle {
+    color: aliceblue;
+    text-align: center;
   }

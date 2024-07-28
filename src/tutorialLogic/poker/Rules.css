@@ -27,9 +27,10 @@
   .slide {
     position: relative;
     width: 60%;
-    height: 60%;
+    height: 75%;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     transition: background-image 1s ease-in-out;
     z-index: 15; /* Ensure it's above the blur background */
   }

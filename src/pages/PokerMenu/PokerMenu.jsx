@@ -10,27 +10,11 @@ export const PokerMenu = () => {
   const { setOption, selectedOption } = useContext(TutorialContext);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  function handleOnlinePoker() {
-    navigate(`/onlinePoker`);
-  }
-
-  function handleRules() {
-    navigate(`/rules`);
-  }
-
   function handleOfflinePoker() {
     navigate(`/poker`);
     setInGame(true);
   }
   
-  const handleTutorial = (gameName) => {
-    console.log("Setting option in Menu:", gameName);
-    setOption(gameName);
-    setTimeout(() => {
-      console.log("Navigating to /tutorial with gameName:", gameName);
-      navigate(`/tutorial?gameName=${gameName}`);
-    }, 1000); // 1 second delay
-  };
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
@@ -40,36 +24,29 @@ export const PokerMenu = () => {
     setShowDropdown(false);
   };
 
+  const handleGoToTutorial = () => {
+    navigate(`/tutorialMenu`);
+  }
+
   return (
     <div className="pokerMenuWrapper">
       <div className="pokerMenu">
-        <h2>Do you want to play online or offline?</h2>
+        <h2 className="pokerMenuTitle">Do you wish to go through a brief </h2>
+        <h2 className="pokerMenuTitle"> tutorial of the game?</h2>
         <heading className="pokerOptions">
-          <h2 className="onlinePoker" onClick={handleOnlinePoker}>
-            Online 
-          </h2>
+
+          <h2 className="offlinePoker" onClick={handleGoToTutorial}>Yes</h2>
+
           <h2 className="offlinePoker" onClick={handleOfflinePoker}>
-            Offline
+            No
           </h2>
-          <div 
+          {/* <div 
             className="tutorial"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <h2>How to Play?</h2>
-            {showDropdown && (
-              <div className="dropdown">
-                <p onClick={() => handleRules()}>Rules</p>
-                <p onClick={() => handleTutorial('Pair')}>Pair</p>
-                <p onClick={() => handleTutorial('Double Pair')}>Double Pair</p>
-                <p onClick={() => handleTutorial('Three of a Kind')}>Three of a Kind</p>
-                <p onClick={() => handleTutorial('Flush')}>Flush</p>
-                <p onClick={() => handleTutorial('Straight')}>Straight</p>
-                <p onClick={() => handleTutorial('Full House')}>Full House</p>
-                <p onClick={() => handleTutorial('Four of a Kind')}>Four of a Kind</p>
-              </div>
-            )}
-          </div>
+
+          </div> */}
         </heading>
       </div>
     </div> 

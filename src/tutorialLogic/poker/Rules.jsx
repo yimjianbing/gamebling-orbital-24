@@ -3,7 +3,7 @@ import slide1 from '../../assets/slides/slide1.png';
 import slide2 from '../../assets/slides/slide2.png';
 import slide3 from '../../assets/slides/slide3.png';
 import slide4 from '../../assets/slides/slide4.png';
-import slide5 from '../../assets/slides/slide5.png';
+import slide5 from '../../assets/slides/slide5.jpg';
 import Exit from './Exit';
 import { useNavigate } from "react-router-dom";
 
@@ -39,7 +39,7 @@ const Rules = () => {
           <div className="slide" style={{ backgroundImage: `url(${images[currentIndex]})` }}>
             <div className="overlay">
               <Exit />
-              <h2>Tutorial {currentIndex + 1}</h2>
+              <h6>Page {currentIndex + 1}</h6>
             </div>
           </div>
           <button className="prev" onClick={handlePrev}>❮</button>

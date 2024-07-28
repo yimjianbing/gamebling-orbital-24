@@ -15,13 +15,9 @@ const handleAI = (state, pushAnimationState) => {
   console.log("handlingAI");
   const { highBet } = state;
   const activePlayer = state.players[state.activePlayerIndex];
-  if (!activePlayer.robot) {
-    setTimeout(() => {}, 15000);
-    alert("not robot");
-    return;
-  }
 
   const min = determineMinBet(highBet, activePlayer.chips, activePlayer.bet);
+  console.log("min", min);
   const max = activePlayer.chips + activePlayer.bet;
   const totalInvestment =
     activePlayer.chips + activePlayer.bet + activePlayer.stackInvestment; // NOTE: StackInvestment must be incremented at each level of BETTING
