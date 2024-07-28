@@ -14,6 +14,10 @@ export const PokerMenu = () => {
     navigate(`/onlinePoker`);
   }
 
+  function handleRules() {
+    navigate(`/rules`);
+  }
+
   function handleOfflinePoker() {
     navigate(`/poker`);
     setInGame(true);
@@ -55,6 +59,7 @@ export const PokerMenu = () => {
             <h2>How to Play?</h2>
             {showDropdown && (
               <div className="dropdown">
+                <p onClick={() => handleRules()}>Rules</p>
                 <p onClick={() => handleTutorial('Pair')}>Pair</p>
                 <p onClick={() => handleTutorial('Double Pair')}>Double Pair</p>
                 <p onClick={() => handleTutorial('Three of a Kind')}>Three of a Kind</p>
