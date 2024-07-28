@@ -440,7 +440,6 @@ imageLoaderRequest.send();
         <div className='showdown-container--community-cards'>
           { this.renderCommunityCards(true) }
         </div>
-        <button className="showdown--nextRound--button" onClick={() => this.handleNextRound()}> Next Round </button>
           { this.renderBestHands() }
       </div>
     )
