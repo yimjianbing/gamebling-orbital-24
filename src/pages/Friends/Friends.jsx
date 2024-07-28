@@ -5,6 +5,7 @@ import { db, auth } from "../../auth/firebase-config"
 import defaultAvatar from '../../assets/profile/default profile avatar.svg';
 import { doc, getDoc, updateDoc, arrayUnion, query, where, collection, getDocs, onSnapshot } from "firebase/firestore";
 import ProfilePic from '../../components/ProfilePic/ProfilePic';
+import { useNavigate } from 'react-router-dom';
 
 export const Friends = () => {
     const { currentUserLoggedIn, updateLoggedIn} = useContext(AuthContext);
@@ -13,6 +14,7 @@ export const Friends = () => {
     const [ pendingFriendRequests, setPendingFriendRequests ] = useState([]);
     const [ friends, setFriends ] = useState([]);
     const [profilePicPaths, setProfilePicPaths] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (currentUserLoggedIn) {
@@ -197,6 +199,12 @@ export const Friends = () => {
         }
     };
 
+    const handleProfileNavigation = (friendID) => {
+        return () => {
+            navigate(`/profile/${friendID}`);
+        }
+    };
+
     return (
         <div className="friendsWrapper">
             <div className="friends">
@@ -209,11 +217,11 @@ export const Friends = () => {
                                 ? friends.map((friend, index) => {
                                         const path = profilePicPaths[friend.uid];
                                         return (
-                                            <>
-                                                <div key={index} className="friend">
-                                                <ProfilePic key={index} filePath={path} className="smallProfilePic" />                                                    <h2>{friend.username}</h2>
+                                            <div className='friendWrapper'>
+                                                <div key={index} className="friend" onClick={handleProfileNavigation(friend.uid)}>
+                                                <ProfilePic key={index} filePath={path} size={"small"} className="smallProfilePic" />                                                    <h2>{friend.username}</h2>
                                                 </div>
-                                            </>
+                                            </div>
                                         );
                                     })
                                 : <h4 className="noFriends">No friends yet!</h4>}

@@ -15,6 +15,7 @@ import Tutorial  from "../tutorialLogic/poker/Tutorial";
 import Rules from "../tutorialLogic/poker/Rules";
 import { TutorialMenu } from "../pages/TutorialMenu/TutorialMenu";
 import { Friends } from "../pages/Friends/Friends";
+import  Profile  from "../pages/Profile/Profile";
 
 
 const RouterBuilder = () => {
@@ -80,6 +81,9 @@ const RouterBuilder = () => {
     {
       path: "/friends",
       element: <Friends />,
+    }, {
+      path: "profile/:id",
+      element: <Profile/>,
     }
   ];
 

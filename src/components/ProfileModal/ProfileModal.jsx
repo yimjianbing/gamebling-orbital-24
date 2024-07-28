@@ -69,7 +69,7 @@ export function ProfileModal() {
             <div className="profileContainer">
                 <div className="yourProfile">Your Profile</div>
                 <br/>
-                <ProfilePic filePath={path} /> 
+                <ProfilePic filePath={path} size={"large"}/> 
                 <div className="name">{currentUserLoggedIn.displayName}</div>
                 <br />
                 <div className="eloAndIdContainer">

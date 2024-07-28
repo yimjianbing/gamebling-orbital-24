@@ -53,6 +53,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     color: #fff;
     overflow-y: auto; /* Add this line to enable vertical scrolling */
+    min-width: 250px;
   }
 
   .pendingFriendRequests,

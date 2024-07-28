@@ -3,7 +3,7 @@ import { getProfilePicUrl } from '../../utils/profpicretriever'; // Adjust the i
 import './ProfilePic.css'; // Adjust the import path as needed
 import defaultAvatar from '../../assets/profile/default profile avatar.svg';
 
-const ProfilePic = ({ filePath }) => {
+const ProfilePic = ({ filePath, size }) => {
   const [profilePicUrl, setProfilePicUrl] = useState('');
 
     useEffect(() => {
@@ -29,7 +29,7 @@ const ProfilePic = ({ filePath }) => {
         <div className='filler'>
           {filePath && filePath !== '' ? (
             <div
-              className="profilePic"
+              className={`profilePic ${size}`}
               style={{ backgroundImage: `url(${profilePicUrl})` }}
             ></div>
           ) : (
