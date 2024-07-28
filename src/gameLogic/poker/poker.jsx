@@ -374,13 +374,15 @@ imageLoaderRequest.send();
         }
       })
   }
+  
   renderOddsBar() {
-    const { odds } = this.state;
+    const { odds, oddsColor } = this.state;
     console.log("odds rendered: ", odds)
+    console.log("oddsColor rendered: ", oddsColor)
 
     return (
       <div className="odds-bar-container">
-        <div className="odds-bar" style={{ width: `${odds}%` }}></div>
+        <div className="odds-bar" style={{ width: `${odds}%`, backgroundColor: `${oddsColor}` }}></div>
       </div>
     );
   }

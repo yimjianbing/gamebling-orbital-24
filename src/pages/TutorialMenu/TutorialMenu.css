@@ -1,0 +1,123 @@
+.tutorialMenuWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: height 0.2s ease;
+    animation: zoom 0.2s ease-in;
+}
+  
+  @keyframes zoom {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+.tutorialMenu {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.tutorialOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+
+.rules {
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    background: #e0e0e0;
+    width: 50%;
+    margin: 0 auto;
+    transition: 0.2s ease;
+
+}
+
+.rules:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #162938;
+    transform: scale(1.2);
+    z-index: 10;
+    transition: 0.2s ease;
+    background-color: white;
+}
+
+.tutTopRow> p {
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    background: #e0e0e0;
+    transition: 0.2s ease;
+
+}
+
+.tutBotRow> p {
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    background: #e0e0e0;
+    transition: 0.2s ease;
+
+}
+
+.tutTopRow > p:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #162938;
+    transform: scale(1.2);
+    z-index: 10;
+    transition: 0.2s ease;
+
+}
+
+.tutBotRow > p:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #162938;
+    transform: scale(1.2);
+    z-index: 10;
+    transition: 0.2s ease;
+
+}
+
+.tutTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.tutBotRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.bigFont {
+    font-size: 64px;
+    color: #000;
+}

@@ -12,6 +12,8 @@ import OnlinePoker from "../onlineGameLogic/onlinePoker/OnlinePoker";
 import { PokerMenu } from "../pages/PokerMenu/PokerMenu";
 import { Skins } from "../pages/Skins/Skins";
 import  Tutorial  from "../tutorialLogic/poker/Tutorial";
+import Rules from "../tutorialLogic/poker/Rules";
+import { TutorialMenu } from "../pages/TutorialMenu/TutorialMenu";
 
 
 const RouterBuilder = () => {
@@ -63,6 +65,16 @@ const RouterBuilder = () => {
     {
       path: "/skins",
       element: <Skins />,
+    },
+    {
+      path: "/rules",
+      element: <Rules />,
+    },
+    {
+      path: "/tutorialMenu",
+      element: (<TutorialProvider>
+        <TutorialMenu />
+        </TutorialProvider>),
     }
   ];
 
