@@ -99,7 +99,7 @@ export const Friends = () => {
     const handleSendFriendRequest = async () => {
     
             if (currentUserLoggedIn && friendRequest !== currentUserLoggedIn.uid.toString().substring(0, 5)){
-                const collectionRef = collection(db, "userData"); // Corrected the path to use as parameters
+                const collectionRef = collection(db, "userData"); 
 
                 const q = query(collectionRef, where("friendId", "==", friendRequest));
 

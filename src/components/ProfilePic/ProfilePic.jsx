@@ -10,6 +10,7 @@ const ProfilePic = ({ filePath, size }) => {
         if (filePath && filePath !== '') {
           const fetchProfilePic = async () => {
             try {
+                console.log("filepath: " + filePath);
               const url = await getProfilePicUrl(filePath);
               setProfilePicUrl(url);
             } catch (error) {
