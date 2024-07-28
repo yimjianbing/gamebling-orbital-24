@@ -103,6 +103,31 @@ const popShowdownCards = (deck, numToPop) => {
   return { mutableDeckCopy, chosenCards };
 };
 
+const obtainColor = (odds) => {
+  if (odds < 10) {
+      return 'red'
+    } else if (odds < 39) {
+      // this.handleColorChange('rgb(255, 111, 0)')
+      return 'rgb(255, 111, 0)';
+    } else if (odds < 50) {
+      // this.handleColorChange('orange')
+      return 'orange';
+    } else if (odds < 70) {
+      this.handleColorChange('yellow');
+      return 'yellow';
+    } else if (odds < 80) {
+      // this.handleColorChange('rgb(129, 194, 65)')
+      return 'rgb(129, 194, 65)';
+    } else if (odds < 100) {
+      // this.handleColorChange('rgb(72, 170, 61)')
+      return 'rgb(72, 170, 61)';
+    } else {
+      // this.handleColorChange('green');
+      return 'green';
+    }
+  }
+  
+
 const dealPrivateCards = (state) => {
   if (!state || !state.players || !state.deck || !state.riggedDeck) {
     console.error("State or required properties are missing or null", state);
@@ -177,6 +202,9 @@ const dealPrivateCards = (state) => {
       ? Math.floor(Math.random() * (40 - 15 + 1)) + 15
       : (odds[0].wins / odds[0].count) * 100;
 
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
+
   console.log("player cards converted:", newCards);
   console.log("odds are this 0:", odds[0].wins / 100);
   console.log("odds are this 1:", odds[1].wins / 100);
@@ -220,7 +248,8 @@ const dealFlop = (state) => {
     (odds[0].wins / odds[0].count) * 100 < 5
       ? Math.floor(Math.random() * (40 - 15 + 1)) + 15
       : (odds[0].wins / odds[0].count) * 100;
-
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
   console.log("odds are this 0:", odds[0].wins / 100);
   console.log("odds are this 1:", odds[1].wins / 100);
   console.log("odds are this 2:", odds[2].wins / 100);
@@ -249,7 +278,8 @@ const dealTurn = (state) => {
     (odds[0].wins / odds[0].count) * 100 < 5
       ? Math.floor(Math.random() * (40 - 15 + 1)) + 15
       : (odds[0].wins / odds[0].count) * 100;
-
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
   console.log(odds);
   console.log("odds are this 0:", (odds[0].wins / odds[0].count) * 100);
   console.log("odds are this 1:", odds[1].wins / 100);
@@ -279,6 +309,8 @@ const dealRiver = (state) => {
     (odds[0].wins / odds[0].count) * 100 < 5
       ? Math.floor(Math.random() * (40 - 15 + 1)) + 15
       : (odds[0].wins / odds[0].count) * 100;
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
   return state;
 };
 

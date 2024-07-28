@@ -64,6 +64,7 @@ class Tutorial extends Component {
   state = {
     tutorialType: this.context.selectedOption, // pair | doublePair | threeOfAKind | flush | straight | fullHouse
     odds: 10.0,
+    oddsColor: 'green',
     loading: true,
     winnerFound: null,
     players: null,
@@ -393,31 +394,17 @@ imageLoaderRequest.send();
         }
       })
   }
+  
   renderOddsBar() {
-    const { odds } = this.state;
+    const { odds, oddsColor } = this.state;
     console.log("odds rendered: ", odds)
 
-    let color;
 
-    if (odds < 10) {
-      color = 'red';
-    } else if (odds < 39) {
-      color = 'rgb(255, 111, 0)'; // Red-orange
-    } else if (odds < 50) {
-      color = 'orange';
-    } else if (odds < 70) {
-      color = 'yellow';
-    } else if (odds < 80) {
-      color = 'rgb(129, 194, 65)'; // Light green
-    } else if (odds < 100) {
-      color = 'rgb(72, 170, 61)'; // Medium green
-    } else {
-      color = 'green';
-    }
+
 
     return (
       <div className="odds-bar-container">
-        <div className="odds-bar" style={{ width: `${odds}%`, backgroundColor: `${color}` }}></div>
+        <div className="odds-bar" style={{ width: `${odds}%`, backgroundColor: `${oddsColor}` }}></div>
       </div>
     );
   }

@@ -103,6 +103,30 @@ const popShowdownCards = (deck, numToPop) => {
   return { mutableDeckCopy, chosenCards };
 };
 
+const obtainColor = (odds) => {
+if (odds < 10) {
+    return 'red'
+  } else if (odds < 20) {
+    // this.handleColorChange('rgb(255, 111, 0)')
+    return 'orange';
+  } else if (odds < 40) {
+    // this.handleColorChange('orange')
+    return 'yellow';
+  } else if (odds < 50) {
+    // this.handleColorChange('yellow');
+    return 'rgb(129, 194, 65)';
+  } else if (odds < 70) {
+    // this.handleColorChange('rgb(129, 194, 65)')
+    return 'rgb(72, 170, 61)';
+  } else if (odds < 100) {
+    // this.handleColorChange('rgb(72, 170, 61)')
+    return 'green';
+  } else {
+    // this.handleColorChange('green');
+    return 'green';
+  }
+}
+
 const dealPrivateCards = (state) => {
   if (!state || !state.players || !state.deck) {
     console.error("State or required properties are missing or null", state);
@@ -162,6 +186,8 @@ const dealPrivateCards = (state) => {
     odds[0].wins / 100 < 5
       ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
       : odds[0].wins / 100;
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
   console.log("player cards:", newCards);
   console.log("odds are this:", odds[0].wins / 100);
 
@@ -193,6 +219,9 @@ const dealFlop = (state) => {
       ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
       : odds[0].wins / 100;
 
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
+
   return state;
 };
 
@@ -215,6 +244,9 @@ const dealTurn = (state) => {
     odds[0].wins / 100 < 5
       ? Math.floor(Math.random() * (40 - 15 + 1)) + 15
       : odds[0].wins / 100;
+
+      const color = obtainColor(state.odds);
+      state.oddsColor = color;
 
   return state;
 };
@@ -239,6 +271,9 @@ const dealRiver = (state) => {
     odds[0].wins / 100 < 5
       ? Math.floor(Math.random() * (30 - 15 + 1)) + 15
       : odds[0].wins / 100;
+
+  const color = obtainColor(state.odds);
+  state.oddsColor = color;    
   return state;
 };
 
