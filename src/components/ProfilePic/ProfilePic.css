@@ -1,0 +1,41 @@
+.profilePic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* .filler .profilePic {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+} */
+
+.profilePic.small{
+    display: block;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.profilePic.large {
+    display: block;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+}
+
+.profilePic.medium {
+    display: block;
+    text-align: center;
+    width: 75px;
+    height: 75px;
+}
+
+.profilePic.verylarge {
+    display: block;
+    text-align: center;
+    width: 150px;
+    height: 150px;
+}

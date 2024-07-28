@@ -1,0 +1,161 @@
+.friendsWrapper {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    max-height: 580px;;
+  }
+  
+  .friends {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .bigFont {
+    font-size: 2em;
+    font-weight: bold;
+    color: rgb(53, 51, 61);
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    top: 15px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+  }
+  
+  .friendOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .smallProfilePic {
+    width: 40% !important;
+    height: 40% !important;
+}
+
+  .friendsListWrapper {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    overflow-y: auto; /* Add this line to enable vertical scrolling */
+    min-width: 250px;
+  }
+
+  .pendingFriendRequests,
+  .sendFriendRequest {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
+  
+  .profilePicFriend {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+  .friendsList h1,
+  .pendingFriendRequests h1,
+  .sendFriendRequest h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: aliceblue;
+  }
+  
+  .friend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .friend:last-child {
+    border-bottom: none;
+  }
+
+  .noFriendReq {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    color: aliceblue;
+  }
+  
+  .friend img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .friend p {
+    flex-grow: 1;
+    margin: 0;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .friend button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .friend button:hover {
+    background-color: #0056b3;
+  }
+  
+  .sendFriendRequest input {
+    width: calc(100% - 100px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .sendFriendRequest button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .sendFriendRequest button:hover {
+    background-color: #218838;
+  }
+
+  .noFriends {
+    font-size: 1.5em;
+    color: aliceblue;
+    text-align: center;
+  }
+  
