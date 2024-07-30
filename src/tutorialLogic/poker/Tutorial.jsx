@@ -20,6 +20,9 @@ import Player from "./components/players/Player.jsx";
 import ShowdownPlayer from "./components/players/ShowdownPlayer.jsx";
 import Card from "./components/cards/Card.jsx";
 
+import { updateTutorialPlayed } from '../../utils/updateTutorialPlayed.js';
+import { checkAndGiveAchievement } from '../../utils/getAchievement.js';
+
 import { 
   generateDeckOfCards, 
   shuffle, 
@@ -340,6 +343,8 @@ imageLoaderRequest.send();
   renderRankWinner = (player) => {
     const { name, bestHand, handRank } = player;
     const playerStateData = this.state.players.find(statePlayer => statePlayer.name === name);
+    updateTutorialPlayed();
+    checkAndGiveAchievement();
     return (
       <div className="showdown-player--entity" key={name}>
         <ShowdownPlayer
@@ -398,10 +403,6 @@ imageLoaderRequest.send();
   renderOddsBar() {
     const { odds, oddsColor } = this.state;
     console.log("odds rendered: ", odds)
-
-
-
-
     return (
       <div className="odds-bar-container">
         <div className="odds-bar" style={{ width: `${odds}%`, backgroundColor: `${oddsColor}` }}></div>
