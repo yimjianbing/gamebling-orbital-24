@@ -76,10 +76,20 @@ const LoginRegister = () => {
       const userData = {
         elo: 1000,
         gamesWon: 0,
+        gamesPlayed : 0,
+        finishedTutorial: false,
         friends: [],
         friendId: friendId,
         username: user.displayName,
         pendingFriendRequests: [],
+        achievements: {
+          finishedTutorial: false,
+          playFirstGame: false,
+          winFirstGame: false,
+          tenGames: false,
+        },
+        
+
       };
       return setDoc(playerRef, userData);
     })
@@ -117,10 +127,18 @@ const LoginRegister = () => {
                 const userData = {
                   elo: 1000,
                   gamesWon: 0,
+                  gamesPlayed: 0,
+                  finishedTutorial: false,
                   friends: [],
                   friendId: friendId,
                   username: user.displayName,
                   pendingFriendRequests: [],
+                  achievements: {
+                    finishedTutorial: false,
+                    playFirstGame: false,
+                    winFirstGame: false,
+                    tenGames: false,
+                  },
                 };
 
                 setDoc(playerRef, userData)

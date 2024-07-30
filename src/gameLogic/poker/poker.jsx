@@ -19,6 +19,9 @@ import Player from "./components/players/Player.jsx";
 import ShowdownPlayer from "./components/players/ShowdownPlayer.jsx";
 import Card from "./components/cards/Card.jsx";
 
+import { updateGamesPlayed } from '../../utils/updateGamesPlayed.js';
+import { updateGamesWon } from '../../utils/updateGamesWon.js';
+
 import { 
   generateDeckOfCards, 
   shuffle, 
@@ -320,6 +323,8 @@ imageLoaderRequest.send();
   renderRankWinner = (player) => {
     const { name, bestHand, handRank } = player;
     const playerStateData = this.state.players.find(statePlayer => statePlayer.name === name);
+    updateGamesPlayed();
+    updateGamesWon();
     return (
       <div className="showdown-player--entity" key={name}>
         <ShowdownPlayer

@@ -19,6 +19,8 @@ export const MainMenu = () => {
       .then(() => {
         updateLoggedIn(false); //update context to be signedout
         // alert("successful signout"); // Sign-out successful.
+      }).then(() => {
+        navigate("/loginregister");
       })
       .catch((error) => {
         var errorMessage = error.message;

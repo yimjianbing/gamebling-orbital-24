@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import "./ProfileModal.css";
 import { AuthContext } from '../../context/AuthContext';
 import { db, auth } from "../../auth/firebase-config"
+import { useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc, arrayUnion, query, where, collection, getDocs, onSnapshot } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import ProfilePicUpload from "../UploadProfilePic/ProfilePicUpload";
@@ -12,6 +13,7 @@ export function ProfileModal() {
     const [ elo, setElo ] = useState(0);
     const [ friendId, setFriendId ] = useState("");
     const [ path, setPath ] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (currentUserLoggedIn) {
@@ -56,6 +58,8 @@ export function ProfileModal() {
           .then(() => {
             updateLoggedIn(false); //update context to be signedout
             // alert("successful signout"); // Sign-out successful.
+          }).then(() => {
+            navigate("/loginregister");
           })
           .catch((error) => {
             var errorMessage = error.message;
@@ -63,6 +67,9 @@ export function ProfileModal() {
           });
       }
 
+    function handleAchievementNav() {
+        navigate("/achievements");
+    }
 
     return (
         currentUserLoggedIn ? (
@@ -80,7 +87,11 @@ export function ProfileModal() {
                     
                 </div>
 
-             <ProfilePicUpload />
+                <ProfilePicUpload />
+
+                <br />
+
+                <div className="achievementsNav" onClick={() => handleAchievementNav()}>Your Achievements</div>
 
                 <br />
 
